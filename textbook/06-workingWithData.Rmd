@@ -433,15 +433,15 @@ This somewhat long section on `dplyr` adapts the nice introduction by Jenny Brya
 
 ### Improved Data Frames
 
-The `dplyr` package provides a couple functions that offer improvements on data frames. First, `tibble` creates a tibble from a series of vectors^[Reminds me of [The Trouble with Tribbles](https://en.wikipedia.org/wiki/The_Trouble_with_Tribbles)]. A tibble has two advantages over a data frame. First, when printing, it only prints the first ten rows and the columns that fit on the page, as well as some additional information about the table's dimension, data type of variables, and non-printed columns. Second, recall that subsetting a data frame can sometimes return a vector rather than a data frame (if only one row or column is the result of the subset), a tibble does not have this behavior. Second, we can use the `as_tibble()` function to convert an existing data frame or list into a tibble. Here is an example using the `religionWide` data frame.^[The text printed immediately after `library(dplyr)` means the `stats` and `base` packages, which are automatically loaded when you start R, have functions with the same name as functions in `dplyr`. So, for example, if you call the `filter()` or `lag()` functions, R will use `library(dplyr)`'s functions. Use the `::` operator to explicity identify which packages' function you want to use, e.g., if you want `stats`'s `lag()` then call `stats::lag()`.]
+The `dplyr` package provides a couple functions that offer improvements on data frames. First, `tibble` creates a tibble from a series of vectors^[Reminds me of [The Trouble with Tribbles](https://en.wikipedia.org/wiki/The_Trouble_with_Tribbles)]. A tibble has two advantages over a data frame. First, when printing, it only prints the first ten rows and the columns that fit on the page, as well as some additional information about the table's dimension, data type of variables, and non-printed columns. Second, recall that subsetting a data frame can sometimes return a vector rather than a data frame (if only one row or column is the result of the subset), a tibble does not have this behavior. Second, we can use the `as_tibble()` function to convert an existing data frame or list into a tibble. Here is an example using the `mtcars` data frame.^[The text printed immediately after `library(dplyr)` means the `stats` and `base` packages, which are automatically loaded when you start R, have functions with the same name as functions in `dplyr`. So, for example, if you call the `filter()` or `lag()` functions, R will use `library(dplyr)`'s functions. Use the `::` operator to explicity identify which packages' function you want to use, e.g., if you want `stats`'s `lag()` then call `stats::lag()`.]
 
 ```{r}
 library(dplyr)
-head(religionWide)
-religionWide[,1]
-religionWideTbl <- as_tibble(religionWide)
-head(religionWideTbl)
-religionWideTbl[,1]
+head(mtcars)
+mtcars[,1]
+mtcarsTbl <- as_tibble(mtcars)
+head(mtcarsTbl)
+mtcarsTbl[,1]
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>12 Rcpp | R Programming for Data Sciences</title>
-  <meta name="description" content="12 Rcpp | R Programming for Data Sciences" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <title>Chapter 12 Rcpp | R Programming for Data Sciences</title>
+  <meta name="description" content="Chapter 12 Rcpp | R Programming for Data Sciences" />
+  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="12 Rcpp | R Programming for Data Sciences" />
+  <meta property="og:title" content="Chapter 12 Rcpp | R Programming for Data Sciences" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="12 Rcpp | R Programming for Data Sciences" />
+  <meta name="twitter:title" content="Chapter 12 Rcpp | R Programming for Data Sciences" />
   
   
   
@@ -24,15 +24,16 @@
 <meta name="author" content="Andrew O. Finley, Jeffrey W. Doser, Vince Melfi" />
 
 
-<meta name="date" content="2020-05-26" />
+<meta name="date" content="2020-06-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="xml.html">
-<link rel="next" href="databases-and-r.html">
+<link rel="prev" href="xml.html"/>
+<link rel="next" href="databases-and-r.html"/>
+<script src="libs/header-attrs/header-attrs.js"></script>
 <script src="libs/jquery/jquery.min.js"></script>
 <link href="libs/gitbook/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +41,9 @@
 <link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -62,7 +66,6 @@ pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -122,6 +125,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -150,10 +154,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#obtaining-and-installing-rstudio"><i class="fa fa-check"></i><b>2.2</b> Obtaining and Installing RStudio</a></li>
 <li class="chapter" data-level="2.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#using-r-and-rstudio"><i class="fa fa-check"></i><b>2.3</b> Using R and RStudio</a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.1</b> R as a Calculator</a></li>
-<li class="chapter" data-level="2.3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#dec"><i class="fa fa-check"></i><b>2.3.2</b> Basic descriptive statistics and graphics in R</a></li>
-<li class="chapter" data-level="2.3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.3</b> An Initial Tour of RStudio</a></li>
-<li class="chapter" data-level="2.3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#practice-problem"><i class="fa fa-check"></i><b>2.3.4</b> Practice Problem</a></li>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#rstudio-themes"><i class="fa fa-check"></i><b>2.3.1</b> Rstudio Themes</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#r-as-a-calculator"><i class="fa fa-check"></i><b>2.3.2</b> R as a Calculator</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#dec"><i class="fa fa-check"></i><b>2.3.3</b> Basic descriptive statistics and graphics in R</a></li>
+<li class="chapter" data-level="2.3.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#an-initial-tour-of-rstudio"><i class="fa fa-check"></i><b>2.3.4</b> An Initial Tour of RStudio</a></li>
+<li class="chapter" data-level="2.3.5" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#practice-problem"><i class="fa fa-check"></i><b>2.3.5</b> Practice Problem</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#getting-help"><i class="fa fa-check"></i><b>2.4</b> Getting Help</a></li>
 <li class="chapter" data-level="2.5" data-path="introduction-to-r-and-rstudio.html"><a href="introduction-to-r-and-rstudio.html#workspace-working-directory-and-keeping-organized"><i class="fa fa-check"></i><b>2.5</b> Workspace, Working Directory, and Keeping Organized</a></li>
@@ -463,18 +468,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.6.1" data-path="graphics.html"><a href="graphics.html#practice-problem-16"><i class="fa fa-check"></i><b>15.6.1</b> Practice Problem</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="stats.html"><a href="stats.html"><i class="fa fa-check"></i><b>16</b> Basic Statistics in <code>R</code></a>
-<ul>
-<li class="chapter" data-level="16.1" data-path="stats.html"><a href="stats.html#basics-of-linear-models"><i class="fa fa-check"></i><b>16.1</b> Basics of Linear Models</a></li>
-<li class="chapter" data-level="16.2" data-path="stats.html"><a href="stats.html#one-way-analysis-of-variance-anova"><i class="fa fa-check"></i><b>16.2</b> One-Way Analysis of Variance (ANOVA)</a></li>
-<li class="chapter" data-level="16.3" data-path="stats.html"><a href="stats.html#two-way-analyis-of-variance-anova"><i class="fa fa-check"></i><b>16.3</b> Two-Way Analyis of Variance (ANOVA)</a></li>
-<li class="chapter" data-level="16.4" data-path="stats.html"><a href="stats.html#simple-linear-regression"><i class="fa fa-check"></i><b>16.4</b> Simple Linear Regression</a></li>
-<li class="chapter" data-level="16.5" data-path="stats.html"><a href="stats.html#multiple-linear-regression"><i class="fa fa-check"></i><b>16.5</b> Multiple Linear Regression</a></li>
-<li class="chapter" data-level="16.6" data-path="stats.html"><a href="stats.html#regresion-diagnostics-and-model-selection"><i class="fa fa-check"></i><b>16.6</b> Regresion Diagnostics and Model Selection</a></li>
-<li class="chapter" data-level="16.7" data-path="stats.html"><a href="stats.html#basic-linear-mixed-model"><i class="fa fa-check"></i><b>16.7</b> Basic Linear Mixed Model</a></li>
-<li class="chapter" data-level="16.8" data-path="stats.html"><a href="stats.html#repeated-measures-design"><i class="fa fa-check"></i><b>16.8</b> Repeated Measures Design</a></li>
-<li class="chapter" data-level="16.9" data-path="stats.html"><a href="stats.html#some-other-basic-statistical-tools"><i class="fa fa-check"></i><b>16.9</b> Some Other Basic Statistical Tools</a></li>
-</ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 </ul>
 
@@ -494,8 +487,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="rcpp" class="section level1" number="12">
-<h1 number="12"><span class="header-section-number">12</span> Rcpp</h1>
-<p>R is an interpreted language. The code interpretor runs each line of a script individually instead of compiling the entire file at once as in a compiled language like C++. This means R can be slower than compiled languages when completing some tasks. In this chapter, we show how to improve the performance of our R scripts by rewriting functions in C++<a href="references.html#fn56" class="footnote-ref" id="fnref56"><sup>56</sup></a>. Although R has an API for developers to move between R data structures and data structures in lower-level languages (C++, C, FORTRAN, etc.), an alternative is to use <code>Rcpp</code>. According to the <a href="http://www.rcpp.org/">official Rcpp website</a>, “Rcpp provides a powerful API on top of R, permitting direct interchange of rich R objects between R and C++.” It is a higher-level approach than using the aforementioned API directly. C++ functions can address gaps in R’s abilities including</p>
+<h1><span class="header-section-number">Chapter 12</span> Rcpp</h1>
+<p>R is an interpreted language. The code interpretor runs each line of a script individually instead of compiling the entire file at once as in a compiled language like C++. This means R can be slower than compiled languages when completing some tasks. In this chapter, we show how to improve the performance of our R scripts by rewriting functions in C++<a href="#fn56" class="footnote-ref" id="fnref56"><sup>56</sup></a>. Although R has an API for developers to move between R data structures and data structures in lower-level languages (C++, C, FORTRAN, etc.), an alternative is to use <code>Rcpp</code>. According to the <a href="http://www.rcpp.org/">official Rcpp website</a>, “Rcpp provides a powerful API on top of R, permitting direct interchange of rich R objects between R and C++.” It is a higher-level approach than using the aforementioned API directly. C++ functions can address gaps in R’s abilities including</p>
 <ul>
 <li>Vectorizing loops whose subsequent iterations depend on previous iterations.</li>
 <li>Writing recursive functions with lower overhead. (Recursive functions are functions that call themselves, leading to millions of function calls.)</li>
@@ -503,9 +496,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>In this chapter, we will cover an abbreviated/modified version of Hadley Wickham’s tutorial <a href="http://adv-r.had.co.nz/Rcpp.html%7D%7BHigh%20performance%20functions%20with%20Rcpp">High performance functions with Rcpp</a></p>
 <div id="getting-started-with-rcpp" class="section level2" number="12.1">
-<h2 number="12.1"><span class="header-section-number">12.1</span> Getting Started with Rcpp</h2>
+<h2><span class="header-section-number">12.1</span> Getting Started with Rcpp</h2>
 <div id="installation" class="section level3" number="12.1.1">
-<h3 number="12.1.1"><span class="header-section-number">12.1.1</span> Installation</h3>
+<h3><span class="header-section-number">12.1.1</span> Installation</h3>
 <p>Before we install the <code>Rcpp</code> package, we need a working C++ compiler. To get the compiler:</p>
 <ul>
 <li>Windows: install Rtools from <a href="https://cran.r-project.org/bin/windows/Rtools/">here</a>.</li>
@@ -516,31 +509,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Now we can install <code>Rcpp</code>. (Note that the <code>microbenchmark</code> package is needed for the examples in this chapter, so we’ll install that, too.)</p>
 </div>
 <div id="the-simplest-c-example" class="section level3" number="12.1.2">
-<h3 number="12.1.2"><span class="header-section-number">12.1.2</span> The Simplest C++ Example</h3>
-<p>It is common for textbooks to introduce a new programming language through the “Hello World” program.<a href="references.html#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a> If we wanted to write this simple program in C++, the code would look like this:</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1026-1"><a href="rcpp.html#cb1026-1"></a>&gt; <span class="er">#include &lt;iostream&gt;</span></span>
-<span id="cb1026-2"><a href="rcpp.html#cb1026-2"></a>+ </span>
-<span id="cb1026-3"><a href="rcpp.html#cb1026-3"></a>+ <span class="dt">int</span> main()</span>
-<span id="cb1026-4"><a href="rcpp.html#cb1026-4"></a>+ {</span>
-<span id="cb1026-5"><a href="rcpp.html#cb1026-5"></a>+     <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;Hello World!&quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb1026-6"><a href="rcpp.html#cb1026-6"></a>+ }</span></code></pre></div>
+<h3><span class="header-section-number">12.1.2</span> The Simplest C++ Example</h3>
+<p>It is common for textbooks to introduce a new programming language through the “Hello World” program.<a href="#fn57" class="footnote-ref" id="fnref57"><sup>57</sup></a> If we wanted to write this simple program in C++, the code would look like this:</p>
+<div class="sourceCode" id="cb1025"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1025-1"><a href="rcpp.html#cb1025-1"></a>&gt; <span class="er">#include &lt;iostream&gt;</span></span>
+<span id="cb1025-2"><a href="rcpp.html#cb1025-2"></a>+ </span>
+<span id="cb1025-3"><a href="rcpp.html#cb1025-3"></a>+ <span class="dt">int</span> main()</span>
+<span id="cb1025-4"><a href="rcpp.html#cb1025-4"></a>+ {</span>
+<span id="cb1025-5"><a href="rcpp.html#cb1025-5"></a>+     <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;Hello World!&quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb1025-6"><a href="rcpp.html#cb1025-6"></a>+ }</span></code></pre></div>
 <p>Think about the C++ code above. How would you accomplish the same task in R? How are the programs similar in syntax and structure? How are they different? In the following section, we will rewrite this program in a format that can interface with R through <code>Rcpp</code>. Note that C++ is a compiled language, which means we cannot run the program line-by-line like we can with an R script.</p>
 </div>
 </div>
 <div id="using-rcpp" class="section level2" number="12.2">
-<h2 number="12.2"><span class="header-section-number">12.2</span> Using Rcpp</h2>
+<h2><span class="header-section-number">12.2</span> Using Rcpp</h2>
 <div id="exporting-c-functions" class="section level3" number="12.2.1">
-<h3 number="12.2.1"><span class="header-section-number">12.2.1</span> Exporting C++ Functions</h3>
+<h3><span class="header-section-number">12.2.1</span> Exporting C++ Functions</h3>
 <p>Let’s start out with that simple, obligatory “Hello World!” program in C++ that we will export to R. C++ files use the extension <code>*.cpp</code>. Through the RStudio menu, create a new C++ File (File <span class="math inline">\(&gt;\)</span> New File <span class="math inline">\(&gt;\)</span> C++ File). Note that the default C++ file contains the line <code>#include &lt;Rcpp.h&gt;</code>. In C++, these <code>include</code> files are header files that provide us with objects and functions that we can use within our C++ file. Although the program building process is different, there are some parallels between these header files and the packages we use in our R code. Note that unlike R, every line of code in a C++ file must end with a semicolon.</p>
 <p>To verify that Rcpp is working correctly, let’s run the following code. Save the document as <code>hello.cpp</code>, and enter the following code:</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1027-1"><a href="rcpp.html#cb1027-1"></a>&gt; <span class="er">#include &lt;Rcpp.h&gt;</span></span>
-<span id="cb1027-2"><a href="rcpp.html#cb1027-2"></a>+ <span class="kw">using</span> <span class="kw">namespace</span> Rcpp;</span>
-<span id="cb1027-3"><a href="rcpp.html#cb1027-3"></a>+ </span>
-<span id="cb1027-4"><a href="rcpp.html#cb1027-4"></a>+ <span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb1027-5"><a href="rcpp.html#cb1027-5"></a>+ </span>
-<span id="cb1027-6"><a href="rcpp.html#cb1027-6"></a>+ <span class="dt">void</span> hello(){</span>
-<span id="cb1027-7"><a href="rcpp.html#cb1027-7"></a>+   Rprintf(<span class="st">&quot;Hello World!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb1027-8"><a href="rcpp.html#cb1027-8"></a>+ }</span></code></pre></div>
+<div class="sourceCode" id="cb1026"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1026-1"><a href="rcpp.html#cb1026-1"></a>&gt; <span class="er">#include &lt;Rcpp.h&gt;</span></span>
+<span id="cb1026-2"><a href="rcpp.html#cb1026-2"></a>+ <span class="kw">using</span> <span class="kw">namespace</span> Rcpp;</span>
+<span id="cb1026-3"><a href="rcpp.html#cb1026-3"></a>+ </span>
+<span id="cb1026-4"><a href="rcpp.html#cb1026-4"></a>+ <span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb1026-5"><a href="rcpp.html#cb1026-5"></a>+ </span>
+<span id="cb1026-6"><a href="rcpp.html#cb1026-6"></a>+ <span class="dt">void</span> hello(){</span>
+<span id="cb1026-7"><a href="rcpp.html#cb1026-7"></a>+   Rprintf(<span class="st">&quot;Hello World!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb1026-8"><a href="rcpp.html#cb1026-8"></a>+ }</span></code></pre></div>
 <p>Let’s do a quick line-by line explanation:</p>
 <ol style="list-style-type: decimal">
 <li><code>#include &lt;Rcpp.h&gt;</code>: contains the definitions used by the Rcpp package.
@@ -550,35 +543,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <code>Rprintf("Hello World!\n");</code>: prints to the R console.</li>
 </ol>
 <p>Now, we can go to the RStudio Console and test our code with the following three lines and the expected output.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1028-1"><a href="rcpp.html#cb1028-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(Rcpp)</span>
-<span id="cb1028-2"><a href="rcpp.html#cb1028-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">sourceCpp</span>(<span class="st">&quot;hello.cpp&quot;</span>)</span>
-<span id="cb1028-3"><a href="rcpp.html#cb1028-3"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">hello</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb1027"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1027-1"><a href="rcpp.html#cb1027-1"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">library</span>(Rcpp)</span>
+<span id="cb1027-2"><a href="rcpp.html#cb1027-2"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">sourceCpp</span>(<span class="st">&quot;hello.cpp&quot;</span>)</span>
+<span id="cb1027-3"><a href="rcpp.html#cb1027-3"></a><span class="op">&gt;</span><span class="st"> </span><span class="kw">hello</span>()</span></code></pre></div>
 <pre><code>[1] &quot;Hello&quot;</code></pre>
 <p>The <code>sourceCpp</code> function parsed our C++ file (“hello.cpp”) and looked for functions marked with the <code>Rcpp::export</code> attribute. A shared library was then built and the exported function (<code>hello()</code>) was made available as an R function in the current environment. The function simply printed “Hello World!” to our RStudio Console. Great! You have now written a C++ function using built-in C++ types and Rcpp wrapper types and then sourced them like an R script.</p>
 </div>
 <div id="inline-c-code" class="section level3" number="12.2.2">
-<h3 number="12.2.2"><span class="header-section-number">12.2.2</span> Inline C++ Code</h3>
+<h3><span class="header-section-number">12.2.2</span> Inline C++ Code</h3>
 <p>Maintaining C++ code in it’s own source file provides several benefits including the ability to use C++ aware text-editing tools and straightforward mapping of compilation errors to lines in the source file. However, it’s also possible to do inline declaration and execution of C++ code.</p>
 <p>There are several ways to accomplish this, including passing a code string to <code>sourceCpp()</code> or using the shorter-form <code>cppFunction()</code> or <code>evalCpp()</code> functions. Run the following code:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1030-1"><a href="rcpp.html#cb1030-1"></a><span class="kw">library</span>(Rcpp)</span>
-<span id="cb1030-2"><a href="rcpp.html#cb1030-2"></a></span>
-<span id="cb1030-3"><a href="rcpp.html#cb1030-3"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
-<span id="cb1030-4"><a href="rcpp.html#cb1030-4"></a><span class="st">  int add(int x, int y, int z) {</span></span>
-<span id="cb1030-5"><a href="rcpp.html#cb1030-5"></a><span class="st">    int sum = x + y + z;</span></span>
-<span id="cb1030-6"><a href="rcpp.html#cb1030-6"></a><span class="st">    return sum;</span></span>
-<span id="cb1030-7"><a href="rcpp.html#cb1030-7"></a><span class="st">  }&quot;</span></span>
-<span id="cb1030-8"><a href="rcpp.html#cb1030-8"></a>)</span>
-<span id="cb1030-9"><a href="rcpp.html#cb1030-9"></a></span>
-<span id="cb1030-10"><a href="rcpp.html#cb1030-10"></a><span class="kw">add</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1029"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1029-1"><a href="rcpp.html#cb1029-1"></a><span class="kw">library</span>(Rcpp)</span>
+<span id="cb1029-2"><a href="rcpp.html#cb1029-2"></a></span>
+<span id="cb1029-3"><a href="rcpp.html#cb1029-3"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
+<span id="cb1029-4"><a href="rcpp.html#cb1029-4"></a><span class="st">  int add(int x, int y, int z) {</span></span>
+<span id="cb1029-5"><a href="rcpp.html#cb1029-5"></a><span class="st">    int sum = x + y + z;</span></span>
+<span id="cb1029-6"><a href="rcpp.html#cb1029-6"></a><span class="st">    return sum;</span></span>
+<span id="cb1029-7"><a href="rcpp.html#cb1029-7"></a><span class="st">  }&quot;</span></span>
+<span id="cb1029-8"><a href="rcpp.html#cb1029-8"></a>)</span>
+<span id="cb1029-9"><a href="rcpp.html#cb1029-9"></a></span>
+<span id="cb1029-10"><a href="rcpp.html#cb1029-10"></a><span class="kw">add</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span></code></pre></div>
 <pre><code>[1] 7</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1032-1"><a href="rcpp.html#cb1032-1"></a>a &lt;-<span class="st"> </span><span class="kw">add</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
-<span id="cb1032-2"><a href="rcpp.html#cb1032-2"></a>a</span></code></pre></div>
+<div class="sourceCode" id="cb1031"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1031-1"><a href="rcpp.html#cb1031-1"></a>a &lt;-<span class="st"> </span><span class="kw">add</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb1031-2"><a href="rcpp.html#cb1031-2"></a>a</span></code></pre></div>
 <pre><code>[1] 6</code></pre>
 <p>When you run this code, Rcpp will compile the C++ code and construct an R function that connects to the compiled C++ function. We’re going to use this simple interface to learn how to write C++. C++ is a large language, and there’s no way to cover it all in the limited time we have. Instead, you’ll get the basics so that you can start writing useful functions to address bottlenecks in your R code.</p>
 </div>
 </div>
 <div id="the-rcpp-interface" class="section level2" number="12.3">
-<h2 number="12.3"><span class="header-section-number">12.3</span> The Rcpp Interface</h2>
+<h2><span class="header-section-number">12.3</span> The Rcpp Interface</h2>
 <p>The following subsections will teach you the basics by translating simple R functions to their C++ equivalents. We’ll start simple with a function that has no inputs and a scalar output, and then get progressively more complicated:</p>
 <ul>
 <li>No input and scalar output</li>
@@ -590,19 +583,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <div id="no-input-and-scalar-output" class="section level2" number="12.4">
-<h2 number="12.4"><span class="header-section-number">12.4</span> No input and scalar output</h2>
+<h2><span class="header-section-number">12.4</span> No input and scalar output</h2>
 <p>Let’s start with a very simple function. It has no arguments and always returns the integer 1:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1034-1"><a href="rcpp.html#cb1034-1"></a>one &lt;-<span class="st"> </span><span class="cf">function</span>() 1L</span></code></pre></div>
+<div class="sourceCode" id="cb1033"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1033-1"><a href="rcpp.html#cb1033-1"></a>one &lt;-<span class="st"> </span><span class="cf">function</span>() 1L</span></code></pre></div>
 <p>The equivalent C++ function is:</p>
-<pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1035-1"><a href="rcpp.html#cb1035-1"></a>&gt; <span class="dt">int</span> one() {</span>
-<span id="cb1035-2"><a href="rcpp.html#cb1035-2"></a>+   <span class="cf">return</span> <span class="dv">1</span>;</span>
-<span id="cb1035-3"><a href="rcpp.html#cb1035-3"></a>+ }</span></code></pre></div>
+<div class="sourceCode" id="cb1034"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1034-1"><a href="rcpp.html#cb1034-1"></a>&gt; <span class="dt">int</span> one() {</span>
+<span id="cb1034-2"><a href="rcpp.html#cb1034-2"></a>+   <span class="cf">return</span> <span class="dv">1</span>;</span>
+<span id="cb1034-3"><a href="rcpp.html#cb1034-3"></a>+ }</span></code></pre></div>
 <p>We can compile and use this from R with <code>cppFunction</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1036-1"><a href="rcpp.html#cb1036-1"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
-<span id="cb1036-2"><a href="rcpp.html#cb1036-2"></a><span class="st">  int one() {</span></span>
-<span id="cb1036-3"><a href="rcpp.html#cb1036-3"></a><span class="st">    return 1;</span></span>
-<span id="cb1036-4"><a href="rcpp.html#cb1036-4"></a><span class="st">  }&quot;</span></span>
-<span id="cb1036-5"><a href="rcpp.html#cb1036-5"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1035"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1035-1"><a href="rcpp.html#cb1035-1"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
+<span id="cb1035-2"><a href="rcpp.html#cb1035-2"></a><span class="st">  int one() {</span></span>
+<span id="cb1035-3"><a href="rcpp.html#cb1035-3"></a><span class="st">    return 1;</span></span>
+<span id="cb1035-4"><a href="rcpp.html#cb1035-4"></a><span class="st">  }&quot;</span></span>
+<span id="cb1035-5"><a href="rcpp.html#cb1035-5"></a>)</span></code></pre></div>
 <p>This small function illustrates a number of important differences between R and C++:</p>
 <ul>
 <li>The syntax to create a function looks like the syntax to call a function; you don’t use assignment to create functions as you do in R.</li>
@@ -612,29 +605,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Every statement is terminated by a semicolon.</li>
 </ul>
 <div id="scalar-input-and-scalar-output" class="section level3" number="12.4.1">
-<h3 number="12.4.1"><span class="header-section-number">12.4.1</span> Scalar input and scalar output</h3>
+<h3><span class="header-section-number">12.4.1</span> Scalar input and scalar output</h3>
 <p>The next example function implements a scalar version of the <code>sign()</code> function which returns 1 if the input is positive, and -1 if it’s negative:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1037-1"><a href="rcpp.html#cb1037-1"></a>signR &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
-<span id="cb1037-2"><a href="rcpp.html#cb1037-2"></a>    <span class="cf">if</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) {</span>
-<span id="cb1037-3"><a href="rcpp.html#cb1037-3"></a>        <span class="dv">1</span></span>
-<span id="cb1037-4"><a href="rcpp.html#cb1037-4"></a>    } <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</span>
-<span id="cb1037-5"><a href="rcpp.html#cb1037-5"></a>        <span class="dv">0</span></span>
-<span id="cb1037-6"><a href="rcpp.html#cb1037-6"></a>    } <span class="cf">else</span> {</span>
-<span id="cb1037-7"><a href="rcpp.html#cb1037-7"></a>        <span class="dv">-1</span></span>
-<span id="cb1037-8"><a href="rcpp.html#cb1037-8"></a>    }</span>
-<span id="cb1037-9"><a href="rcpp.html#cb1037-9"></a>}</span>
-<span id="cb1037-10"><a href="rcpp.html#cb1037-10"></a></span>
-<span id="cb1037-11"><a href="rcpp.html#cb1037-11"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
-<span id="cb1037-12"><a href="rcpp.html#cb1037-12"></a><span class="st">  int signC(int x) {</span></span>
-<span id="cb1037-13"><a href="rcpp.html#cb1037-13"></a><span class="st">    if (x &gt; 0) {</span></span>
-<span id="cb1037-14"><a href="rcpp.html#cb1037-14"></a><span class="st">      return 1;</span></span>
-<span id="cb1037-15"><a href="rcpp.html#cb1037-15"></a><span class="st">    } else if (x == 0) {</span></span>
-<span id="cb1037-16"><a href="rcpp.html#cb1037-16"></a><span class="st">      return 0;</span></span>
-<span id="cb1037-17"><a href="rcpp.html#cb1037-17"></a><span class="st">    } else {</span></span>
-<span id="cb1037-18"><a href="rcpp.html#cb1037-18"></a><span class="st">      return -1;</span></span>
-<span id="cb1037-19"><a href="rcpp.html#cb1037-19"></a><span class="st">    }</span></span>
-<span id="cb1037-20"><a href="rcpp.html#cb1037-20"></a><span class="st">  }&quot;</span></span>
-<span id="cb1037-21"><a href="rcpp.html#cb1037-21"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1036"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1036-1"><a href="rcpp.html#cb1036-1"></a>signR &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
+<span id="cb1036-2"><a href="rcpp.html#cb1036-2"></a>    <span class="cf">if</span> (x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) {</span>
+<span id="cb1036-3"><a href="rcpp.html#cb1036-3"></a>        <span class="dv">1</span></span>
+<span id="cb1036-4"><a href="rcpp.html#cb1036-4"></a>    } <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">==</span><span class="st"> </span><span class="dv">0</span>) {</span>
+<span id="cb1036-5"><a href="rcpp.html#cb1036-5"></a>        <span class="dv">0</span></span>
+<span id="cb1036-6"><a href="rcpp.html#cb1036-6"></a>    } <span class="cf">else</span> {</span>
+<span id="cb1036-7"><a href="rcpp.html#cb1036-7"></a>        <span class="dv">-1</span></span>
+<span id="cb1036-8"><a href="rcpp.html#cb1036-8"></a>    }</span>
+<span id="cb1036-9"><a href="rcpp.html#cb1036-9"></a>}</span>
+<span id="cb1036-10"><a href="rcpp.html#cb1036-10"></a></span>
+<span id="cb1036-11"><a href="rcpp.html#cb1036-11"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
+<span id="cb1036-12"><a href="rcpp.html#cb1036-12"></a><span class="st">  int signC(int x) {</span></span>
+<span id="cb1036-13"><a href="rcpp.html#cb1036-13"></a><span class="st">    if (x &gt; 0) {</span></span>
+<span id="cb1036-14"><a href="rcpp.html#cb1036-14"></a><span class="st">      return 1;</span></span>
+<span id="cb1036-15"><a href="rcpp.html#cb1036-15"></a><span class="st">    } else if (x == 0) {</span></span>
+<span id="cb1036-16"><a href="rcpp.html#cb1036-16"></a><span class="st">      return 0;</span></span>
+<span id="cb1036-17"><a href="rcpp.html#cb1036-17"></a><span class="st">    } else {</span></span>
+<span id="cb1036-18"><a href="rcpp.html#cb1036-18"></a><span class="st">      return -1;</span></span>
+<span id="cb1036-19"><a href="rcpp.html#cb1036-19"></a><span class="st">    }</span></span>
+<span id="cb1036-20"><a href="rcpp.html#cb1036-20"></a><span class="st">  }&quot;</span></span>
+<span id="cb1036-21"><a href="rcpp.html#cb1036-21"></a>)</span></code></pre></div>
 <p>In the C++ version:</p>
 <ul>
 <li><p>We declare the type of each input in the same way we declare the type of the output. While this makes the code a little more verbose, it also makes it very obvious what type of input the function needs.</p></li>
@@ -642,26 +635,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <div id="vector-input-and-scalar-output" class="section level3" number="12.4.2">
-<h3 number="12.4.2"><span class="header-section-number">12.4.2</span> Vector input and scalar output</h3>
+<h3><span class="header-section-number">12.4.2</span> Vector input and scalar output</h3>
 <p>One big difference between R and C++ is that the cost of loops is much lower in C++. For example, we could implement the <code>sum()</code> function in R using a loop. If you’ve been programming in R a while, you’ll probably have a visceral reaction to this function!</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1038-1"><a href="rcpp.html#cb1038-1"></a>sumR &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
-<span id="cb1038-2"><a href="rcpp.html#cb1038-2"></a>    total &lt;-<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb1038-3"><a href="rcpp.html#cb1038-3"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)) {</span>
-<span id="cb1038-4"><a href="rcpp.html#cb1038-4"></a>        total &lt;-<span class="st"> </span>total <span class="op">+</span><span class="st"> </span>x[i]</span>
-<span id="cb1038-5"><a href="rcpp.html#cb1038-5"></a>    }</span>
-<span id="cb1038-6"><a href="rcpp.html#cb1038-6"></a>    total</span>
-<span id="cb1038-7"><a href="rcpp.html#cb1038-7"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1037"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1037-1"><a href="rcpp.html#cb1037-1"></a>sumR &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</span>
+<span id="cb1037-2"><a href="rcpp.html#cb1037-2"></a>    total &lt;-<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb1037-3"><a href="rcpp.html#cb1037-3"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)) {</span>
+<span id="cb1037-4"><a href="rcpp.html#cb1037-4"></a>        total &lt;-<span class="st"> </span>total <span class="op">+</span><span class="st"> </span>x[i]</span>
+<span id="cb1037-5"><a href="rcpp.html#cb1037-5"></a>    }</span>
+<span id="cb1037-6"><a href="rcpp.html#cb1037-6"></a>    total</span>
+<span id="cb1037-7"><a href="rcpp.html#cb1037-7"></a>}</span></code></pre></div>
 <p>In C++, loops have very little overhead, so it’s fine to use them.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1039-1"><a href="rcpp.html#cb1039-1"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
-<span id="cb1039-2"><a href="rcpp.html#cb1039-2"></a><span class="st">  double sumC(NumericVector x) {</span></span>
-<span id="cb1039-3"><a href="rcpp.html#cb1039-3"></a><span class="st">    int n = x.size();</span></span>
-<span id="cb1039-4"><a href="rcpp.html#cb1039-4"></a><span class="st">    double total = 0;</span></span>
-<span id="cb1039-5"><a href="rcpp.html#cb1039-5"></a><span class="st">    for(int i = 0; i &lt; n; i++) {</span></span>
-<span id="cb1039-6"><a href="rcpp.html#cb1039-6"></a><span class="st">      total += x[i];</span></span>
-<span id="cb1039-7"><a href="rcpp.html#cb1039-7"></a><span class="st">    }</span></span>
-<span id="cb1039-8"><a href="rcpp.html#cb1039-8"></a><span class="st">    return total;</span></span>
-<span id="cb1039-9"><a href="rcpp.html#cb1039-9"></a><span class="st">  }&quot;</span></span>
-<span id="cb1039-10"><a href="rcpp.html#cb1039-10"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1038"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1038-1"><a href="rcpp.html#cb1038-1"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
+<span id="cb1038-2"><a href="rcpp.html#cb1038-2"></a><span class="st">  double sumC(NumericVector x) {</span></span>
+<span id="cb1038-3"><a href="rcpp.html#cb1038-3"></a><span class="st">    int n = x.size();</span></span>
+<span id="cb1038-4"><a href="rcpp.html#cb1038-4"></a><span class="st">    double total = 0;</span></span>
+<span id="cb1038-5"><a href="rcpp.html#cb1038-5"></a><span class="st">    for(int i = 0; i &lt; n; i++) {</span></span>
+<span id="cb1038-6"><a href="rcpp.html#cb1038-6"></a><span class="st">      total += x[i];</span></span>
+<span id="cb1038-7"><a href="rcpp.html#cb1038-7"></a><span class="st">    }</span></span>
+<span id="cb1038-8"><a href="rcpp.html#cb1038-8"></a><span class="st">    return total;</span></span>
+<span id="cb1038-9"><a href="rcpp.html#cb1038-9"></a><span class="st">  }&quot;</span></span>
+<span id="cb1038-10"><a href="rcpp.html#cb1038-10"></a>)</span></code></pre></div>
 <p>The C++ version is similar, but</p>
 <ul>
 <li><p>To find the length of the vector, we use the <code>.size()</code> method, which returns an integer. C++ methods are called with <code>.</code> (i.e., a period).</p></li>
@@ -671,39 +664,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>C++ provides operators that modify in-place: <code>total += x[i]</code> is equivalent to <code>total = total + x[i]</code>. Similar in-place operators are <code>-=</code>, <code>*=;</code>, and <code>/=</code>.</p></li>
 </ul>
 <p>This is a good example of where C++ is much more efficient than R. As shown by the following microbenchmark, <code>sumC()</code> is competitive with the built-in (and highly optimized) <code>sum()</code>, while <code>sumR()</code> is several orders of magnitude slower. Note, you’ll need to install the microbenchmark package.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1040-1"><a href="rcpp.html#cb1040-1"></a><span class="kw">library</span>(microbenchmark)</span>
-<span id="cb1040-2"><a href="rcpp.html#cb1040-2"></a></span>
-<span id="cb1040-3"><a href="rcpp.html#cb1040-3"></a>x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1000</span>)</span>
-<span id="cb1040-4"><a href="rcpp.html#cb1040-4"></a><span class="kw">microbenchmark</span>(<span class="kw">sum</span>(x), <span class="kw">sumC</span>(x), <span class="kw">sumR</span>(x))</span></code></pre></div>
+<div class="sourceCode" id="cb1039"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1039-1"><a href="rcpp.html#cb1039-1"></a><span class="kw">library</span>(microbenchmark)</span>
+<span id="cb1039-2"><a href="rcpp.html#cb1039-2"></a></span>
+<span id="cb1039-3"><a href="rcpp.html#cb1039-3"></a>x &lt;-<span class="st"> </span><span class="kw">runif</span>(<span class="dv">1000</span>)</span>
+<span id="cb1039-4"><a href="rcpp.html#cb1039-4"></a><span class="kw">microbenchmark</span>(<span class="kw">sum</span>(x), <span class="kw">sumC</span>(x), <span class="kw">sumR</span>(x))</span></code></pre></div>
 <pre><code>Unit: microseconds
     expr    min     lq   mean median     uq      max
-  sum(x)  1.003  1.039  1.331  1.081  1.376    3.151
- sumC(x)  2.371  2.490 15.446  2.591  3.482 1233.033
- sumR(x) 37.328 37.536 75.927 38.036 55.454 2903.943
+  sum(x)  1.027  1.058  1.162  1.075  1.099    7.641
+ sumC(x)  2.352  2.458 12.685  2.510  2.601  999.347
+ sumR(x) 37.321 37.468 70.329 37.580 37.971 3170.582
  neval cld
    100  a 
-   100  a 
+   100  ab
    100   b</code></pre>
 <p>The <code>microbenchmark()</code> function runs each function it’s passed 100 times and provides summary statistics for the multiple execution times. This is a very handy tool for testing various function implementations (as illustrated above).</p>
 </div>
 <div id="vector-input-and-vector-output" class="section level3" number="12.4.3">
-<h3 number="12.4.3"><span class="header-section-number">12.4.3</span> Vector input and vector output</h3>
+<h3><span class="header-section-number">12.4.3</span> Vector input and vector output</h3>
 <p>Next we’ll create a function that computes the Euclidean distance between a value and a vector of values:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1042-1"><a href="rcpp.html#cb1042-1"></a>pdistR &lt;-<span class="st"> </span><span class="cf">function</span>(x, ys) {</span>
-<span id="cb1042-2"><a href="rcpp.html#cb1042-2"></a>    <span class="kw">sqrt</span>((x <span class="op">-</span><span class="st"> </span>ys)<span class="op">^</span><span class="dv">2</span>)</span>
-<span id="cb1042-3"><a href="rcpp.html#cb1042-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1041"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1041-1"><a href="rcpp.html#cb1041-1"></a>pdistR &lt;-<span class="st"> </span><span class="cf">function</span>(x, ys) {</span>
+<span id="cb1041-2"><a href="rcpp.html#cb1041-2"></a>    <span class="kw">sqrt</span>((x <span class="op">-</span><span class="st"> </span>ys)<span class="op">^</span><span class="dv">2</span>)</span>
+<span id="cb1041-3"><a href="rcpp.html#cb1041-3"></a>}</span></code></pre></div>
 <p>It’s not obvious that we want <code>x</code> to be a scalar from the function definition. We’d need to make that clear in the documentation. That’s not a problem in the C++ version because we have to be explicit about types:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1043-1"><a href="rcpp.html#cb1043-1"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
-<span id="cb1043-2"><a href="rcpp.html#cb1043-2"></a><span class="st">  NumericVector pdistC(double x, NumericVector ys) {</span></span>
-<span id="cb1043-3"><a href="rcpp.html#cb1043-3"></a><span class="st">    int n = ys.size();</span></span>
-<span id="cb1043-4"><a href="rcpp.html#cb1043-4"></a><span class="st">    NumericVector out(n);</span></span>
-<span id="cb1043-5"><a href="rcpp.html#cb1043-5"></a></span>
-<span id="cb1043-6"><a href="rcpp.html#cb1043-6"></a><span class="st">    for(int i = 0; i &lt; n; i++) {</span></span>
-<span id="cb1043-7"><a href="rcpp.html#cb1043-7"></a><span class="st">      out[i] = sqrt(pow(ys[i] - x, 2.0));</span></span>
-<span id="cb1043-8"><a href="rcpp.html#cb1043-8"></a><span class="st">    }</span></span>
-<span id="cb1043-9"><a href="rcpp.html#cb1043-9"></a><span class="st">    return out;</span></span>
-<span id="cb1043-10"><a href="rcpp.html#cb1043-10"></a><span class="st">  }&quot;</span></span>
-<span id="cb1043-11"><a href="rcpp.html#cb1043-11"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1042"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1042-1"><a href="rcpp.html#cb1042-1"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
+<span id="cb1042-2"><a href="rcpp.html#cb1042-2"></a><span class="st">  NumericVector pdistC(double x, NumericVector ys) {</span></span>
+<span id="cb1042-3"><a href="rcpp.html#cb1042-3"></a><span class="st">    int n = ys.size();</span></span>
+<span id="cb1042-4"><a href="rcpp.html#cb1042-4"></a><span class="st">    NumericVector out(n);</span></span>
+<span id="cb1042-5"><a href="rcpp.html#cb1042-5"></a></span>
+<span id="cb1042-6"><a href="rcpp.html#cb1042-6"></a><span class="st">    for(int i = 0; i &lt; n; i++) {</span></span>
+<span id="cb1042-7"><a href="rcpp.html#cb1042-7"></a><span class="st">      out[i] = sqrt(pow(ys[i] - x, 2.0));</span></span>
+<span id="cb1042-8"><a href="rcpp.html#cb1042-8"></a><span class="st">    }</span></span>
+<span id="cb1042-9"><a href="rcpp.html#cb1042-9"></a><span class="st">    return out;</span></span>
+<span id="cb1042-10"><a href="rcpp.html#cb1042-10"></a><span class="st">  }&quot;</span></span>
+<span id="cb1042-11"><a href="rcpp.html#cb1042-11"></a>)</span></code></pre></div>
 <p>This function introduces only a few new concepts:</p>
 <ul>
 <li>We create a new numeric vector of length n with a constructor: <code>NumericVector out(n)</code>. This and similar vector and matrix constrictors initialize the elements with zeros. Another useful way of making a vector is to copy an existing one: <code>NumericVector zs = clone(ys)</code>.</li>
@@ -712,30 +705,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Note that because the R version is fully vectorized, it’s already going to be fast. On my computer, it takes around 8 ms with a 1 million element y vector. The C++ function is twice as fast, <span class="math inline">\(\sim\)</span> 4 ms, but assuming it took you 10 minutes to write the C++ function, you’d need to run it <span class="math inline">\(\sim\)</span> 150,000 times to make rewriting worthwhile :-) The reason why the C++ function is faster is subtle, and relates to memory management. The R version needs to create an intermediate vector the same length as <code>y(x - ys)</code>, and allocating memory is an expensive operation. The C++ function avoids this overhead because it uses an intermediate scalar.</p>
 </div>
 <div id="matrix-input-and-vector-output" class="section level3" number="12.4.4">
-<h3 number="12.4.4"><span class="header-section-number">12.4.4</span> Matrix input and vector output</h3>
+<h3><span class="header-section-number">12.4.4</span> Matrix input and vector output</h3>
 <p>Each vector type has a matrix equivalent: <code>NumericMatrix</code>, <code>IntegerMatrix</code>, <code>CharacterMatrix</code>, and <code>LogicalMatrix</code>. Using them is straightforward. For example, we could create a function that reproduces <code>rowSums()</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1044-1"><a href="rcpp.html#cb1044-1"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
-<span id="cb1044-2"><a href="rcpp.html#cb1044-2"></a><span class="st">  NumericVector rowSumsC(NumericMatrix x) {</span></span>
-<span id="cb1044-3"><a href="rcpp.html#cb1044-3"></a><span class="st">    int nrow = x.nrow(), ncol = x.ncol();</span></span>
-<span id="cb1044-4"><a href="rcpp.html#cb1044-4"></a><span class="st">    NumericVector out(nrow);</span></span>
-<span id="cb1044-5"><a href="rcpp.html#cb1044-5"></a></span>
-<span id="cb1044-6"><a href="rcpp.html#cb1044-6"></a><span class="st">    for (int i = 0; i &lt; nrow; i++) {</span></span>
-<span id="cb1044-7"><a href="rcpp.html#cb1044-7"></a><span class="st">      double total = 0;</span></span>
-<span id="cb1044-8"><a href="rcpp.html#cb1044-8"></a><span class="st">      for (int j = 0; j &lt; ncol; j++) {</span></span>
-<span id="cb1044-9"><a href="rcpp.html#cb1044-9"></a><span class="st">        total += x(i, j);</span></span>
-<span id="cb1044-10"><a href="rcpp.html#cb1044-10"></a><span class="st">      }</span></span>
-<span id="cb1044-11"><a href="rcpp.html#cb1044-11"></a><span class="st">      out[i] = total;</span></span>
-<span id="cb1044-12"><a href="rcpp.html#cb1044-12"></a><span class="st">    }</span></span>
-<span id="cb1044-13"><a href="rcpp.html#cb1044-13"></a><span class="st">    return out;</span></span>
-<span id="cb1044-14"><a href="rcpp.html#cb1044-14"></a><span class="st">  }&quot;</span></span>
-<span id="cb1044-15"><a href="rcpp.html#cb1044-15"></a>)</span>
-<span id="cb1044-16"><a href="rcpp.html#cb1044-16"></a></span>
-<span id="cb1044-17"><a href="rcpp.html#cb1044-17"></a>x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">sample</span>(<span class="dv">100</span>), <span class="dv">10</span>)</span>
-<span id="cb1044-18"><a href="rcpp.html#cb1044-18"></a></span>
-<span id="cb1044-19"><a href="rcpp.html#cb1044-19"></a><span class="kw">rowSums</span>(x)</span></code></pre></div>
-<pre><code> [1] 385 520 311 484 419 648 513 743 600 427</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1046-1"><a href="rcpp.html#cb1046-1"></a><span class="kw">rowSumsC</span>(x)</span></code></pre></div>
-<pre><code> [1] 385 520 311 484 419 648 513 743 600 427</code></pre>
+<div class="sourceCode" id="cb1043"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1043-1"><a href="rcpp.html#cb1043-1"></a><span class="kw">cppFunction</span>(<span class="st">&quot;</span></span>
+<span id="cb1043-2"><a href="rcpp.html#cb1043-2"></a><span class="st">  NumericVector rowSumsC(NumericMatrix x) {</span></span>
+<span id="cb1043-3"><a href="rcpp.html#cb1043-3"></a><span class="st">    int nrow = x.nrow(), ncol = x.ncol();</span></span>
+<span id="cb1043-4"><a href="rcpp.html#cb1043-4"></a><span class="st">    NumericVector out(nrow);</span></span>
+<span id="cb1043-5"><a href="rcpp.html#cb1043-5"></a></span>
+<span id="cb1043-6"><a href="rcpp.html#cb1043-6"></a><span class="st">    for (int i = 0; i &lt; nrow; i++) {</span></span>
+<span id="cb1043-7"><a href="rcpp.html#cb1043-7"></a><span class="st">      double total = 0;</span></span>
+<span id="cb1043-8"><a href="rcpp.html#cb1043-8"></a><span class="st">      for (int j = 0; j &lt; ncol; j++) {</span></span>
+<span id="cb1043-9"><a href="rcpp.html#cb1043-9"></a><span class="st">        total += x(i, j);</span></span>
+<span id="cb1043-10"><a href="rcpp.html#cb1043-10"></a><span class="st">      }</span></span>
+<span id="cb1043-11"><a href="rcpp.html#cb1043-11"></a><span class="st">      out[i] = total;</span></span>
+<span id="cb1043-12"><a href="rcpp.html#cb1043-12"></a><span class="st">    }</span></span>
+<span id="cb1043-13"><a href="rcpp.html#cb1043-13"></a><span class="st">    return out;</span></span>
+<span id="cb1043-14"><a href="rcpp.html#cb1043-14"></a><span class="st">  }&quot;</span></span>
+<span id="cb1043-15"><a href="rcpp.html#cb1043-15"></a>)</span>
+<span id="cb1043-16"><a href="rcpp.html#cb1043-16"></a></span>
+<span id="cb1043-17"><a href="rcpp.html#cb1043-17"></a>x &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">sample</span>(<span class="dv">100</span>), <span class="dv">10</span>)</span>
+<span id="cb1043-18"><a href="rcpp.html#cb1043-18"></a></span>
+<span id="cb1043-19"><a href="rcpp.html#cb1043-19"></a><span class="kw">rowSums</span>(x)</span></code></pre></div>
+<pre><code> [1] 603 548 514 472 333 564 520 461 566 469</code></pre>
+<div class="sourceCode" id="cb1045"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1045-1"><a href="rcpp.html#cb1045-1"></a><span class="kw">rowSumsC</span>(x)</span></code></pre></div>
+<pre><code> [1] 603 548 514 472 333 564 520 461 566 469</code></pre>
 <p>Let’s look at the main differences:</p>
 <ul>
 <li>In C++, you subset a matrix with <code>()</code>, not <code>[]</code>.</li>
@@ -743,15 +736,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 <div id="matrix-input-and-matrix-output" class="section level3" number="12.4.5">
-<h3 number="12.4.5"><span class="header-section-number">12.4.5</span> Matrix input and matrix output</h3>
+<h3><span class="header-section-number">12.4.5</span> Matrix input and matrix output</h3>
 <p>See the Rcpp exercise.</p>
 </div>
 </div>
 <div id="exercises-9" class="section level2" number="12.5">
-<h2 number="12.5"><span class="header-section-number">12.5</span> Exercises</h2>
+<h2><span class="header-section-number">12.5</span> Exercises</h2>
 <p><strong>Exercise Rcpp</strong> Learning objectives: practice using <code>Rcpp</code> to run a C++ function through R; use <code>microbenchmark()</code> to compare function performance.</p>
 
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="56">
+<li id="fn56"><p>You do not need prior C++ experience to complete this chapter and corresponding exercises, but we are hoping you learn a little C++ syntax along the way!<a href="rcpp.html#fnref56" class="footnote-back">↩︎</a></p></li>
+<li id="fn57"><p>For a collection of “Hello World” programs in 400+ programming languages, see <a href="https://helloworldcollection.github.io/">here</a>.<a href="rcpp.html#fnref57" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
@@ -764,45 +764,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 <script src="libs/gitbook/js/app.min.js"></script>
 <script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/clipboard.min.js"></script>
 <script src="libs/gitbook/js/plugin-search.js"></script>
 <script src="libs/gitbook/js/plugin-sharing.js"></script>
 <script src="libs/gitbook/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
-"facebook": true,
-"twitter": true,
-"google": false,
+"facebook": false,
+"twitter": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": {},
+"google": false
 },
 "fontsettings": {
 "theme": "white",
 "family": "sans",
 "size": 2
 },
-"edit": null,
+"edit": {
+"link": null,
+"text": null
+},
 "history": {
 "link": null,
 "text": null
 },
-"download": ["bookdown.pdf", "bookdown.epub"],
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
 "toc": {
-"collapse": "subsection",
-"scroll_highlight": true
-},
-"toolbar": {
-"position": "fixed"
-},
-"search": true,
-"info": true
+"collapse": "none"
+}
 });
 });
 </script>
@@ -814,8 +817,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

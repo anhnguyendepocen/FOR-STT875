@@ -331,7 +331,7 @@ m <- leaflet() %>%
       addTiles() %>%  # Add default OpenStreetMap map tiles
       addMarkers(lng=-84.482004, lat=42.727516, 
                  popup="<b>Here I am!</b>") # Add a clickable marker
-m  # Print the map
+m      # Print the map
 ```
 
 There are a couple things to note in the code. First, we use the pipe operator `%>%` just like in `dplyr` functions. Second, the `popup` argument in `addMarkers()` takes standard HTML and clicking on the marker makes the text popup. Third, the html version of this text provides the full interactive, dynamic map, so we encourage you to read and interact with the html version of this textbook for this section. The PDF document will simply display a static version of this map and will not do justice to how awesome `leaflet` truly is!
