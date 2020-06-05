@@ -1,0 +1,2 @@
+"0","Weekly.train <- subset(Weekly, Year < 2009)"
+"0","Weekly.test <- subset(Weekly, Year >= 2009)"

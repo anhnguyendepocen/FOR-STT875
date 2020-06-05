@@ -1,0 +1,193 @@
+---
+title: "FOR/STT 875, Exercise 6"
+html_document: default
+---
+
+## Learning objectives
+  + Practice using `ggplot2` functions
+  + Summarize variables using graphics
+  + Introduce `ggplot2` facets
+  
+## Overview and deliverables
+Write an R script to recreate the eight figures in the [TODO Section](#todo).
+
+## Submission instructions
+Upload your exercise_6.R script to the Exercise 6 D2L dropbox. 
+
+## Grading
+You will receive full credit if your R script: 1) runs without error; 2) closely recreates the eight figures in the [TODO Section](#todo); and 3) is neatly formatted. 
+
+## Getting started
+Set some global options to make the R code printed in the html output look nice.
+
+```{r global_options}
+knitr::opts_chunk$set(comment = NA)
+```
+
+In this exercise we practice using `ggplot2` functions for creating graphics. Some of what you'll be doing is not covered explicitly in the book, so you will probably find the `ggplot2` help at (http://docs.ggplot2.org/current/) to be useful, as well as other referenced provided in Chapter 5. Of course Google is also quite helpful!
+
+We'll again use the gapminder data created by Jenny Bryan. To read these data into R and remind yourself of the structure use
+
+```{r, cache = TRUE}
+gapminder <- read.delim("http://blue.for.msu.edu/FOR875/data/gapminder.tsv", header = TRUE)
+str(gapminder)
+```
+
+##Scatter Plots
+Our main focus will be on scatter plots, although other types of graphical displays such as histograms and box plots will also make an appearance. In some cases the R code will be provided for you. In others the finished graphic will be provided, and your job will be to determine how to create that graphic.
+
+First, we draw a simple scatter plot of life expectancy versus GDP. In this first code chunk we'll need to load the `ggplot2` library, since it's not loaded by default in R.
+
+```{r}
+library(ggplot2)
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+```
+
+The form of the scatter plot suggests that a log transformation might be helpful. One possibility is to include the transformation in the initial `aes` specification:
+
+```{r}
+ggplot(data = gapminder, aes(x = log10(gdpPercap), y = lifeExp)) +
+  geom_point()
+```
+
+That's OK, but the scale on the x axis is now in "log" units. It might be better to use the original units, which we do next. 
+
+```{r}
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() + 
+  scale_x_log10()
+```
+
+  An alert viewer of the graph will notice that the distance between 1000 and 10000 is the same as the distance between 10000 and 100000 and realize that the percapita GDP has been log scaled. But it doesn't hurt to indicate this explicitly by changing the label on the x axis. As with many things in R (and in life) there are several ways to do this. 
+
+```{r}
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() + 
+  scale_x_log10(name = "per capita GDP (log10 scaled)")
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() + 
+  scale_x_log10() + 
+  xlab("per capita GDP (log10 scaled)")
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() + 
+  scale_x_log10() + 
+  labs(x = "per capita GDP (log10 scaled)")
+```
+
+All are fine ways to change the x axis label. Let's use the third method, also change the y axis label, and save this part of the graphic specification so we don't have to keep retyping it.
+
+```{r}
+p <- ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + 
+  scale_x_log10() + 
+  labs(x = "per capita GDP (log10 scaled)", y = "life expectancy")
+p + geom_point()
+```
+
+##TODO
+###Life expectancy and GDP
+Using `p` as a starting point, produce a scatter plot similar to the ones we have created, but with the countries from each of the five continents colored differently such that your graphic looks like this:
+
+```{r p-col}
+p + geom_point(aes(color = continent)) + labs(title = "TODO 6.1: plot 1")
+```
+
+Add a least squares line to the scatter plot. Here is what the graphic should look like:
+
+```{r p-col-lm}
+p + geom_point(size=1, aes(color = continent)) + stat_smooth(method = lm, se = FALSE) + labs(title = "TODO 6.2: plot 2")
+```
+
+The least squares line is not very visible. Make it wider. Also change its color to green. Here is what the graphic should look like:
+
+```{r p-col-lm-grn}
+p + geom_point(aes(color = continent)) + stat_smooth(method = lm, se = FALSE, lwd = 2, color = "green") + labs(title = "TODO 6.3: plot 3")
+```
+
+Instead of one least squares line summarizing all the countries, include separate least squares lines for each continent. Here is what the graphic should look like:
+
+```{r p-col-lm-grn-cont}
+p + geom_point(aes(color = continent)) + stat_smooth(method = lm, se = FALSE, aes(color = continent), lwd = 1.5) + labs(title = "TODO 6.4: plot 4")
+```
+
+Rather than least squares LINES, include a separate smoother for each continent. (Hint: You've been using `method = lm`. Change this to `method = loess`.) Here is what the graphic should look like:
+
+```{r p-col-sm-grn-cont}
+p + geom_point(aes(color = continent)) + stat_smooth(method = loess, se = FALSE, aes(color = continent), lwd = 1.5) + labs(title = "TODO 6.5: plot 5")
+```
+
+###Country trends over time
+So far the focus has been on life expectancy versus per capita GDP. Next we investigate how life expectancy changes over time, and limit our attention to one or a few countries. First, here is the graphic for Rwanda (do you recall what happened in Rwanda in the early to mid 1990s).
+
+```{r}
+ggplot(data = subset(gapminder, country == "Rwanda"), aes(x = year, y = lifeExp)) + geom_line() + labs(title = "TODO 6.6: plot 6")
+```
+
+Probably adding the actual points being connected by the line segments would add clarity.
+
+```{r}
+ggplot(data = subset(gapminder, country == "Rwanda"), aes(x = year, y = lifeExp)) + geom_line() + geom_point() + labs(title = "TODO 6.7: plot 7")
+```
+
+Choose five countries that you find interesting. Create a graphic similar to the one just created for Rwanda, but including the five countries of interest. Here is an example where I have chosen the five of interest to me.
+
+```{r, tidy = FALSE}
+five_countries <- c("China", "United States", "Finland", "Germany", "Norway")
+ggplot(data = subset(gapminder, country %in% five_countries), aes(x = year, y = lifeExp, color = country)) + 
+  geom_line() + 
+  geom_point() + 
+  labs(title = "TODO 6.8: plot 8")
+```
+
+## Histograms, box plots, and facets
+Consider the distribution of life expectancy. Here is a histogram of life expectancy.
+
+```{r}
+ggplot(data = gapminder, aes(x = lifeExp)) + geom_histogram()
+```
+
+By itself this doesn't provide much information. One way to increase the usefulness is to plot separate histograms by continent. In `ggplot2`, facets provide a simple way to do this. There are two different types of facet specifications, `facet_grid` and `facet_wrap`. The faceting specification is `rows ~ columns`, and a dot `.` indicates that there should be no faceting on that dimension. A few examples will make this more clear. 
+```{r}
+ggplot(data = subset(gapminder, year %in% c(1952, 1972) & continent != "Oceania"), aes(x = lifeExp)) + 
+  geom_histogram(aes(fill = continent)) +
+  facet_wrap(continent ~ year)
+ggplot(data = subset(gapminder, year %in% c(1952, 1972) & continent != "Oceania"), aes(x = lifeExp)) +
+  geom_histogram(aes(fill = continent)) +
+  facet_wrap(year ~ continent)
+ggplot(data = subset(gapminder, year %in% c(1952, 1972) & continent != "Oceania"), aes(x = lifeExp)) + 
+  geom_histogram(aes(fill = continent)) + 
+  facet_grid(continent ~ year)
+ggplot(data = subset(gapminder, year %in% c(1952, 1972) & continent != "Oceania"), aes(x = lifeExp)) + 
+  geom_histogram(aes(fill = continent)) + 
+  facet_grid(year ~ continent)
+```
+
+Create a graphic with separate histograms of life expectancy for the four continents excluding `Oceania`, with the histograms arranged on top of one another. Use all years in the data set. The graphic should look like this:
+
+```{r}
+ggplot(data = subset(gapminder, continent != "Oceania"), aes(x = lifeExp)) + geom_histogram(aes(fill = continent)) + facet_grid(continent ~ .)
+```
+
+Side by side boxplots would help us understand the changes in life expectancy over time. To create the following boxplot you'll need to specify `year` as the `x` variable. But this isn't enough. You also need to explicitly tell `geom_boxplot` that year is a grouping variable, i.e., via `group` argument.
+
+```{r}
+ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_boxplot(aes(group = year))
+```
+
+********
+
+Congratulations! You've reached the end of Exercise 6.
+
+###Questions?
+
+If you have any lingering questions about the material in this document or in the corresponding chapter, put them at the end of your R Script.
+
+###Give us your feedback!
+
+Place answers at end of R Script.
+
+1.  How do you feel you're doing in this class?
+
+2.  What could be done to improve your learning experience?
+
+*********

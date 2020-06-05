@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1577814442266.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3083532280",
+    "id" : "F65EE530",
+    "lastKnownWriteTime" : 1577814472,
+    "last_content_update" : 1577814472704,
+    "path" : "~/Dropbox/teaching/for875/for875-20/textbook/05-graphics-ggplot.Rmd",
+    "project_path" : "05-graphics-ggplot.Rmd",
+    "properties" : {
+        "cursorPosition" : "250,12",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

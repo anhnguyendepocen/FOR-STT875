@@ -1,0 +1,9 @@
+Exercise 6: ggplot2 graphing
+
+Graded out of a total of 8 points. 
+
+1 point for each of the graphics.
+
+Take quarter or half points off depending on the importance of the thing that was missed. 
+
+If something was repeatedly wrong on 3 or more of the graphs, take off 1 point. 

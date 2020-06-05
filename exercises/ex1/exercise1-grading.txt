@@ -1,0 +1,9 @@
+Exercise 1
+
+Six questions, grade out of 10 points. 
+
+One point for each question, minor errors can take off half a point since it's the first exercise
+
+3 points for proper format.
+
+1 point for everything running without error. 

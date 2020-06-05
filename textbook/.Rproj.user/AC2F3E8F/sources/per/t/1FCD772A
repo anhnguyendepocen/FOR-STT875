@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1577815012094.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2440797484",
+    "id" : "1FCD772A",
+    "lastKnownWriteTime" : 1590790962,
+    "last_content_update" : 1590790962,
+    "path" : "~/Dropbox/teaching/for875/for875-20/textbook/14-signalProcess.Rmd",
+    "project_path" : "14-signalProcess.Rmd",
+    "properties" : {
+        "cursorPosition" : "7,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 14,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

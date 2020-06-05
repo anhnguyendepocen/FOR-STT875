@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1558793959508.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "888400676",
+    "id" : "1CA749B7",
+    "lastKnownWriteTime" : 1558654336,
+    "last_content_update" : 1558654336,
+    "path" : "~/Dropbox/teaching/for875/for875-19/bookdown-crc-master/05-graphics-ggplot.Rmd",
+    "project_path" : "05-graphics-ggplot.Rmd",
+    "properties" : {
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

@@ -1,0 +1,8 @@
+"0","con <- dbConnect(MonetDB.R::MonetDBLite())
+"
+"2","Registered S3 method overwritten by 'dplyr':
+  method           from
+  print.rowwise_df     
+"
+"2","Error: 'monetdb_embedded_startup' is not an exported object from 'namespace:MonetDBLite'
+"

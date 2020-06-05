@@ -1,0 +1,167 @@
+# Look into the cld function 
+
+library(dplyr)
+library(lme4)
+library(lmerTest)
+library(emmeans)
+library(multcomp)
+
+# Read in the data set
+dat <- read.csv("~/Downloads/brookeDat.csv")
+# Manipulating the data set
+dat <- dat %>% dplyr::select(-NH4SME) %>% 
+  mutate(Year = factor(Year)) %>% 
+  dplyr::select(Compost, Year, EC:ClSME)
+
+n.dep.vars <- ncol(dat) - 2
+
+# Run ANOVA for each group and count up how many significant results there are
+results <- list()
+n.sig.diffs <- 0
+for (i in 1:n.dep.vars) {
+  results[[i]] <- summary(aov(dat[, i + 2] ~ Compost, data = dat))
+  n.sig.diffs <- ifelse(results[[i]][[1]]$`Pr(>F)`[1] < 0.05, n.sig.diffs + 1, n.sig.diffs)
+  names(results)[i] <- names(dat)[i + 2]
+}
+
+# Display the ANOVA tables for each ANOVA test.
+results
+n.sig.diffs
+
+
+## ------------------------------------------------------------------------
+out.bulk.density <- aov(BulkDensity ~ Compost, data = dat)
+summary(out.bulk.density)
+TukeyHSD(out.bulk.density)
+
+## ------------------------------------------------------------------------
+dat %>% 
+  dplyr::group_by(Compost) %>% 
+  dplyr::summarize(mean.vals = mean(BulkDensity), 
+            se.vals = sd(BulkDensity , na.rm = TRUE) / sqrt(n())) %>%
+ggplot(aes(x = Compost, y = mean.vals, color = Compost, shape = Compost)) + 
+  geom_bar(stat = 'identity', aes(fill = Compost)) + 
+  geom_segment(aes(x = Compost, y = mean.vals - se.vals, xend = Compost, yend = mean.vals + se.vals)) + 
+  theme_classic() + 
+  labs(title = 'BulkDensity', y = "Mean Bulk Density")
+
+
+## ------------------------------------------------------------------------
+dat.2 <- read.csv("project2BAnalysis.csv") %>% 
+  mutate(Pile = factor(Pile), 
+         Rep = factor(Rep))
+
+plant.health.vars <- dat.2 %>% dplyr::select(RootRating, Leaves, 
+                                    PlantHeight, DryWt, WetWt 
+                                    )
+out.pca <- prcomp(plant.health.vars,
+                 center = TRUE,
+                 scale. = TRUE) 
+summary(out.pca)
+
+
+## ------------------------------------------------------------------------
+ggbiplot(out.pca, groups = dat.2$Compost, ellipse = TRUE)
+
+
+## ------------------------------------------------------------------------
+dat.2$pc.1 <- out.pca$x[, 1]
+
+out <- lmer(pc.1 ~ Compost + (1|Pile/Rep), data = dat.2)
+
+# Check model assumptions
+plot(out)
+curr.resids <- resid(out)
+qqnorm(curr.resids[-51], pch = 19)
+qqline(curr.resids[-51], col = 'red')
+
+
+## ------------------------------------------------------------------------
+lsmeans <- emmeans(out,"Compost", lmer.df = "satterthwaite")
+#pairwise comparisons between marginal means (default adjustment is Tukey)
+# Note that here we use Satterthwaite's degrees of freedom adjustment to 
+# account for non-constant variance in the model
+pairs(lsmeans)
+cld(lsmeans, by = NULL, Letters = "abcdefg", alpha = .05)
+
+
+## ------------------------------------------------------------------------
+dat.2 %>% 
+  dplyr::group_by(Compost) %>% 
+  dplyr::summarize(mean.vals = mean(pc.1), 
+            se.vals = sd(pc.1) / sqrt(n())) %>%
+ggplot(aes(x = Compost, y = mean.vals, color = Compost, shape = Compost)) + 
+  geom_point() + 
+  geom_segment(aes(x = Compost, y = mean.vals - se.vals, xend = Compost, yend = mean.vals + se.vals)) + 
+  annotate("text", x = 1, y = -0.5, label = 'A') + 
+  annotate("text", x = 2, y = 1.2, label = 'B') + 
+  annotate("text", x = 3, y = 0.35, label = 'B') + 
+  annotate("text", x = 4, y = 0.42, label = 'AB') + 
+  theme_classic() + 
+  geom_hline(yintercept = 0, linetype = 2) + 
+  labs(y = "Mean PC1")
+
+
+## ------------------------------------------------------------------------
+dat.3 <- left_join(dat.2, dat, by = c('Compost', 'Pile'))
+dat.back.reg <- dat.3 %>% 
+  dplyr::select(pc.1, Compost, Pile, Rep, EC, NO3ppmSME, NH4ppmSME, PppmSME, 
+         KppmSME, CappmSME, MgppmSME, pH, NTotal, CN)
+
+
+## ------------------------------------------------------------------------
+cor(dat.back.reg[, -c(1:4)])
+pairs(dat.back.reg[, -c(1:4)], pch = 19)
+
+
+## ------------------------------------------------------------------------
+cov.dat <- dat.back.reg %>% 
+  dplyr::select(EC, NH4ppmSME, PppmSME, pH, NTotal, CN)
+cor(cov.dat)
+pairs(cov.dat, pch = 19)
+
+
+## ------------------------------------------------------------------------
+dat.back.reg <- dat.back.reg %>% 
+  dplyr::select(pc.1, Compost, Pile, Rep, 
+                EC, NH4ppmSME, PppmSME, pH, NTotal, CN)
+model.full <- lmer(pc.1 ~ EC + NH4ppmSME + PppmSME + pH + NTotal +
+                     CN + (1|Pile/Rep), data = dat.back.reg)
+summary(model.full)
+
+
+## ------------------------------------------------------------------------
+model.2 <- lmer(pc.1 ~ EC + PppmSME + pH + NTotal +
+                     CN + (1|Pile/Rep), data = dat.back.reg, 
+                control=lmerControl(optimizer="bobyqa"))
+summary(model.2)
+AIC(model.full, model.2)
+
+
+## ------------------------------------------------------------------------
+model.3 <- lmer(pc.1 ~ EC + pH + NTotal +
+                     CN + (1|Pile/Rep), data = dat.back.reg, 
+                control=lmerControl(optimizer="bobyqa"))
+summary(model.3)
+AIC(model.2, model.3)
+
+
+## ------------------------------------------------------------------------
+model.4 <- lmer(pc.1 ~ pH + NTotal +
+                     CN + (1|Pile/Rep), data = dat.back.reg, 
+                control=lmerControl(optimizer="bobyqa"))
+summary(model.4)
+AIC(model.3, model.4)
+
+
+## ------------------------------------------------------------------------
+model.5 <- lmer(pc.1 ~ NTotal +
+                     CN + (1|Pile/Rep), data = dat.back.reg, 
+                control=lmerControl(optimizer="bobyqa"))
+summary(model.5)
+AIC(model.4, model.5)
+
+
+## ------------------------------------------------------------------------
+summary(model.4)
+

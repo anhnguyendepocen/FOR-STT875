@@ -1,0 +1,12 @@
+"0","list.files(""tempVarSongs"")
+"
+"1","[1]"
+"1"," ""tempAfternoon.wav"""
+"1"," ""tempEvening.wav""  "
+"1"," ""tempMorning.wav""  "
+"1","
+"
+"0","morning <- readWave(""tempVarSongs/tempMorning.wav"")"
+"2","Error in readWave(""tempVarSongs/tempMorning.wav"") : 
+  could not find function ""readWave""
+"

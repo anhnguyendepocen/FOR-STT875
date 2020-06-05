@@ -1,0 +1,32 @@
+[K[A]0;jeffdoser@pop-os: ~/Dropbox/teaching/for875/for875-19/bookdown-crc-master[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/teaching/for875/for875-19/bookdown-crc-master[00m$ 
+]0;jeffdoser@pop-os:~/Dropbox/teaching/for875/for875-19/bookdown-crc-master]7;file://pop-os/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master]0;jeffdoser@pop-os: ~/Dropbox/teaching/for875/for875-19/bookdown-crc-master[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/teaching/for875/for875-19/bookdown-crc-master[00m$ 
+]0;jeffdoser@pop-os:~/Dropbox/teaching/for875/for875-19/bookdown-crc-master]7;file://pop-os/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master]0;jeffdoser@pop-os: ~/Dropbox/teaching/for875/for875-19/bookdown-crc-master[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/teaching/for875/for875-19/bookdown-crc-master[00m$ 
+]0;jeffdoser@pop-os:~/Dropbox/teaching/for875/for875-19/bookdown-crc-master]7;file://pop-os/home/jeffdoser/Dropbox/teaching/for875/for875-19/bookdown-crc-master]0;jeffdoser@pop-os: ~/Dropbox/teaching/for875/for875-19/bookdown-crc-master[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/teaching/for875/for875-19/bookdown-crc-master[00m$ cd
+]0;jeffdoser@pop-os:~]7;file://pop-os/home/jeffdoser]0;jeffdoser@pop-os: ~[01;32mjeffdoser@pop-os[00m:[01;34m~[00m$ cd Dropbox/tea[K[K[Kconferences/envr2018/ee[Kxercise-1a/
+]0;jeffdoser@pop-os:~/Dropbox/conferences/envr2018/exercise-1a]7;file://pop-os/home/jeffdoser/Dropbox/conferences/envr2018/exercise-1a]0;jeffdoser@pop-os: ~/Dropbox/conferences/envr2018/exercise-1a[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/conferences/envr2018/exercise-1a[00m$ ls
+cIDist.cpp     cIDistOMP.R   exercise_1a.html  try-it-out.R
+cIDist.o       [0m[01;32mcIDistOMP.so[0m  exercise_1a.Rmd   workshopNotes.html
+cIDistOMP.cpp  cIDist.R      [01;32mMakevars[0m          workshopNotes.Rmd
+cIDistOMP.o    [01;32mcIDist.so[0m     rIDist.R
+]0;jeffdoser@pop-os:~/Dropbox/conferences/envr2018/exercise-1a]7;file://pop-os/home/jeffdoser/Dropbox/conferences/envr2018/exercise-1a]0;jeffdoser@pop-os: ~/Dropbox/conferences/envr2018/exercise-1a[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/conferences/envr2018/exercise-1a[00m$ R CMD SHLIB cIDi st.cpp
+make: Nothing to be done for 'all'.
+]0;jeffdoser@pop-os:~/Dropbox/conferences/envr2018/exercise-1a]7;file://pop-os/home/jeffdoser/Dropbox/conferences/envr2018/exercise-1a]0;jeffdoser@pop-os: ~/Dropbox/conferences/envr2018/exercise-1a[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/conferences/envr2018/exercise-1a[00m$ clear
+[3J[H[2J]0;jeffdoser@pop-os:~/Dropbox/conferences/envr2018/exercise-1a]7;file://pop-os/home/jeffdoser/Dropbox/conferences/envr2018/exercise-1a]0;jeffdoser@pop-os: ~/Dropbox/conferences/envr2018/exercise-1a[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/conferences/envr2018/exercise-1a[00m$ ls
+cIDist.cpp     cIDistOMP.R   exercise_1a.html  try-it-out.R
+cIDist.o       [0m[01;32mcIDistOMP.so[0m  exercise_1a.Rmd   workshopNotes.html
+cIDistOMP.cpp  cIDist.R      [01;32mMakevars[0m          workshopNotes.Rmd
+cIDistOMP.o    [01;32mcIDist.so[0m     rIDist.R
+]0;jeffdoser@pop-os:~/Dropbox/conferences/envr2018/exercise-1a]7;file://pop-os/home/jeffdoser/Dropbox/conferences/envr2018/exercise-1a]0;jeffdoser@pop-os: ~/Dropbox/conferences/envr2018/exercise-1a[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/conferences/envr2018/exercise-1a[00m$ ma[K[Kls
+cIDist.cpp     cIDistOMP.R   exercise_1a.html  try-it-out.R
+cIDist.o       [0m[01;32mcIDistOMP.so[0m  exercise_1a.Rmd   workshopNotes.html
+cIDistOMP.cpp  cIDist.R      [01;32mMakevars[0m          workshopNotes.Rmd
+cIDistOMP.o    [01;32mcIDist.so[0m     rIDist.R
+]0;jeffdoser@pop-os:~/Dropbox/conferences/envr2018/exercise-1a]7;file://pop-os/home/jeffdoser/Dropbox/conferences/envr2018/exercise-1a]0;jeffdoser@pop-os: ~/Dropbox/conferences/envr2018/exercise-1a[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/conferences/envr2018/exercise-1a[00m$ lsclearR CMD SHLIB cIDisst.cpp
+g++ -std=gnu++11 -I"/usr/share/R/include" -DNDEBUG    -fopenmp -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-VjHo9C/r-base-3.6.0=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c cIDist.cpp -o cIDist.o
+g++ -std=gnu++11 -shared -L/usr/lib/R/lib -Wl,-Bsymbolic-functions -Wl,-z,relro -o cIDist.so cIDist.o -fopenmp -L/usr/lib/R/lib -lR
+]0;jeffdoser@pop-os:~/Dropbox/conferences/envr2018/exercise-1a]7;file://pop-os/home/jeffdoser/Dropbox/conferences/envr2018/exercise-1a]0;jeffdoser@pop-os: ~/Dropbox/conferences/envr2018/exercise-1a[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/conferences/envr2018/exercise-1a[00m$ ls
+cIDist.cpp     cIDistOMP.R   exercise_1a.html  try-it-out.R
+cIDist.o       [0m[01;32mcIDistOMP.so[0m  exercise_1a.Rmd   workshopNotes.html
+cIDistOMP.cpp  cIDist.R      [01;32mMakevars[0m          workshopNotes.Rmd
+cIDistOMP.o    [01;32mcIDist.so[0m     rIDist.R
+[K]0;jeffdoser@pop-os: ~/Dropbox/conferences/envr2018/exercise-1a[01;32mjeffdoser@pop-os[00m:[01;34m~/Dropbox/conferences/envr2018/exercise-1a[00m$ 

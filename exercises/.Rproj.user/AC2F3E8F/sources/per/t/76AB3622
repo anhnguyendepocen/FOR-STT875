@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565976034991.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2170764732",
+    "id" : "76AB3622",
+    "lastKnownWriteTime" : 1560341068,
+    "last_content_update" : 1560341068,
+    "path" : "~/Dropbox/teaching/for875/for875-19/exercises/ex-rcpp/ex_Rcpp_solutions.Rmd",
+    "project_path" : "ex-rcpp/ex_Rcpp_solutions.Rmd",
+    "properties" : {
+        "cursorPosition" : "4,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

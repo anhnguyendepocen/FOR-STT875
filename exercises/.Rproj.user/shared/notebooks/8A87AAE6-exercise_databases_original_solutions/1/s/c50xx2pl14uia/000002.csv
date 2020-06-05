@@ -1,0 +1,7 @@
+"0","dbWriteTable(con, 'baseball', Master)
+"
+"2","Error in .local(conn, name, value, ...) : 
+  Table baseball already exists. Set overwrite=TRUE if you want 
+      to remove the existing table. Set append=TRUE if you would like to add the new data to the 
+      existing table.
+"

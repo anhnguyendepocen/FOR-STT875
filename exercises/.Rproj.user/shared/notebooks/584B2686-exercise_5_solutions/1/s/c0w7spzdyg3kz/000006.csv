@@ -1,0 +1,6 @@
+"0","all.equal(upper.cor.tri, t(lower.cor.tri))
+"
+"1","[1]"
+"1"," TRUE"
+"1","
+"

@@ -1,0 +1,67 @@
+## ----global_options------------------------------------------------------
+knitr::opts_chunk$set(comment = NA, tidy = TRUE)
+
+## ---- message = FALSE----------------------------------------------------
+library(dplyr)
+library(nycflights13)
+
+## ------------------------------------------------------------------------
+flights
+
+## ------------------------------------------------------------------------
+print(flights, n = 20)
+
+## ------------------------------------------------------------------------
+glimpse(flights)
+
+## ------------------------------------------------------------------------
+filter(flights, month == 3 & dest == "DTW")
+
+## ------------------------------------------------------------------------
+##TODO 9.1: January flights to Detroit Metro (DTW) or Chicago O'Hare (ORD)
+
+## ------------------------------------------------------------------------
+slice(flights, c(1, 3, 7, 20))
+
+## ------------------------------------------------------------------------
+arrange(flights, arr_time, carrier)
+
+## ------------------------------------------------------------------------
+#TODO 9.2: arrange flights by distance and then by departure delay, with the sorting being in descending order in both cases
+
+## ------------------------------------------------------------------------
+select(flights, month, origin, dest)
+select(flights, month, origin, destination = dest)
+
+## ------------------------------------------------------------------------
+##TODO 9.4: Select the columns here
+
+## ------------------------------------------------------------------------
+glimpse(mutate(flights,
+  gain = arr_delay - dep_delay,
+  speed = distance / air_time * 60))
+
+## ------------------------------------------------------------------------
+#TODO 9.5: Create the new columns here
+
+## ------------------------------------------------------------------------
+summarise(flights,
+  mean_dep_delay = mean(dep_delay, na.rm = TRUE), mean_arr_delay = mean(arr_delay, na.rm = TRUE))
+
+## ------------------------------------------------------------------------
+flights_by_month <- group_by(flights, month)
+summarize(flights_by_month, number = n(), mean_distance = mean(distance, na.rm = TRUE), mean_arrival_delay = mean(arr_delay, na.rm = TRUE))
+summarize(group_by(flights, month), number = n(), mean_distance = mean(distance, na.rm = TRUE), mean_arrival_delay = mean(arr_delay, na.rm = TRUE))
+group_by(flights, month) %>% summarize(number = n(), mean_distance = mean(distance, na.rm = TRUE), mean_arrival_delay = mean(arr_delay, na.rm = TRUE))
+
+## ------------------------------------------------------------------------
+##Pipe the results directly into ggplot
+library(ggplot2)
+group_by(flights, month) %>% summarize(number = n(), mean_distance = mean(distance, na.rm = TRUE), mean_arrival_delay = mean(arr_delay, na.rm = TRUE)) %>% ggplot(aes(x = month, y = mean_arrival_delay)) + geom_point()
+##Save the results in "delays" and then use ggplot on delays
+delays <- group_by(flights, month) %>% summarize(number = n(), mean_distance = mean(distance, na.rm = TRUE), mean_arrival_delay = mean(arr_delay, na.rm = TRUE))
+ggplot(data = delays, aes(x = month, y = mean_arrival_delay)) + geom_point()
+
+## ------------------------------------------------------------------------
+##TODO 9.6: add code here to answer the query above
+

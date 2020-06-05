@@ -1,0 +1,6 @@
+"0","library(dplyr)"
+"0","battingTable <- tbl(con, ""batting"")"
+"0","baseballTable <- tbl(con, ""baseball"")"
+"0","fieldingTable <- tbl(con, ""fielding"")"
+"0","pitchingTable <- tbl(con, ""pitching"")"
+"0","battingTable"

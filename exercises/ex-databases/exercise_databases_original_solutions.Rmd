@@ -1,0 +1,217 @@
+---
+title: "FOR/STT 875, Exercise 16"
+output: html_document
+---
+
+## Learning objectives
+  + Connect to a `MonetDB` database
+  + Perform simple queries using `dplyr`
+  + Use data from the database in a Shiny app
+  + Learn how to perform changes (insert/delete/update) on a database
+  
+## Overview
+Update the `exercise_databases.Rmd` file.
+
+## Submission instructions
+Upload your `exercise_databases.Rmd` and `exercise_databases.html` to the Databases Exercise D2L dropbox. Also, please, fill in the feedback [questions](#questions) at the end of the exercise. 
+
+## Grading
+You will receive full credit if your R Markdown file: 1) compiles without error; and 2) correctly completes the tasks described by the `# TODO:` code chunks. 
+
+## Getting started
+As always, set some global options to make the R code printed in the html output look nice.
+
+```{r global_options}
+knitr::opts_chunk$set(comment = NA, tidy = TRUE)
+```
+
+In this exercise we will work with `MonetDBLite`, a database that runs inside the R environment and does not require the installation of any external software. It is based off of the free and open-source `MonetDB` and works in a similar manner. One useful aspect of `MonetDBLite` is that it can complete queries extremely fast as a result of its columnar storage structure. We will install the pacakge from the GitHub repository where the package is regularly updated. This requires the use of the `devtools` package, so if need be, install `devtools` using `install.packages("devtools")` before running the following line of code to install `MonetDBLite`.
+
+```{r, eval = FALSE}
+devtools::install_github("hannesmuehleisen/MonetDBLite-R")
+```
+
+In addition, if you have not previously installed the `dbplyr` package, make sure to do that using `install.packages("dbplyr")`. The `dbplyr` package is required for R to work behind the scenes with the database connection. 
+
+We will first create a table in our database containing information on baseball players and statistics. Using `dplyr` and `DBI` we will perform queries on the database to get an idea of what the database holds. We will then use a Shiny web application with the data in the database that allows the user to see what players fit under the given conditions applied by the user. Lastly we will explore different methods of changing the database (update/delete) and watch how this changes the Shiny app. 
+
+## Startup
+
+First we need to set up an area on our hard drive where we can store our database. Set the variable `dbdir` to "myDBDir". This will create a new folder in your current directory called `myDBDir` that will contain the database and the tables we will use. We will then connect to the `MonetDBLite` database using the `dbConnect()` function from the `DBI` package. 
+
+```{r}
+library(MonetDBLite)
+library(DBI)
+dbdir <- "myDBDir2"
+con <- dbConnect(MonetDBLite::MonetDBLite(), dbdir)
+```
+
+```{r, echo = FALSE}
+if(length(dbListTables(con)) != 0) {
+  dbRemoveTable(con, "baseball")
+  dbRemoveTable(con, "batting")
+  dbRemoveTable(con, "pitching")
+  dbRemoveTable(con, "fielding")
+}
+```
+
+## Data Importation
+
+Next, we will copy multiple data frames from the `Lahman` package that contains information on over 10,000 baseball players into our database. 
+
+```{r, echo = FALSE}
+library(Lahman)
+names(Master) <- tolower(names(Master))
+names(Pitching) <- tolower(names(Pitching))
+names(Batting) <- tolower(names(Batting))
+names(Fielding) <- tolower(names(Fielding))
+```
+
+
+```{r}
+library(Lahman)
+dbWriteTable(con, 'baseball', Master)
+dbWriteTable(con, 'batting', Batting)
+dbWriteTable(con, 'pitching', Pitching)
+dbWriteTable(con, 'fielding', Fielding)
+```
+
+Take notice of how the `dbWriteTable` is used to add a new table to an existing database. This is one method of inserting records into a database (among many others). To see what tables our database now holds we run the following command:
+
+```{r}
+dbListTables(con)
+```
+As expected, we see that our database contains our four tables on the baseball data.
+
+## Querying the Database
+
+We can query the database using `dplyr` syntax. First, let's create a reference to all the tables in the database. 
+```{r, message = FALSE}
+library(dplyr)
+battingTable <- tbl(con, "batting")
+baseballTable <- tbl(con, "baseball")
+fieldingTable <- tbl(con, "fielding")
+pitchingTable <- tbl(con, "pitching")
+battingTable
+```
+
+Notice that the `battingTable` data set looks very similar to a tibble. Next, we look at all the variables in the table to get an idea of what we are working with. 
+
+```{r}
+dbListFields(con, "batting")
+```
+So it looks like this table contains different statistics on batters throughout MLB history. Now let's perform some queries. Write a `dplyr` query that obtains the `playerid`, `yearid`, `hr` and `rbi` for all the players that had at least 40 home runs in one season. Order the data set in descending order of home runs.
+
+```{r, tidy = FALSE, warning = FALSE}
+#TODO 16.1: write the dplyr query here
+battingTable %>% 
+  select(playerid, yearid, hr, rbi) %>% 
+  filter(hr >= 40) %>% 
+  arrange(desc(hr))
+```
+
+Notice that the `playerID` field does not give us the actual name of the player (although if you know baseball you could probably figure out who most of these top home run hitters are by their `playerID`). We want to replace the `playerID` field with the player's name. The player's name is stored in the `Baseball` table in our database, so we need to somehow join these two tables. We join the tables using the `inner_join()` function below.
+
+```{r, tidy = FALSE}
+battingTable %>% 
+  inner_join(baseballTable)
+```
+
+Now that we can join the two tables together, use the `inner_join()` function along with other `dplyr` functions to select `namefirst`, `namelast`, `yearid`, `hr`, and `rbi` for all players with at least 40 homeruns. Like in `TODO 16.1`, order the data set in descending order of home runs.  
+
+```{r, tidy = FALSE, warning = FALSE}
+# TODO 16.2: replace playerID with namefirst and namelast using an inner join
+battingTable %>% 
+  inner_join(baseballTable) %>% 
+  select(namefirst, namelast, yearid, hr, rbi) %>% 
+  filter(hr >= 40) %>% 
+  arrange(desc(hr))
+```
+
+Now we have what we want: a list of players that had at least 40 home runs in a season. But wait... We see that three players in the top 10 are Barry Bonds, Mark McGwire, and Sammy Sosa. If you follow baseball, you may know that all three are known for using steroids. Let's remove them from this list. 
+
+We can delete data from our database by using the `dbSendQuery` function and a `SQL` statement. This statement for us would take the following form:
+```{sql, eval = FALSE}
+DELETE FROM tableName
+WHERE playerid IN ('a player id', 'another player id')
+```
+
+Now use the `dbSendQuery` function to remove all records of these players from the `Baseball`, `Batting`, and `Fielding` tables (HINT: the `playerid` for Barry Bonds is `bondsba01`, for Mark McGwire is `mcgwima01`, and for Sammy Sosa is `sosasa01`). 
+
+```{r}
+# TODO 16.3: remove all records of Barry Bonds, Mark McGwire, and Sammy Sosa from the database
+dbSendQuery(con, "DELETE FROM baseball WHERE playerid IN ('bondsba01', 'mcgwima01', 'sosasa01')")
+dbSendQuery(con, "DELETE FROM batting WHERE playerid IN ('bondsba01', 'mcgwima01', 'sosasa01')")
+dbSendQuery(con, "DELETE FROM fielding WHERE playerid IN ('bondsba01', 'mcgwima01', 'sosasa01')")
+```
+
+Now run the query finding the top home run hitters in the database and you will see that these steroid users are no longer listed (of course if you did this right, this bumps another steroid user, Alex Rodriguez, into the top 10, but we will just ignore this for now). 
+
+```{r, tidy = FALSE, warning = FALSE}
+#TODO 16.4: rerun the query listing those players with greater than 40 home runs
+battingTable %>% 
+  inner_join(baseballTable) %>% 
+  select(namefirst, namelast, yearid, hr, rbi) %>% 
+  filter(hr >= 40) %>% 
+  arrange(desc(hr))
+```
+
+## Working with a Shiny App
+
+Now we will update data used in a Shiny App and see the changes that occur in the app (you don't need to have gone through the Shiny chapter to do this). Open and look through the `db_app.R` file.  This file produces a simple user interface that allows the user to set restrictions on a few statistics of the baseball players, and then submit this to perform a query on the database and return the players that fulfill those requirements. No need to fully understand how this works, but if you previously completed the Shiny Chapter then perhaps going through this code will be a good refresher for you.
+
+It is important to note here that MonetDBLite allows multiple concurrent connections to signle database, but does not allow more than one concurrent embedded server session. This could lead to some problems when you are working on this part of the exercise if you have the Shiny app running at the same time you are trying to make edits in the R Markdown document. If you encounter some weird errors suggesting MonetDB has failed or there is a lock on the database, you can shutdown the server using 
+
+```{r, eval = FALSE}
+dbDisconnect(con, shutdown = TRUE)
+```
+
+or 
+
+```{r, eval = FALSE}
+monetdblite_shutdown()
+```
+
+and then can continue working as usual.
+
+To run the app, press the `Run App` button in the top right of the script window in RStudio. Mess around with the user interface to see exactly how the app works. 
+
+Suppose that you are convinced Alex Rodriquez hit 67 home runs in 2002 and not 57 and you want to change this in the data (this is of course false, but humor me for the time being and assume it's correct). Lets update this using `dplyr` and see the changes that occur in the Shiny app. We will again use SQL syntax to perform this update, much like we did for the previous `DELETE` statement we performed. Our update statement will take the following form:
+
+```{sql, eval = FALSE}
+UPDATE tableName
+SET desiredVariable = desiredValue
+WHERE conditions
+```
+
+Knowing this format, write a query using the `dbSendQuery` statement like before to change the home runs of Alex Rodriguez in 2002 to 67 (HINT: Alex Rodriquez's player id is `rodrial01`.)
+
+```{r}
+#TODO 16.5: perform the update here
+dbSendQuery(con, "UPDATE batting SET hr = 67 WHERE playerid = 'rodrial01' AND yearid = 2002")
+```
+
+Now rerun the Shiny app and see the changes that occur in the right hand side of the panel. Alex Rodriguez now shows up as number 1 on that list. 
+
+********
+
+Congratulations! You've reached the end of Exercise 16.
+
+###Questions?
+
+If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
+
+*Response...*
+
+
+###Give us your feedback!
+
+1.  How do you feel you're doing in this class?
+
+*Response...*
+
+2.  What could be done to improve your learning experience?
+
+*Response...*
+
+*********

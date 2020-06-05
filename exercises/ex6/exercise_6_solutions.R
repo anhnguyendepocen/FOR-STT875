@@ -1,0 +1,66 @@
+## ----global_options------------------------------------------------------
+knitr::opts_chunk$set(comment = NA, tidy = TRUE)
+
+## ---- cache = TRUE-------------------------------------------------------
+gapminder <- read.delim("http://blue.for.msu.edu/FOR875/data/gapminder.tsv", header = TRUE)
+str(gapminder)
+
+## ------------------------------------------------------------------------
+library(ggplot2)
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point()
+
+## ------------------------------------------------------------------------
+ggplot(data = gapminder, aes(x = log10(gdpPercap), y = lifeExp)) + geom_point()
+
+## ------------------------------------------------------------------------
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point() + scale_x_log10()
+
+## ------------------------------------------------------------------------
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point() + scale_x_log10(name = "per capita GDP (log10 scaled)")
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point() + scale_x_log10() + xlab("per capita GDP (log10 scaled)")
+ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point() + scale_x_log10() + labs(x = "per capita GDP (log10 scaled)")
+
+## ------------------------------------------------------------------------
+p <- ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +  scale_x_log10() + labs(x = "per capita GDP (log10 scaled)", y = "life expectancy")
+p + geom_point()
+
+## ----p-col---------------------------------------------------------------
+p + geom_point(aes(color = continent)) + labs(title = "TODO 6.1: plot 1")
+
+## ----p-col-lm------------------------------------------------------------
+p + geom_point(size=1, aes(color = continent)) + stat_smooth(method = lm, se = FALSE) + labs(title = "TODO 6.2: plot 2")
+
+## ----p-col-lm-grn--------------------------------------------------------
+p + geom_point(aes(color = continent)) + stat_smooth(method = lm, se = FALSE, lwd = 2, color = "green") + labs(title = "TODO 6.3: plot 3")
+
+## ----p-col-lm-grn-cont---------------------------------------------------
+p + geom_point(aes(color = continent)) + stat_smooth(method = lm, se = FALSE, aes(color = continent), lwd = 1.5) + labs(title = "TODO 6.4: plot 4")
+
+## ----p-col-sm-grn-cont---------------------------------------------------
+p + geom_point(aes(color = continent)) + stat_smooth(method = loess, se = FALSE, aes(color = continent), lwd = 1.5) + labs(title = "TODO 6.5: plot 5")
+
+## ------------------------------------------------------------------------
+ggplot(data = subset(gapminder, country == "Rwanda"), aes(x = year, y = lifeExp)) + geom_line() + labs(title = "TODO 6.6: plot 6")
+
+## ------------------------------------------------------------------------
+ggplot(data = subset(gapminder, country == "Rwanda"), aes(x = year, y = lifeExp)) + geom_line() + geom_point() + labs(title = "TODO 6.7: plot 7")
+
+## ------------------------------------------------------------------------
+five_countries <- c("China", "United States", "Finland", "Germany", "Norway")
+ggplot(data = subset(gapminder, country %in% five_countries), aes(x = year, y = lifeExp, color = country)) + geom_line() + geom_point() + labs(title = "TODO 6.8: plot 8")
+
+## ------------------------------------------------------------------------
+ggplot(data = gapminder, aes(x = lifeExp)) + geom_histogram()
+
+## ------------------------------------------------------------------------
+ggplot(data = subset(gapminder, year %in% c(1952, 1972) & continent != "Oceania"), aes(x = lifeExp)) + geom_histogram(aes(fill = continent)) + facet_wrap(continent ~ year)
+ggplot(data = subset(gapminder, year %in% c(1952, 1972) & continent != "Oceania"), aes(x = lifeExp)) + geom_histogram(aes(fill = continent)) + facet_wrap(year ~ continent)
+ggplot(data = subset(gapminder, year %in% c(1952, 1972) & continent != "Oceania"), aes(x = lifeExp)) + geom_histogram(aes(fill = continent)) + facet_grid(continent ~ year)
+ggplot(data = subset(gapminder, year %in% c(1952, 1972) & continent != "Oceania"), aes(x = lifeExp)) + geom_histogram(aes(fill = continent)) + facet_grid(year ~ continent)
+
+## ------------------------------------------------------------------------
+ggplot(data = subset(gapminder, continent != "Oceania"), aes(x = lifeExp)) + geom_histogram(aes(fill = continent)) + facet_grid(continent ~ .)
+
+## ------------------------------------------------------------------------
+ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_boxplot(aes(group = year))
+

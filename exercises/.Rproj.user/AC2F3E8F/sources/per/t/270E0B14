@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565912319930.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1162811144",
+    "id" : "270E0B14",
+    "lastKnownWriteTime" : 1565716994,
+    "last_content_update" : 1565716994,
+    "path" : "~/Dropbox/teaching/for875/for875-19/exercises/ex-sp/exercise_sp_solutions.Rmd",
+    "project_path" : "ex-sp/exercise_sp_solutions.Rmd",
+    "properties" : {
+        "cursorPosition" : "5,22",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

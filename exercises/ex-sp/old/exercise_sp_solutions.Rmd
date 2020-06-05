@@ -1,0 +1,256 @@
+---
+title: "Day 24 In Class work"
+author: "Andy Finley"
+date: "November 21, 2016"
+output: html_document
+---
+
+```{r global_options, echo=FALSE}
+knitr::opts_chunk$set(comment = NA, tidy = TRUE)
+```
+
+## Spatial data in a nut shell
+Recall, a data structure is a format for organizing and storing data. The structure is designed so that data can be accessed and worked with in specific ways. Statistical software and programming languages have methods (or functions) designed to operate on different kinds of data structures.
+
+This exercise focuses on spatial data structures and some of the R functions that work with these data. Spatial data comprise observations associated with locations. Spatial data are typically organized into **vector** or **raster** data structures. 
+  
+  * Vector data represent features such as discrete points, lines, and polygons. 
+  * Raster data represent surfaces as a rectangular matrix of square cells or pixels. 
+
+Depending on the type of problem that needs to be solved, the type of maps that need to be made, and the data source, either vector or raster, or a combination of the two, are used. Each data structure has strengths and weaknesses in terms of functionality and representation. As you gain more experience working with spatial data, you will be able to determine which structure to use for a particular application.
+
+There is an enormous set of R packages available for working with spatial (and space-time) data. These packages are described in the [**CRAN Task View: Analysis of Spatial Data**](https://CRAN.R-project.org/view=Spatial). The CRAN task view attempts to organize the various packages into categories, e.g., _Handling spatial data_, _Reading and writing spatial data_, _Visualisation_, and _Disease mapping and areal data analysis_, so users can quickly identify package options given their project needs. 
+
+Given our limited time, it is impossible to do even a reasonable survey of the excellent spatial data tools available in R. Rather I would point you to subject texts like Applied Spatial Data Analysis with R by Bivand et al. (2013) available for free via the MSU library system, and numerous on-line tutorials on pretty much any aspect of spatial data analysis with R. These tools make R a full-blown [Geographic Information System](https://en.wikipedia.org/wiki/Geographic_information_system) (GIS) capable of spatial data manipulation and analysis on par with commercial GIS systems such as ESRI's ArcGIS. 
+
+### Coordinate systems and map projections
+One of the first stumbling blocks often encountered when trying to bring together different spatial data is the lack of a common coordinate system. A **coordinate system** is a system that uses one or more numbers, or coordinates, to uniquely determine the position of a point or other geometric element. For spatial data, there are two common coordinate systems:
+
+  1. Spherical coordinate system such as latitude–longitude, often referred to as a **geographic coordinate system**.
+  
+  2. Projected coordinate system based on a map projection which is a systematic transformation of the latitudes and longitudes that aims to minimize distortion that occurs from projecting maps of the earth's spherical surface onto a two-dimensional Cartesian coordinate plane. Projected coordinate systems are sometimes referred to as **map projections**.
+  
+There are numerous map projections, e.g., see partial list [here](https://en.wikipedia.org/wiki/List_of_map_projections). One of the more frustrating parts of working with spatial data, is that it seems like each data source you find offers its data in a different map projection and hence you spend a great deal of time **reprojecting** (i.e., transforming from one projection to another) data into a common coordinate system such that they overlay correctly. 
+
+## Motivating analysis
+Learning objectives:
+
+  * Get some additional practice with `dplyr` functions 
+  * Learn about map projection and reprojecting spatial data to different projections
+  * Build some experience using `leaflet`, `rgdal`, and `sp` packages for spatial data manipulation and visualization
+  
+The [Penobscot Experimental Forest](http://www.nrs.fs.fed.us/ef/locations/me/penobscot/) (PEF) is a long-term experimental forest that is used to understand the effects of silviculture (i.e., science of tending trees) treatments on forest growth and composition. The PEF is comprised of management units (MUs) that receive different harvesting treatments. Within each management unit is a series observation point locations (called forest inventory plots) where forest variables have been measured. 
+
+**Analysis objectives**: Develop maps of forest variable summaries at forest inventory plots and areal management units on the PEF.
+
+### Getting started
+
+Set your working directory (and be sure this Rmd file you're working on is in the working directory). Download the PEF.zip directory from http://blue.for.msu.edu/STT301/data and unzip it into your working directory. Install `downloader`, `dplyr`, `rgdal`, `sp`, and `leaflet`. The code chunk below automates these steps.
+
+```{r}
+#install.packages(c("downloader", "dplyr", "rgdal", "sp", "leaflet"), repos="http://cran.rstudio.com/")
+
+library(downloader)
+
+download("http://blue.for.msu.edu/STT301/data/PEF.zip", destfile="./PEF.zip", mode="wb") 
+unzip("PEF.zip", exdir = ".")
+```
+
+Note, comment out the above code chunk so it doesn't run each time you knit your rmarkdown document.
+
+### Reading in the PEF data
+
+#### PEF management unit polygons
+Because of its prominence in the GIS software world, ESRI's spatial data formats are very common. For vector data ESRI's native format is called a _shapefile_. There are several R packages that read and write shapefiles. The `rgdal` package offers the most versatile functions for spatial data I/O (input/output) and recognizes all common vector and raster formats, including shapefiles. Here we use `rgdal`'s `readOGR()` function to read in the PEF `MU-bounds` polygon shapefile which holds the PEF's management unit boundaries. Note, first I clear out my environment, and load both `rgdal` and `sp`. The `sp` package works hand-in-hand with `rgdal` by defining spatial data structures used to store and manipulate spatial in R. 
+
+```{r}
+rm(list=ls())
+library(leaflet)
+library(rgdal)
+library(sp)
+
+mu <- readOGR("PEF", "MU-bounds")
+```
+Note, a single shapefile data _layer_ (we often refer to spatial data files as layers) comprises at least three separate files with different extensions (take a look into the PEF directory). The `readOGR()` function provides a bit of feedback when called. Above we see that it read the `MU-bounds` shapefile from `PEF` directory and the shapefile had 52 features (i.e., polygons) and 1 field (i.e., field is synonymous with column or variable in the data frame).
+
+You can think of the resulting `mu` object produced by `readOGR()` as a data frame where each row corresponds to a polygon and each column holds information about the polygon. Much of the actual spatial information, e.g., coordinates and projection, is hidden from you in other parts of the data structure, but is available if you ask nicely for it. More specifically, the `mu` object is a `sp` spatial data structure called a `SpatialPolygonsDataFrame` as shown below.
+```{r}
+class(mu)
+```
+
+You can access the data frame associated with the polygons by using the `@data` symbol as shown below. 
+```{r}
+class(mu@data)
+dim(mu@data)
+head(mu@data)
+```
+
+Above, a call to `class()` confirms we have accessed the layer's data frame, `dim()` shows there 52 rows (one row for each polygon) and one column, and `head()` shows the first six values of the column named `UNIT_ID`. The values held in `UNIT_ID` are a unique identifier for each management unit polygon across the PEF and `OUT AREA` identifies polygons that fall outside the PEF management units.
+
+#### PEF inventory plots
+
+Foresters have measured forest variables at a set of locations (i.e., inventory plots) within each management unit. These inventory plots are used to describe forest characteristics within each management unit. These data are held in a csv file within the PEF directory. The following statement reads in these data and displays the resulting data frame's structure.
+
+```{r}
+plots <- read.csv("PEF/PEF-plots.csv")
+str(plots)
+```
+
+In `plots` each row is a forest inventory plot. Columns in `plots` are:
+
+  1. `UNIT_ID` these identify which PEF management unit the plot falls within
+  2. `plot` an identifier that is unique with `UNIT_ID`
+  3. `easting` plot's longitude coordinate in UTM zone 19 (UTM zone 19 is a map projection)
+  4. `northing` plot's latitude coordinate in UTM zone 19
+  5. `biomass.mg.ha` tree biomass in metric ton (per hectare basis)
+  6. `stocking.stems.ha` number of tree (per hectare basis)
+  7. `diameter.class.cm` average tree diameter measured 130 cm up the stem
+  8. `basal.area.m2.ha` total cross-sectional area at 130 cm up the stem (per hectare basis)
+
+
+### Reprojection to geographic coordinate system
+
+In a subsequent step we are going to create maps of the management unit polygons in `mu` and inventory plots in `plots` using the `leaflet` R package. `leaflet` requires spatial data is in a **geographic coordinate system**. Both `mu` and `plots` are in a **map projection** called [Universal Transverse Mercator](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system) (UTM).
+
+The `sp` package's `proj4string()` function can be used to get and set a layer's projection. The code below shows the current projection of `mu`. 
+```{r}
+proj4string(mu)
+```
+The cryptic looking string returned by `proj4string()` is a set of directives understood by the [proj.4 C library](http://proj4.org/), which is in the `sp` R package, and used to map geographic longitude and latitude coordinates into the projected Cartesian coordinates.  
+
+#### Reproject `mu`
+
+We use the `sp` packages `spTranslate()` function to change the projection of a vector data layer. The trick is we need to know the proj.4 string that we want to reproject to (I give you this in the code below). The code below reprojects `mu` from UTM zone 19 to latitude and longitude geographic coordinate system, then checks if the proj.4 string was indeed changed.
+
+```{r}
+mu <- spTransform(mu, CRS("+proj=longlat +datum=WGS84"))
+proj4string(mu)
+```
+
+#### Reproject `plots`
+
+`plots` is currently a data frame with columns `easting` and `northing` used to identify each inventory plot's spatial location in UTM zone 19 map projection. Like `mu` we need to reproject `plots` to latitude and longitude geographic coordinate system. This is most easily done by:
+
+  1. Converting the `plots` data frame to a `sp` spatial data structure called a `SpatialPointsDataFrame`.
+  2. Setting its current projection, i.e., telling the `SpatialPointsDataFrame` what projection the `easting` and `northing` define.
+  3. Reprojecting to the desired projection.
+  
+The code below executes these three steps.
+```{r}
+##1. promoted data frame to a SpatialPointsDataFrame
+coordinates(plots) <- ~easting+northing
+
+##2. set current projection
+proj4string(plots) <- CRS("+proj=utm +zone=19 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0")
+
+##3. reproject to latitude and longitude geographic coordinate system
+plots <- spTransform(plots, proj4string(mu))
+```
+
+A call to `proj4string()` confirms we now have `plots` in the correct projection and one shared by `mu`.
+```{r}
+proj4string(plots)
+```
+
+### Leaflet maps
+Leaflet is one of the most popular open-source JavaScript libraries for interactive maps. As noted on the official [R leaflet website](https://rstudio.github.io/leaflet/), it's used by websites ranging from The New York Times and The Washington Post to GitHub and Flickr, as well as GIS specialists like OpenStreetMap, Mapbox, and CartoDB.
+
+The R leaflet website [https://rstudio.github.io/leaflet](https://rstudio.github.io/leaflet/) is an excellent resource to learn leaflet basics, and should serve as a reference to gain a better understanding of the topics we briefly explore below.
+
+You create a leaflet map using these basic steps:
+
+  1. Create a map by calling `leaflet()`.
+  2. Add a layer to the map by using layer functions such as, `addTiles()`, `addMarkers()`, `addPolygons()`, 'addCircleMarkers()', 'addPolylines()', 'addRasterImage()' and other `add...` functions.
+  3. Repeat step 2 to add more layers to the map.
+  4. Print the map to display it.
+
+Here's a brief example.
+```{r}
+library(leaflet)
+
+m <- leaflet(width = "100%") %>%
+      addTiles() %>%  # Add default OpenStreetMap map tiles
+      addMarkers(lng=-84.482004, lat=42.727516, popup="I see you &#128515;")
+m  # Print the map
+```
+
+Couple things to note here. First we use the pipe operator `%>%` just like in `dplyr` functions. Second the `width = "100%"` in the initial `leaflet()` call is only needed in rmarkdown documents to make the map extend the entire width of the knitted html document. Third the `popup` argument in `addMarkers()` takes standard html (click on the map marker).
+
+As seen in the `leaflet()` call above, the various `add...` functions can take longitude (i.e., `lng`) and latitude (i.e., `lat`) to position the desired object. Alterantivly, these functions can extract the necessary spatial information from a structure such as a `sp` `SpatialPolygonsDataFrame`, `SpatialPointsDataFrame`, or `SpatialLinesDataFrame` when passed to the `data` argument. The code below maps the PEF management units and plots layers, i.e., `mu` and `plots`. I also add a plot popup, that displays the management unit and plot identification, and a satellite image via a `addProviderTiles()` function.
+
+```{r}
+plot.popup <- paste("MU id:", plots$UNIT_ID, "<br>Plot id:", plots$plot, sep="")
+
+m <- leaflet(width = "100%") %>%
+      addProviderTiles("Esri.WorldImagery") %>%
+      addPolygons(data=mu) %>%
+      addCircleMarkers(data=plots, popup=plot.popup)
+m
+```
+
+This is not the most aesthetically pleasing map. The plot markers are too large and the polygons are the same color as the plots. Please improve the readability of this map by:
+
+  1. Reducing the point size, remove circle outlines, and make the `fillOpacity=1`.
+  2. Change the polygon boarder color and remove the polygon fill color.
+  3. Feel free to change anything else to your liking.
+
+```{r}
+##Add your code here.
+```
+
+Many of the arguments in the `add...` functions can take object specific value. I add the following features to the map below:
+
+  1. Circle marker color based on `biomass.mg.ha` value. `leaflet` package's `colorNumeric()` function can be used to assign a color based on values.
+  2. Change circle marker point transparency and size.
+  3. Add a legend for the plot colors.
+  4. Change the polygons look a bit.
+
+
+Take a look at [Color Brewer 2.0](http://colorbrewer2.org/) for some color palette ideas. 
+
+```{r, warning=FALSE}
+biomass <- plots$biomass.mg.ha
+plot.col <- colorNumeric(palette = c("white", "blue"), domain=biomass)
+
+m <- leaflet(width = "100%") %>%
+      addProviderTiles("Esri.WorldImagery") %>%
+      addPolygons(data=mu, weight=2, fillOpacity=0, color="orange") %>%
+      addCircleMarkers(data=plots, color=plot.col(biomass), popup=plot.popup, fillOpacity=1, radius=5) %>% 
+      addLegend("bottomright", pal=plot.col, values=biomass, title=paste("Biomass mg/ha"), opacity = 1)
+m
+
+```
+
+### Spatial joins and final map product
+Foresters collect forest inventory plot data to characterize forest management units. Specifically we treat forest variable measurements taken on inventory plots as a sample from a finite population. In settings like the PEF, we treat management units as strata and pursue a stratified random sampling design. The mean of a forest variable over the plots within a given management unit (i.e., stratum) serves as a point estimate for the given management unit (we can also calculate standard errors and confidence intervals, but will not do so in this exercise).
+
+Your task is to calculate the mean `plots` `biomass.mg.ha` within each management unit, shade the `mu` polygons to match the mean `biomass.mg.ha`, and add a map legend that give the respective color values. This will involve the following steps:
+
+  1. Use `dplyr` to group the `plots` data frame by `UNIT_ID` then calculate mean `biomass.mg.ha` (hint: this will likely involve the `group_by()` and `summarize()` functions, don't forget the use `na.rm=TRUE` in the `mean()` function). Recall, `plots` is a `SpatialPointsDataFrame` and its data frame is accessed using `plots@data`.
+  2. The result from step 1 will need to be merged with `mu`'s data frame. Use the `merge` function with argument `by=UNIT_ID` to add the results from step 1 as new column in `mu@data`.
+  3. Use the `colorNumeric()` function with `addPolygons()` and `addLegend()` to create the desired map.
+
+You can omit the `addCircleMarkers()` from this final map to reduce clutter. Your final map should look something like the map found [here](http://blue.for.msu.edu/STT301/leaflet/day24-map.html).
+
+```{r}
+##Add your code here.
+library(dplyr)
+
+mu.bio <- plots@data %>% group_by(UNIT_ID) %>% summarize(biomass.mu = mean(biomass.mg.ha, na.rm=TRUE))
+
+mu@data <- merge(mu@data, mu.bio, by="UNIT_ID")
+
+biomass <- mu@data$biomass.mu
+col <- colorNumeric(palette = c("white", "blue"), domain=biomass)
+
+m <- leaflet() %>%
+      addProviderTiles("Esri.WorldImagery") %>%
+      addPolygons(data=mu, color=col(biomass), fillOpacity=0.8, stroke=FALSE) %>% 
+      addLegend("bottomright", pal=col, values=biomass, title=paste("Biomass mg/ha"), opacity = 0.8)
+m
+
+```
+
+### Much more
+Again, see the official [R leaflet website](https://rstudio.github.io/leaflet/) to learn about more functionality you can add to your maps, e.g., base maps, turning layers on and off, and integration with `shiny`.
+

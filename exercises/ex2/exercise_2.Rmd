@@ -1,0 +1,29 @@
+---
+title: "FOR/STT 875, Exercise 2"
+#author: "Andy Finley"
+#date: "September 13, 2016"
+output: html_document
+---
+
+## Learning objectives
+  + Practice working within RStudio
+  + Create an R Markdown document and resulting html document in RStudio
+  + Calculate descriptive statistics and graphics 
+
+## Overview
+Create an R Markdown document that recreates the archetype html document available [here](http://blue.for.msu.edu/FOR875/data/exercise_2_archetype.html). Your resulting HTML document should be different from the archetype document in two ways: 
+
+  1. replace my name with your name at the top of the document
+  2. add answers to the four questions in Part 2.
+
+The Exercise 2 video provides some guidance for completing this exercise.
+
+## Submission instructions
+Upload your exercise_2.Rmd and exercise_2.html files to the Exercise 2 D2L dropbox. 
+
+## Grading
+You will receive full credit if the html document produced from your R Markdown document matches the [archetype](http://blue.for.msu.edu/FOR875/data/exercise_2_archetype.html) document (with the two differences noted above).
+
+## Some tips
+Consult the R Markdown [authoring basics](http://rmarkdown.rstudio.com/authoring_basics.html), [R Markdown Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf), and [R Markdown Reference](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf), along with Chapter 3 in the course book.
+

@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1577814447130.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1588165599",
+    "id" : "ADEF0B6B",
+    "lastKnownWriteTime" : 1577814667,
+    "last_content_update" : 1577814667606,
+    "path" : "~/Dropbox/teaching/for875/for875-20/textbook/09-shiny.Rmd",
+    "project_path" : "09-shiny.Rmd",
+    "properties" : {
+        "cursorPosition" : "222,18",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

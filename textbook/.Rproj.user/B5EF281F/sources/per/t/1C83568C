@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565713279191.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2324783871",
+    "id" : "1C83568C",
+    "lastKnownWriteTime" : 1565714047,
+    "last_content_update" : 1565714047633,
+    "path" : "~/Dropbox/teaching/for875/for875-19/exercises/ex-databases/db_app.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "5,12",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

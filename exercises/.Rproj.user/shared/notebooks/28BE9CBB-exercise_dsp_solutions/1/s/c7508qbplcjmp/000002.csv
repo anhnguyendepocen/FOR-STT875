@@ -1,0 +1,4 @@
+"0","# TODO 17.1: write code to play the three sound files within R"
+"0","play(morning, ""aplay"")"
+"2","Playing WAVE '/tmp/RtmpfI3GrK/tuneRtemp.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Stereo
+"

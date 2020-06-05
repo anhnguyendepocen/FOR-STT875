@@ -1,0 +1,178 @@
+---
+title: "FOR/STT 875, Exercise 17"
+output: html_document
+---
+
+## Learning objectives
+  + Download, manipulate, and play audio files using R
+  + Produce spectrograms of audio files
+  + Use acoustic indices in the `soundecology` package to analyze western New York soundscape data
+  
+## Overview
+Update the `exercise_dsp.Rmd` file.
+
+## Submission instructions
+Upload your `exercise_dsp.Rmd` and `exercise_dsp_html` to the Digital Signal Processing Exercise D2L dropbox. Also, please, fill in the feedback [questions](#questions) at the end of the exercise. 
+
+## Grading
+You will receive full credit if your R Markdown file: 1) compiles without error; and 2) correctly completes the tasks described by the `# TODO:` code chunks. 
+
+## Getting started
+As always, set some global options to make the R code printed in the html output look nice.
+
+```{r global_options}
+knitr::opts_chunk$set(comment = NA, tidy = TRUE)
+```
+
+In this exercise we are going to work with soundscape data from western New York. These data were collected in June-August of 2016. We will work with two separate subsets of the data: first we will explore the temporal variation of a soundscape in Avon, New York over the span of a day in early June. Then we will explore the spatial variation of 9 soundscapes across the Genesee River Valley region. 
+
+In this exercise we will use the packages `tuneR` and `seewave`, two packages designed for audio analysis in R that we saw in Chapter 14. We will also utilize the `soundecology` package to work with soundscape data. This package provides numerous functions to compute common indices in the growing field of environmental acoustics (or ecoacoustics). Install the `soundecology` package if you have not already done so. 
+
+## Temporal Variation of a Soundscape
+
+We will explore the daily temporal variation of a soundscape in a small forest plot located in the Avon Driving Park in Avon, New York. This plot is bordered by a stream, soccer fields, and a farm/grassland, which draws in a lot of different species of birds due to the variety of habitats. Three 30 minute recordings were taken at 6:32 AM, 12:11 PM, and 7:37 PM. Let's first get the recordings. For this exercise we are only going to work with 1 minute of these sound files. As we have done in previous exercises, we use the `downloader` package to download the soundscapes and unzip them into a directory. We then read the songs into R. 
+
+```{r}
+library(tuneR)
+library(downloader)
+
+download("http://blue.for.msu.edu/FOR875/data/tempVarSongs.zip", 
+         destfile="./tempVarSongs.zip", mode="wb") 
+
+unzip("tempVarSongs.zip", exdir = ".")
+
+list.files("tempVarSongs")
+
+morning <- readWave("tempVarSongs/tempMorning.wav")
+afternoon <- readWave("tempVarSongs/tempAfternoon.wav")
+evening <- readWave("tempVarSongs/tempEvening.wav")
+morning
+afternoon
+evening
+```
+
+Notice that the sound was recorded in stereo and has a sampling rate of 44.1 kHz (i.e the audio recorder took 44,100 samples per second). Now play the sound files using the `play` function described in Chapter 16 (the exact arguments you give to this function may differ depending on your operating system). NOTE: you should actually listen to the audio when doing this exercise, but we don't want the `play` function to run in the actual R Markdown file as R would play the audio before the file is compiled. This is why the option `eval = FALSE` is included in the below chunk. 
+```{r, eval = FALSE}
+# TODO 17.1: write code to play the three sound files within R
+```
+
+Next, produce the spectrograms for each recording. The simplest way to do this requires the `seewave` package.
+
+```{r}
+# TODO 17.2 Produce the spectrograms for all three sounds
+```
+
+If you do this correctly, you sholud barely see anything in your spectrograms. This is because there is noise in the recordings at low frequencies that is overpowering the biological sounds. Use the `help` function to explore the `spectro` function and determine a way to plot the spectrogram for the morning recording again but only for the frequency values of 2kHz-10kHz. 
+
+```{r}
+# TODO 17.3: Reproduce the morning spectrogram over the frequency range 2kHz - 10kHz.
+```
+
+Now let's use functions in the `soundecology` package to compute acoustic indices for comparing the three recordings. 
+
+The `soundecology` package has a function `multiple_sounds` that computes a specified acoustic index from all the wav files in a directory, and then saves the file to a csv along with some other information about the sound files. We will compute the acoustic diversity index using the `acoustic_diversity` function. The Acoustic Diversity Index (ADI) is a commonly used acoustic index that computes the Shannon Diversity index for different frequency bands. If you are unfamiliar with the Shannon index, it is a commonly used index to represent biological diversity that you can learn more about [here](https://en.wikipedia.org/wiki/Diversity_index#Shannon_index). The ADI computes a form of the Shannon index across 1 kHz frequency bands and then adds up the sum to produce a total value representing the diversity of the soundscape. Don't worry about the specifics for now, just know that the higher the ADI, the more diverse the soundscape. Below we use the `multiple_sounds` function to compute the ADI values for the three songs.
+
+```{r, include = FALSE}
+library(soundecology)
+multiple_sounds(directory = paste(getwd(), "tempVarSongs", sep = "/"), resultfile = "data.csv", 
+                soundindex = "acoustic_diversity", max_freq = 16000)
+```
+
+Now let's read the csv file into R so we can work with the data. We convert `temporalData$FILENAME` into an ordered factor so that we can produce visualizations of the recordings in the desired form (morning then afternoon then evening). 
+```{r}
+temporalData <- read.csv("data.csv", stringsAsFactors = FALSE)
+head(temporalData)
+temporalData$FILENAME <- factor(temporalData$FILENAME, levels = c("tempMorning.wav", "tempAfternoon.wav", 
+                                                                  "tempEvening.wav"), ordered = TRUE)
+```
+
+Notice that each entry has two rows that are identical (this is a result of the sound files being stereo recordings). Change the `temporalData` data frame to include only the odd rows. 
+
+```{r}
+# TODO 17.4: remove the even rows from temporalData
+```
+
+There appears to be some slight differences in the ADI across the sound files. Produce a bar graph using `ggplot2` that shows the variation of the ADI across the three time periods. Only worry about the `LEFT_CHANNEL` values and not the `RIGHT_CHANNEL` values. Make sure your plot looks exactly like the following: 
+
+```{r  out.width = "50%", echo=FALSE, fig.align="center"}
+library(knitr)
+include_graphics("http://blue.for.msu.edu/FOR875/data/adiComparison.png") 
+```
+
+```{r}
+# TODO 17.5: produce a bar plot of the left channel ADI values across the three time periods
+```
+
+Cool, we see some differences between the morning, afternoon, and evening (you would have to get more data and perform statistical tests to see if there is actually a significant difference in these time periods, but that is beyond the scope of this exercise). What we can do is look further into the ADI. Use `?acoustic_diversity` to look up the ADI function and look through the value section. Specifically check out the `left_band_values` object. This object is a "vector of proportion values for each band for the left channel". In other words, this function will give us the amplitude value for each frequency bin, allowing us to understand which frequency band of sound is dominating the soundscape. Let's compare this across the three recordings to see if different frequency bands are dominating the recordings (which would thus tell us the composition of the soundscape changes across the three temporal periods). Compute the ADI manually for the three recordings, explore the structure of the data, perform any necessary manipulations, and then plot the data using `ggplot2`. This is a substantial challenge, so be ready to spend some time manipulating the data. The goal is to produce the graph pictured below. 
+
+Here are some potentially useful (or maybe not useful) hints: 
+
+1. Compute the Acoustic Diversity for each song
+2. Produce a new data frame that has three variables: `values`, `range`, and `time`. For example, the first row in this data frame could have values `0.781950, 1, morning`, respectively. 
+3. Plot using `ggplot` and `geom_bar`. 
+
+
+
+```{r  out.width = "50%", echo=FALSE, fig.align="center"}
+include_graphics("http://blue.for.msu.edu/FOR875/data/adiBandComparison.png") 
+```
+
+```{r, warning = FALSE, message = FALSE, output = FALSE}
+# TODO 17.6: Produce the figure above
+```
+
+## Spatial Variation of Soundscapes in Western New York
+
+**NOTE**: here we are dealing with spatial data, this section requires some of the skills learned in Chapter 8: Spatial data visualization and analysis. Since that is an optional chapter, this final part of the exercise will be optional. 
+
+We will next explore the spatial variation of 9 soundscape recordings across the Genesee River Valley Region in western New York. Here we again use the `downloader` package to download the songs. 
+```{r}
+download("http://blue.for.msu.edu/FOR875/data/spatialVarSongs.zip", 
+         destfile="./spatialVarSongs.zip", mode="wb") 
+
+unzip("spatialVarSongs.zip", exdir = ".")
+
+list.files("spatialVarSongs")
+```
+You will compute the Normalized Difference Soundscape Index, a common index developed right here at MSU that is used to display whether or not a soundscape is dominated by biological sounds (biophony) or human-produced sounds (technophony). The NDSI ranges from -1 (soundscape is composed entirely of technophony) to +1 (soundscape is composed entirely of biological sounds). You goal is to compute the NDSI for all 9 soundscapes and produce a visualization that shows spatially the different recording locations and the values of the NDSI at these locations. This should allow you to see how the NDSI varies across the Genesee Valley Region in this sample of recordings. The goal is to reproduce the following figure (if you want to make the graph even more elaborate, feel free to do that as well):
+
+```{r  out.width = "50%", echo=FALSE, fig.align="center"}
+include_graphics("http://blue.for.msu.edu/FOR875/data/spatialVariationFigure.png") 
+```
+Here is a set of guidelines to follow: 
+
+1. Listen to all the recordings. This will give you a general sense of whether or not a recording is dominated by technophony or biophony.
+2. Use the `sp`, `ggmap`, and `ggrepel` packages.
+3. Again, use the `multiple_sounds` function to compute the `ndsi` for all 9 audio files. 
+4. Read in the `recordingSiteLocations.csv` data, add a column to this containing the NDSI values from the left channel.
+5. Convert the resulting data frame into a spatial data frame.
+6. Assign the coordinate system ("+proj=longlat +datum=WGS84") to the spatial data frame.
+7. Include the code `register_google(key = "AIzaSyBPAwSY5x8vQqlnG-QwiCAWQW12U3CTLZY")` to connect to the class project for working with `ggmap`.
+8. Use `ggmap`, `ggrepel`, and `ggplot2` to produce the desired map. For the location of the map, use "avon, new york"
+
+```{r, warning = FALSE, message = FALSE, output = FALSE}
+# Optional TODO 17.7: Produce the figure above using the provided guidelines
+```
+
+********
+
+Congratulations! You've reached the end of Exercise 17.
+
+###Questions?
+
+If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
+
+*Response...*
+
+
+###Give us your feedback!
+
+1.  How do you feel you're doing in this class?
+
+*Response...*
+
+2.  What could be done to improve your learning experience?
+
+*Response...*
+
+*********

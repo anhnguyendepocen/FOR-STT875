@@ -1,0 +1,13 @@
+Exercise 2: recreate the archetype R Markdown document. 
+
+Grade out of 10 points.
+
+4 questions, one point for each question
+
+1 point for replacing the name at the top of the document with student's name
+
+5 points for general formatting of the RMarkdown document. 
+    - Give three points for generally getting everything the same
+    - Lose one point if more than 5 small mistakes (i.e. missing an indent here or there), 3 medium mistakes (i.e. format of a list is not correct),  or 1 large mistake (i.e. just not doing LaTeX)
+    - 1 point for compiling
+ 

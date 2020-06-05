@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1591299959790.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4087175451",
+    "id" : "DA57AC0F",
+    "lastKnownWriteTime" : 1591300648,
+    "last_content_update" : 1591300648,
+    "path" : "~/Dropbox/scc/brookeComer/brookeComer.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "4,17",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 17,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

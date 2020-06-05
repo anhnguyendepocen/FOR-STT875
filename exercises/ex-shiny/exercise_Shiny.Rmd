@@ -1,0 +1,58 @@
+---
+title: "FOR/STT 875, Shiny Exercise"
+html_document: default
+---
+
+## Learning objectives
+  + Practice updating `ggplot2` plot aesthetics
+  + Modify a Shiny app 
+  + Add an interactive Shiny element
+  
+## Overview and deliverables
+Update the `app.R` files for the Michigan Campsite data.
+
+## Submission instructions
+Upload your updated `app.R` script to the Shiny Exercise D2L dropbox. 
+
+## Grading
+You will receive full credit if your Shiny app: 1) compiles without error; 2) closely recreates the updated Shiny app specifications which result in the improved app posted [here](http://blue.for.msu.edu:443/exercise_12_shiny/); and 3) has neatly formatted code. 
+
+## Getting started
+Review the code for the Michigan Campsites Shiny app from Section 9.4 of the Shiny Chapter 9. For this assignment, you will simply be updating the `app.R` file to complete the `TODO` tasks.
+
+Notice that in the original app, we used three of the data frame rows: `TOTAL_SITE`, `Camp_type`, and `ADA_SITES`. In this exercise, you will be creating a widget that takes in the `DISTRICT` information.
+
+Note, you'll likely need to install the `shiny`, `maps`, and `htmltools` packages.
+
+## TODO
+After completing the tasks below, your Shiny app should look like the one hosted [here](http://blue.for.msu.edu:443/exercise_12_shiny/).
+
+Complete the four following tasks to update the Michigan Campsites shiny app:
+
+  1. Update the map output so the campground marker sizes depend upon the total number of campsites at each location.
+  2. Update the map output so the campground marker colors depend upon the county in which the campground is located.
+  3. Update the HTML bulleted list output so the number of sites is displayed after the campground name.
+  4. Add an additional search parameter of district checkboxes (HINT: use `checkboxGroupInput`). Initially, all districts should be selected.
+
+********
+
+Congratulations! You've reached the end of the Shiny Exercise.
+
+###Questions?
+
+If you have any lingering questions about the material in this document or in the corresponding chapter, add them as comments to the end your R script.
+
+*Response...*
+
+
+###Give us your feedback!
+
+1.  How do you feel you're doing in this class?
+
+*Response...*
+
+2.  What could be done to improve your learning experience?
+
+*Response...*
+
+*********

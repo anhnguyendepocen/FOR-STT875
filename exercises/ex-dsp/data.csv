@@ -1,0 +1,7 @@
+FILENAME,SAMPLINGRATE,BIT,DURATION,CHANNELS,INDEX,MAX_FREQ,DB_THRESHOLD,FREQ_STEPS,LEFT_CHANNEL,RIGHT_CHANNEL
+tempAfternoon.wav,44100,16,60,2,acoustic_diversity,16000,-,1000,2.277086,2.290148 
+tempAfternoon.wav,44100,16,60,2,acoustic_diversity,16000,50,1000,2.277086,2.290148
+tempEvening.wav,44100,16,60,2,acoustic_diversity,16000,-,1000,1.524893,1.536908 
+tempEvening.wav,44100,16,60,2,acoustic_diversity,16000,50,1000,1.524893,1.536908
+tempMorning.wav,44100,16,60,2,acoustic_diversity,16000,-,1000,1.954692,1.972714 
+tempMorning.wav,44100,16,60,2,acoustic_diversity,16000,50,1000,1.954692,1.972714

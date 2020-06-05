@@ -1,0 +1,225 @@
+---
+title: "FOR/STT 875, Classification Exercise"
+output: html_document
+---
+
+## Learning objectives
+  + Explore the logistic regression classification method
+  + Apply the kNN classification method
+  + Create confusion matrices to compare classification methods
+  + Plot classified data
+  
+
+## Overview
+Modify this R Markdown file by filling in the code needed to answer the questions.
+
+## Submission instructions
+Upload your exercise_classification.Rmd and exercise_classification.html files to the Classification Exercise D2L dropbox. 
+
+## Grading
+You will receive full credit if your R Markdown document: 1) compiles without error; and 2) correctly completes the `# TODO:` code chunks. Also, please, fill in the feedback [questions](#questions) at the end of the exercise. 
+
+## Getting started
+Again, set some global options to make the R code printed in the HTML output look nice.
+
+```{r global_options}
+knitr::opts_chunk$set(comment = NA, tidy = TRUE)
+```
+
+## Introduction
+The questions below are adapted from "An Introduction to Statistical Learning with Applications in R" by James, et al. The focus is on classification, using a data set on weekly stock market returns for 21 years. The data are part of the `ISLR` library, so first install the package using `install.packages("ISLR")` in the console window, then load the library.
+
+```{r}
+library(ISLR)
+str(Weekly)
+```
+
+We see that `Weekly` is a data frame with nine variables. Here is a description of each.
+
++  `Year`: The year that the observation was recorded
++  `Lag1`: Percentage return for previous week
++  `Lag2`: Percentage return for 2 weeks previous
++  `Lag3`: Percentage return for 3 weeks previous
++  `Lag4`: Percentage return for 4 weeks previous
++  `Lag5`: Percentage return for 5 weeks previous
++  `Volume`: Volume of shares traded (average number of daily shares traded in billions)
++  `Today`: Percentage return for this week
++  `Direction`: A factor with levels Down and Up indicating whether the market had a positive or negative
+return on a given week, derived from the variable `Volume`
+
+The goal is to find a classifier which can predict whether the market will move up or down based on (some of) the five lag variables and `Volume`.  
+
+1. Get a sense of the relationship between the potential predictors and `Direction` by drawing separate scatter plots of each potential predictor versus `Direction`. (So `Direction` should be on the y-axis.). I convert the `Direction` into an integer indicator variable and create the first plot for you below.
+
+```{r, message=FALSE, tidy = FALSE}
+library(ggplot2)
+library(dplyr)
+
+Weekly <- mutate(Weekly, binDirection=ifelse(Direction == "Up", 1, 0))
+
+ggplot(Weekly, aes(x = Lag1, y = binDirection)) + 
+  geom_point() + 
+  stat_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE)
+```
+
+```{r}
+##TODO 13.1: Draw the five remaining scatter plots here, i.e., Lag2, Lag3, Lag4, Lag5, Volume, versus binDirection 
+ggplot(Weekly, aes(x = Lag2, y = binDirection)) + geom_point() + stat_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE)
+ggplot(Weekly, aes(x = Lag3, y = binDirection)) + geom_point() + stat_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE)
+ggplot(Weekly, aes(x = Lag4, y = binDirection)) + geom_point() + stat_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE)
+ggplot(Weekly, aes(x = Lag5, y = binDirection)) + geom_point() + stat_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE)
+ggplot(Weekly, aes(x = Volume, y = binDirection)) + geom_point() + stat_smooth(method = "glm", method.args = list(family = "binomial"), se = FALSE)
+```
+
+2.  Based on the scatter plots, which, if any, of the predictors seem to be related to `Direction`?
+```
+##TODO 13.2: put your answer here
+```
+
+Now we divide the data into a training set and a test set. Since the likely goal is to predict future returns, we'll use the data from 1990 through 2008 as the training set, and use the remaining data as the test set. 
+
+```{r}
+Weekly.train <- subset(Weekly, Year < 2009)
+Weekly.test <- subset(Weekly, Year >= 2009)
+```
+
+3.  Fit a logistic regression model **to the training data** with `Direction` as the response and with all six potential predictors included. Use `summary` function to get a summary of the fit. 
+
+```{r}
+lr.all <- glm(Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume, data = Weekly.train, family = "binomial" )
+summary(lr.all)
+```
+
+4. P-values smaller than some threshold, e.g., 0.05, can be used to identify useful predictors. Which predictors have the smallest p-values (with the exception of the `Intercept`)? 
+```
+##TODO 13.3: put your answer here
+```
+
+5. Use the fitted model to predict the direction for the data in the test set. Display both the confusion matrix and the percent of correct predictions. Note, it will be helpful to write a function to do the percent correct calculation for you, e.g., `percent.correct <- function(x){100*sum(diag(x))/sum(x)}`.
+
+```{r}
+##TODO 13.4: Obtain the predictions and display the confusion matrix and the percent of correct predictions here.
+percent.correct <- function(x){100*sum(diag(x))/sum(x)}
+
+pred <- predict(lr.all, Weekly.test, type = "response")
+pred.1 <- rep("No", length(pred))
+pred.1[pred > 0.5] <- "Yes"
+x.1 <- table(pred.1, Weekly.test$Direction)
+x.1
+percent.correct(x.1)
+```
+
+6. Does the model including all six potential predictors perform well? Explain your answer.
+```
+##TODO 13.5: put your answer here
+```
+
+7. In Question 4 above you should have found that `Lag1`, `Lag2`, and `Volume` had the smallest p-values. For each of these predictors, fit a logistic regression model with only that predictor (using the training data for the model fit), and find the confusion matrix and the percent of correct predictions for the test data.
+
+```{r}
+##TODO 13.6: Fit a logistic regression model with `Lag1` as the only predictor, and display the confusion matrix and the percent of correct predictions.
+lr.all <- glm(Direction ~ Lag1, data = Weekly.train, family = "binomial" )
+summary(lr.all)
+pred <- predict(lr.all, Weekly.test, type = "response")
+pred.1 <- rep("No", length(pred))
+pred.1[pred > 0.5] <- "Yes"
+x.2 <- table(pred.1, Weekly.test$Direction)
+x.2
+percent.correct(x.2)
+```
+
+```{r}
+##TODO 13.7: Fit a logistic regression model with `Lag2` as the only predictor, and display the confusion matrix and the percent of correct predictions.
+lr.all <- glm(Direction ~ Lag2, data = Weekly.train, family = "binomial" )
+summary(lr.all)
+pred <- predict(lr.all, Weekly.test, type = "response")
+pred.1 <- rep("No", length(pred))
+pred.1[pred > 0.5] <- "Yes"
+x.3 <- table(pred.1, Weekly.test$Direction)
+x.3
+percent.correct(x.3)
+```
+
+```{r}
+##TODO 13.8: Fit a logistic regression model with `Volume` as the only predictor, and display the confusion matrix and the percent of correct predictions.
+lr.all <- glm(Direction ~ Volume, data = Weekly.train, family = "binomial" )
+summary(lr.all)
+pred <- predict(lr.all, Weekly.test, type = "response")
+pred.1 <- rep("No", length(pred))
+pred.1[pred > 0.5] <- "Yes"
+x.4 <- table(pred.1, Weekly.test$Direction)
+x.4
+percent.correct(x.4)
+```
+
+8.  Which of the three predictors was most effective, based on the percent of correct predictions for the test data? 
+```
+##TODO 13.9: put your answer here
+```
+
+9.  Now use k nearest neighbors with `k=1`, `k=3`, and `k=5`, and with `Lag2` as the predictor variable. (To save time we won't do the same with `Lag1` and `Volume`.) In each case display the confusion matrix and the proportion of correct predictions. You'll need to load the `class` library which contains the `knn` function. (If you haven't yet installed the library, first issue the command `install.packages("class")` in the console window.)
+
+Because `knn` breaks ties at random, we will set the seed before each run to obtain reproducible results (so keep the `set.seed(875)` unchanged in your code).
+
+As before, use the training data to fit the model, and then compute the confusion matrix and percent of correct predictions using the test data.
+
+```{r}
+##TODO 13.10: Fit a k nearest neighbors model with `Lag2` as the only predictor and k=1, and display the confusion matrix and the percent of correct predictions.
+library(class)
+set.seed(875)
+blah <- knn(Weekly.train[3], Weekly.test[3], Weekly.train[,9], k = 1, prob = TRUE)
+k.1 <- table(blah, Weekly.test[,9])
+k.1
+percent.correct(k.1)
+```
+
+```{r}
+##TODO 13.11: Fit a k nearest neighbors model with `Lag2` as the only predictor and k=3, and display the confusion matrix and the percent of correct predictions.
+set.seed(875)
+blah <- knn(Weekly.train[3], Weekly.test[3], Weekly.train[,9], k = 3, prob = TRUE)
+k.3 <- table(blah, Weekly.test[,9])
+k.3
+percent.correct(k.3)
+```
+
+```{r}
+##TODO 13.12: Fit a k nearest neighbors model with `Lag2` as the only predictor and k=5, and display the confusion matrix and the percent of correct predictions.
+set.seed(875)
+blah <- knn(Weekly.train[3], Weekly.test[3], Weekly.train[,9], k = 5, prob = TRUE)
+k.5 <- table(blah, Weekly.test[,9])
+k.5
+percent.correct(k.5)
+```
+
+10.  Which value of `k` gives the best predictions, based on the percent of correct predictions?
+```
+##TODO 13.13: put your answer here
+```
+
+11.  For these data, and the models we fit above, which method (logistic regression or k nearest neighbors) produces the best results?
+```
+##TODO 13.14: put your answer here
+```
+
+********
+
+Congratulations! You've reached the end of the Classification Exercise.
+
+###Questions?
+
+If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
+
+*Response...*
+
+
+###Give us your feedback!
+
+1.  How do you feel you're doing in this class?
+
+*Response...*
+
+2.  What could be done to improve your learning experience?
+
+*Response...*
+
+*********

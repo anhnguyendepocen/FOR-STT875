@@ -1,0 +1,5 @@
+"0","knn(Weekly.train$Lag2, Weekly.test$Lag2, Weekly.train[, 9], k = 1, prob = TRUE)
+"
+"2","Error in knn(Weekly.train$Lag2, Weekly.test$Lag2, Weekly.train[, 9], k = 1,  : 
+  dims of 'test' and 'train' differ
+"

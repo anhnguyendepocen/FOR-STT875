@@ -1,0 +1,190 @@
+---
+title: "FOR/STT 875, Rcpp Exercise"
+output: html_document
+---
+
+## Learning objectives
+  + Practice using Rcpp to run a C++ function through R
+  + Use `microbenchmark()` to compare function performance
+  
+## Overview
+Modify this R Markdown file by filling in the code needed to answer the questions.
+
+## Submission instructions
+Upload your exercise_Rcpp.Rmd and exercise_Rcpp.html files to the Rcpp Exercise D2L dropbox. 
+
+## Grading
+You will receive full credit if your R Markdown document: 1) compiles without error; and 2) correctly completes the `# TODO:` code chunks. Also, please, fill in the feedback [questions](#questions) at the end of the exercise. 
+
+## Getting started
+Again, set some global options to make the R code printed in the HTML output look nice.
+
+```{r global_options}
+knitr::opts_chunk$set(comment = NA, tidy = TRUE)
+```
+
+## Part 1: Function writing
+Use `cppFunction()` to write versions of the following functions from R's `base` package into C++. Assume no values are missing. Make sure you test your functions. The outputs of your C++ functions should be the same format as the outputs of the R functions in the example runs.
+
+*  `all` - Given a logical vector, are all of the values true? Return `TRUE` or `FALSE`. Write `allC`.
+*  `range` - Return a 2-item vector containing the minimum and maximum of a numeric vector. Write `rangeC`. 
+
+*Note*: C++ does have a `max()` function, but it is only for pairwise maximum (two arguments), not vector maximum element. Think about how you can iterate through a vector to find the max and min values. (*Hint*: Look at the textbook's **Vector input and scalar output** section code for a loop example.)
+
+```{r}
+# TODO 15.1: Rewrite all() as allC()
+library(Rcpp)
+cppFunction("bool allC(NumericVector x) {
+  int n = x.size();
+  for(int i = 0; i < n; i++){
+    if(!x[i]) return false;
+  }
+  return true;
+}")
+
+allC(c(TRUE,TRUE,TRUE,TRUE))
+allC(c(TRUE,FALSE,TRUE,TRUE))
+allC(c(F,T,F,F,T,T,T,T,T,F,T,T))
+```
+
+```{r}
+# TODO 15.2: Rewrite range() as rangeC()
+library(Rcpp)
+cppFunction("NumericVector rangeC(NumericVector x) {
+  int n = x.size();
+  double min = 0;
+  double max = 0;
+
+  for(int i = 0; i < n; i++){
+    if(i == 0) {
+      min = x[i];
+      max = x[i];
+    } else {
+      if(x[i] < min) {
+        min = x[i];
+      } else if(x[i] > max) {
+        max = x[i];
+      }
+    }
+  }
+  NumericVector out(2);
+  out[0] = min;
+  out[1] = max;
+  return out;
+}")
+
+rangeC(c(1,2,3,10,4))
+
+rangeC(c(1,1,1,1))
+
+rangeC(c(-1000,10,-20,999))
+
+```
+
+How does the efficiency of your function, `rangeC`, compare to the R function `range`? Uncomment the code below and answer the `## TODO:` question.
+
+```{r}
+library(microbenchmark)
+
+x <- runif(10000) # generate points from uniform distribution
+microbenchmark(range(x), rangeC(x))
+```
+
+```{r}
+## TODO 15.3: What do you notice about the running times of the two programs?
+
+# Answer here...
+```
+
+## Part 2: Matrix input, matrix output
+
+Below I wrote an R function called `distR()` that computes the inter-site Euclidean distance matrix for points defined in a n-by-p matrix, where n is the number of sites and columns define the coordinate values in p-dimensional space. Your task is to rewrite my `distR()` function using an Rcpp `cppFunction()` function called `distC()`. Then give the timings of the two functions, i.e., distR() and distC(), using `microbenchmark()`. Choose test cases that convince you that your Rcpp function is more efficient.
+
+```{r}
+distR <- function(x){
+ 
+  n <- nrow(x)
+  p <- ncol(x)
+  out <- matrix(0, n, n)
+  
+  for(i in 1:n){
+    for(j in 1:n){
+      for(k in 1:p){
+        out[i,j] <- out[i,j] + (x[i,k] - x[j,k])^2
+      }
+      out[i,j] <- sqrt(out[i,j])
+    } 
+  }
+  
+  out
+}
+
+##Example run
+x <- cbind(1:3, 1:3)
+distR(x)
+```
+
+```{r}
+# TODO 15.4: Rewrite distR() using a Rcpp cppFunction() function, distC()
+
+library(Rcpp)
+cppFunction("
+
+NumericMatrix distC(NumericMatrix x) {
+  
+  int n = x.nrow();
+  int p = x.ncol();
+
+  NumericMatrix out(n,n);
+
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++){
+      for (int k = 0; k < p; k++) {
+        out(i,j) = out(i,j) + pow(x(i,k) - x(j,k), 2);
+      }
+      out(i,j) = sqrt(out(i,j));
+    }
+  }
+
+  return(out); 
+}
+
+")
+
+x <- as.matrix(cbind(1:3, 1:3))
+distC(x)
+
+```
+
+```{r}
+# TODO 15.5: Give the timings of the two functions using microbenchmark()
+
+library(microbenchmark)
+
+x <- as.matrix(cbind(runif(100),runif(100),runif(100)))
+microbenchmark(distR(x),distC(x))
+```
+
+
+********
+
+Congratulations! You've reached the end of Rcpp Exercise.
+
+###Questions?
+
+If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
+
+*Response...*
+
+
+###Give us your feedback!
+
+1.  How do you feel you're doing in this class?
+
+*Response...*
+
+2.  What could be done to improve your learning experience?
+
+*Response...*
+
+*********

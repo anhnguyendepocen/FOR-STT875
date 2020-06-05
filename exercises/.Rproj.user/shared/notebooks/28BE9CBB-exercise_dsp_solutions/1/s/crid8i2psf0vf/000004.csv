@@ -1,0 +1,55 @@
+"0","adiMorning <- acoustic_diversity(morning, max_freq = 16000)
+"
+"1","
+ This is a stereo file. Results will be given for each channel.
+"
+"1","
+ Calculating index. Please wait... 
+
+"
+"1","  Acoustic Diversity Index: 
+"
+"1","   Left channel: 1.954692
+"
+"1","   Right channel: 1.972714
+"
+"0","adiAfternoon <- acoustic_diversity(afternoon, max_freq = 16000)"
+"1","
+ This is a stereo file. Results will be given for each channel.
+"
+"1","
+ Calculating index. Please wait... 
+
+"
+"1","  Acoustic Diversity Index: 
+"
+"1","   Left channel: 2.277086
+"
+"1","   Right channel: 2.290148
+"
+"0","adiEvening <- acoustic_diversity(evening, max_freq = 16000)"
+"1","
+ This is a stereo file. Results will be given for each channel.
+"
+"1","
+ Calculating index. Please wait... 
+
+"
+"1","  Acoustic Diversity Index: 
+"
+"1","   Left channel: 1.524893
+"
+"1","   Right channel: 1.536908
+"
+"0","longADIMorning <- data.frame(adiMorning$left_band_values, 1:length(adiMorning$left_band_values), "
+"0","                             rep(""morning"", times = length(adiMorning$left_band_values)))"
+"0","colnames(longADIMorning) <- c(""values"", ""range"", ""time"")"
+"0","longADIAfternoon <- data.frame(adiAfternoon$left_band_values, 1:length(adiAfternoon$left_bandrange_values), "
+"0","                             rep(""afternoon"", times = length(adiAfternoon$left_band_values)))"
+"0","colnames(longADIAfternoon) <- c(""values"", ""range"", ""time"")"
+"0","longADIEvening <- data.frame(adiEvening$left_band_values, 1:length(adiEvening$left_bandrange_values), "
+"0","                             rep(""evening"", times = length(adiEvening$left_band_values)))"
+"0","colnames(longADIEvening) <- c(""values"", ""range"", ""time"")"
+"0","allADI <- rbind(longADIMorning, longADIAfternoon, longADIEvening)"
+"0","allADI$range <- factor(allADI$range, order = FALSE)"
+"0","head(allADI)"

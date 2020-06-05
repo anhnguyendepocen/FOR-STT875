@@ -1,0 +1,8 @@
+Exercise 4: gapminder
+
+TODO 4.6 and 4.7 are combined worth 1 point
+All other TODOs are 1 point
+
+1 point for compiling without error (which is the same here on out)
+
+Total out of 10 points

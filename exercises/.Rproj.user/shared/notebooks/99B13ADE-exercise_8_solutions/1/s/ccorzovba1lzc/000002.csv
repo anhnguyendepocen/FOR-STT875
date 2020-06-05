@@ -1,0 +1,1 @@
+"0","gapminder1$year <- substr(x = gapminder1$year, start = 2, stop = 5)"

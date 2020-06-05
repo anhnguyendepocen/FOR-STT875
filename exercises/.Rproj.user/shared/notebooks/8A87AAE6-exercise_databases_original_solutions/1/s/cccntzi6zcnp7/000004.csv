@@ -1,0 +1,9 @@
+"0","if(length(dbListTables(con)) != 0) {
+  dbRemoveTable(con, ""baseball"")
+  dbRemoveTable(con, ""batting"")
+  dbRemoveTable(con, ""pitching"")
+  dbRemoveTable(con, ""fielding"")
+}
+"
+"2","Error in dbRemoveTable(con, ""baseball"") : No such table: baseball
+"

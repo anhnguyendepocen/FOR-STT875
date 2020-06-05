@@ -1,0 +1,116 @@
+rm(list = ls())
+library(dplyr)
+library(lme4)
+library(emmeans)
+library(multcomp)
+library(ggbiplot)
+
+dat <- read.csv("~/Downloads/brookeDat.csv") %>% 
+  mutate(Year = factor(Year))
+
+plant.health.vars <- dat %>% dplyr::select(RootRating, Leaves, 
+                                    PlantHeight, DryWeight, WetWeight 
+                                    )
+
+
+# PCA in R ----------------------------------------------------------------
+
+out.pca <- prcomp(plant.health.vars,
+                 center = TRUE,
+                 scale. = TRUE) 
+summary(out.pca)
+
+# Check out the factor loadings to get an idea of what PC1 is encoding
+out.pca$rotation
+
+# Plots grouping by compost type
+png("pcaPlot.png")
+ggbiplot(out.pca, groups = dat$Compost, ellipse = TRUE)
+dev.off()
+ggbiplot(out.pca, groups = dat$Compost, ellipse = TRUE, choices = c(1, 3))
+
+# Plots grouping by block
+ggbiplot(out.pca, groups = dat$Rep, ellipse = TRUE)
+ggbiplot(out.pca, groups = dat$Rep, ellipse = TRUE, choices = c(1, 3))
+# Conclusion: very little differences across the blocks
+
+# Check out the variance explained by the different principal components
+plot(out.pca, type = 'l', pch = 19)
+
+# We should either keep 1 of the principal components or 3 of the principal
+# components. 
+
+# Below I do the following with 1 component and check out the results
+
+
+
+# RCBD --------------------------------------------------------------------
+
+# Using the first principal component 
+
+dat$pc.1 <- out.pca$x[, 1]
+
+# write.csv(dat, "datWithPC1.csv", row.names = FALSE)
+
+out.rcbd <- lmer(pc.1 ~ Compost + (1|Rep), data = dat)
+
+summary(out.rcbd)
+
+# Verify the model assumptions
+# Residuals vs. fitted values. 
+# Suggests some slight heteroskedasticity, but nothing major, 
+# still can use satterthwaite's adjustment. 
+plot(out.rcbd)
+rcbd.resids <- resid(out.rcbd)
+qqnorm(rcbd.resids[-51], pch = 19)
+qqline(rcbd.resids[-51], col = 'red')
+# Fine. Only seems like one point is off, other than that everything looks 
+# relatively normal
+
+# Pairwise comparisons using satterthwaite's degrees of freedom
+# to account for heteroskedasticity
+lsmeans <- emmeans(out.rcbd,"Compost", lmer.df = "satterthwaite")
+summary(lsmeans)
+#pairwise comparisons between marginal means (default adjustment is Tukey)
+pairs(lsmeans)
+cld(lsmeans, by = NULL, Letters = "abcdefg", alpha = .05)
+
+
+
+
+# Basic Linear Model ------------------------------------------------------
+out.lm.full <- lm(pc.1 ~ pH + EC, data = dat)
+AIC(out.lm.full)
+out.lm.pH <- lm(pc.1 ~ pH, data = dat)
+AIC(out.lm.pH)
+out.lm.ec <- lm(pc.1 ~ EC, data = dat)
+AIC(out.lm.ec)
+
+# By comparing the AIC values, we see that we should use the model including
+# both pH and EC
+summary(out.lm.ec)
+
+
+
+
+# PCA with means of each group --------------------------------------------
+
+grouped.dat <- dat %>% 
+  group_by(Compost) %>% 
+  summarize_at(c('RootRating', 'Leaves', 'PlantHeight', 'DryWeight', 
+                 'WetWeight'), mean)
+
+out.pca.grouped <- prcomp(grouped.dat[, -1],
+                          center = TRUE,
+                          scale. = TRUE) 
+summary(out.pca.grouped)
+ggbiplot(out.pca.grouped)
+
+
+# morgans, sunshine, and shermix are the controls, leave those out. 
+
+# SAS Data Composts: nutrient values. 
+# SAS Data Transplants: plant health measures. Don't use Germination for PCA. 
+
+
+

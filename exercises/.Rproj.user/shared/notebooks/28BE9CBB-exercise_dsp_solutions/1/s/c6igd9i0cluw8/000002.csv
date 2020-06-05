@@ -1,0 +1,50 @@
+"0","library(soundecology)
+library(soundecology)
+multiple_sounds(directory = paste(getwd(), ""tempVarSongs"", sep = ""/""), resultfile = ""data.csv"", 
+                soundindex = ""acoustic_diversity"", max_freq = 16000)
+"
+"1"," Running on 3 files using 1 core
+
+"
+"1","
+ This is a stereo file. Results will be given for each channel.
+"
+"1","
+ Calculating index. Please wait... 
+
+"
+"1","  Acoustic Diversity Index: 
+"
+"1","   Left channel: 2.277086
+"
+"1","   Right channel: 2.290148
+"
+"1","
+ This is a stereo file. Results will be given for each channel.
+"
+"1","
+ Calculating index. Please wait... 
+
+"
+"1","  Acoustic Diversity Index: 
+"
+"1","   Left channel: 1.524893
+"
+"1","   Right channel: 1.536908
+"
+"1","
+ This is a stereo file. Results will be given for each channel.
+"
+"1","
+ Calculating index. Please wait... 
+
+"
+"1","  Acoustic Diversity Index: 
+"
+"1","   Left channel: 1.954692
+"
+"1","   Right channel: 1.972714
+"
+"1"," The analysis of 3 files took 3.1 seconds
+
+"

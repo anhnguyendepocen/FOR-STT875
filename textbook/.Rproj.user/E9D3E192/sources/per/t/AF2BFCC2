@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1558618876572.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3312660611",
+    "id" : "AF2BFCC2",
+    "lastKnownWriteTime" : 1558620230,
+    "last_content_update" : 1558620230479,
+    "path" : "~/Dropbox/teaching/for875/for875-19/bookdown-crc-master/03-rMarkdown.Rmd",
+    "project_path" : "03-rMarkdown.Rmd",
+    "properties" : {
+        "cursorPosition" : "6,247",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

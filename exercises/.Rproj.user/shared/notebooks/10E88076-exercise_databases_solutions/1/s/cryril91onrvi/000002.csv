@@ -1,0 +1,5 @@
+"0","battingTable %>% 
+  inner_join(baseballTable)
+"
+"2","Joining, by = ""playerid""
+"

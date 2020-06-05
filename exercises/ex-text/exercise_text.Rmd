@@ -1,0 +1,213 @@
+---
+title: "FOR/STT 875, Text Exercise"
+output: 
+  html_document
+---
+
+## Learning objectives
+  + Read and write text data
+  + Concatenate text with the `paste` function
+  + Analyze text with `nchar`
+  + Practice with functions
+  + Manipulate strings with `substr` and `strtrim`
+  
+## Overview
+Modify this R Markdown file by filling in the code needed to answer the questions.
+
+## Submission instructions
+Upload your exercise_text.Rmd and exercise_text.html files to the Text Exercise D2L dropbox. 
+
+## Grading
+You will receive full credit if your R Markdown document: 1) compiles without error; and 2) correctly completes the `# TODO:` code chunks. Also, please fill in the feedback [questions](#questions) at the end of the exercise. 
+
+## Getting started
+Again, set some global options to make the R code printed in the HTML output look nice.
+
+```{r global_options}
+knitr::opts_chunk$set(comment = NA, tidy = TRUE)
+```
+
+## Introduction
+In this exercise we will practice reading in and manipulating text data. 
+
+### Reading data in using `readLines`
+
+The file located at (http://blue.for.msu.edu/FOR875/data/Forbes100.html) gives the 100 wealthiest people in America, along with their net worth, age, and a few other variables, according to Forbes magazine. These data are from 2013. More recent data are available online at [here](http://www.forbes.com/forbes-400/list/#version:static). For simplicity we will work with the 2013 data.
+
+Open the file in a web browser. Next, view the document source. If you are using Google Chrome or Firefox this is easy. Just right click on the document and choose `View Page Source`. This is what we can read into R. 
+
+Now use `readLines` to read the data into an R object called `richhtml` as follows.
+
+```{r}
+richhtml <- readLines("http://blue.for.msu.edu/FOR875/data/Forbes100.html")
+```
+
+The resulting R object `richhtml` should be a character vector, with each entry corresponding to one line in the HTML source file. 
+
+1.  How many lines are in the source file? How many total characters are in the source file? Use R to answer these questions below. (For the second, you will find the `nchar` function, discussed in Section 11.3, useful.)
+
+```{r}
+## TODO 14.1: How many lines? How many total characters?
+```
+
+### Reading in data using `scan` and writing back to a file
+
+Next we will read in the novel *Sense and Sensibility* by Jane Austen using the `scan` function. We specify that we are reading in character data, and that newline characters are the separators.
+
+```{r}
+SandS <- scan("http://blue.for.msu.edu/FOR875/data/austen.txt", what = "character", sep = "\n")
+```
+
+2. We are only interested in the story part of the novel and want to remove extraneous text that comes before "CHAPTER 1" and after "THE END". Inspect the vector `SandS` to discover the index of the elements containing "CHAPTER 1" and "THE END". Which element contains "CHAPTER 1"? Which element contains "THE END"? Add your code in the code chunk below question 3.
+
+```{r}
+## TODO 14.2: Add code that finds the elements corresponding to "CHAPTER 1" and "THE END", you can use one line of code for each query
+```
+
+3. Remove the lines prior to "CHAPTER 1" and the lines from "THE END" onward from the vector `SandS`. Verify, using `head` and `tail`, that `SandS` now starts and ends at the right place. How many lines remain in `SandS`?
+
+```{r}
+## TODO 14.3: remove the extraneous beginning and ending text and reassign vector from "CHAPTER 1"" to "THE END"" back to SandS
+```
+
+Let's write our abbreviated text to a file. Currently each element of `SandS` contains a *line* of text from the book. Before writing it out, let's paste together all the strings in `SandS` to make one rather long string. Uncomment the next two code chunks once you've completed the `# TODO:` above.
+
+```{r}
+#SandS <- paste(SandS, collapse = " ")
+#length(SandS)
+```
+
+Fortunately R was clever enough to truncate the display of `SandS` from the `str` function, since otherwise the whole novel would have been printed! Now we'll write you out a copy using the `cat` function with the `file` argument (there are several other ways to write this to file, e.g., `writeLines`). Don't say you never got anything out of this course ;-)
+
+```{r}
+#cat(SandS, file = "Sense and Sensibility.txt")
+```
+
+### The `paste` function
+
+Here is a function to test whether a given number is prime, with a few examples of its use.
+
+```{r}
+is.prime <- function(num) {
+   if (num == 2) {
+      TRUE
+   } else if (any(num %% 2:(sqrt(num)) == 0)) {
+      FALSE
+   } else { 
+      TRUE
+   }
+}
+is.prime(2)
+is.prime(3)
+is.prime(4)
+is.prime(101)
+is.prime(115)
+```
+
+4. Write a function `print_primes` which takes one argument, `n`, and which prints out the prime numbers smaller than or equal to `n`. You may find the `print` function useful. Here are a few examples of such a function in use (hint, my version of this function uses a `for` loop that runs from `2:n` and an `if` statement in the `for` loop that uses the `is.prime` function in `if`'s condition.):
+
+```
+> print_primes(10)
+[1] 2
+[1] 3
+[1] 5
+[1] 7
+> print_primes(29)
+[1] 2
+[1] 3
+[1] 5
+[1] 7
+[1] 11
+[1] 13
+[1] 17
+[1] 19
+[1] 23
+[1] 29
+```
+
+```{r}
+##TODO 14.4: Write the print_primes function here, and demonstrate its use with arguments 10 and 29
+```
+
+It would be more informative to keep track of the number of primes less than a given prime, and display this along with the prime number, as in `Prime Number 4 is 7`. (Even better would be something like `The 4th prime number is 7`, but converting from a number to its ordinal representation is a bit tricky. Search for `convert to ordinal R` on Google if you're interested in how to do this.)
+
+5. Rewrite `print_primes` to produce the specified output such as `Prime Number 4 is 7`. You'll find the `paste` function useful. Also, you'll likely end up using a variable that gets incremented for each prime number. My output for the new `print_primes(10)` function is:
+
+```
+> print_primes(10)
+[1] "Prime Number 1 is 2"
+[1] "Prime Number 2 is 3"
+[1] "Prime Number 3 is 5"
+[1] "Prime Number 4 is 7"
+```
+
+```{r}
+##TODO 14.5: Rewrite print_primes here and demonstrate its use with arguments 10 and 29
+```
+
+There are likely two somewhat irritating features of your output. One is that the output is enclosed in quotation marks. The other is that `[1]` is printed before each line. The first is easy to deal with. Just add the argument `quote = FALSE` to the `print` function. The second is a bit tougher. Probably the easiest option is to use the `cat` function in place of `print`. You'll discover that `cat` by default does not include a newline character, so you'll have to explicitly include `\n` in your `cat` statement. Here's my modified function output:
+
+```
+> print_primes(10)
+Prime Number 1 is 2 
+Prime Number 2 is 3 
+Prime Number 3 is 5 
+Prime Number 4 is 7 
+```
+
+```{r}
+##TODO 14.6: If needed, rewrite print_primes here to give output without quotes and the preceeding [1]
+```
+
+###`substr` and `strtrim`
+
+The `substr` function can extract or replace a substring. Consult Section 11.3 of the text for examples of its use. First we create a simple character vector and use `substr` in a simple fashion.
+```{r}
+x <- c("abcdefg", "123456789", "cats and dogs", "Michigan")
+x
+```
+
+6. Use `substr` to extract characters 3, 4, and 5 of each element of `x`. Your output should look like this:
+
+```
+[1] "cde" "345" "ts " "chi"
+```
+
+```{r}
+##TODO 14.7: extract characters as described above
+```
+
+The `strtrim` function trims a string to a specified width. Again consult Section 11.3 for details.
+
+7. For the same vector `x` above, trim the first two elements to width 4 (i.e, `abcd` and `1234`), trim the third element to width 7, and trim the fourth element to width 5. Your output should look like this:
+
+```
+[1] "abcd"    "1234"    "cats an" "Michi"
+```
+
+```{r}
+##TODO 14.8: trim x as described above
+```
+
+********
+
+Congratulations! You've reached the end of the Text Exercise.
+
+###Questions?
+
+If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
+
+*Response...*
+
+
+###Give us your feedback!
+
+1.  How do you feel you're doing in this class?
+
+*Response...*
+
+2.  What could be done to improve your learning experience?
+
+*Response...*
+
+*********

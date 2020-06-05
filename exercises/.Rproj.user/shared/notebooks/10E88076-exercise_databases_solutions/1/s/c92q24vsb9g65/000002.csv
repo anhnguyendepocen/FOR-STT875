@@ -1,0 +1,9 @@
+"0","#TODO 16.4: rerun the query listing those players with greater than 40 home runs
+battingTable %>% 
+  inner_join(baseballTable) %>% 
+  select(namefirst, namelast, yearid, hr, rbi) %>% 
+  filter(hr >= 40) %>% 
+  arrange(desc(hr))
+"
+"2","Joining, by = ""playerid""
+"

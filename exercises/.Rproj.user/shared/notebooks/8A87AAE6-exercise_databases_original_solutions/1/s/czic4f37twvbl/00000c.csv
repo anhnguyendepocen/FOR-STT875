@@ -1,0 +1,5 @@
+"0","con <- dbConnect(MonetDBLite::MonetDBLite(), dbdir)
+"
+"2","Error in dbConnect(MonetDBLite::MonetDBLite(), dbdir) : 
+  could not find function ""dbConnect""
+"

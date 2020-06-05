@@ -1,0 +1,5 @@
+"0","table(pred.1, Weekly$Direction)
+"
+"2","Error in table(pred.1, Weekly$Direction) : 
+  all arguments must have the same length
+"

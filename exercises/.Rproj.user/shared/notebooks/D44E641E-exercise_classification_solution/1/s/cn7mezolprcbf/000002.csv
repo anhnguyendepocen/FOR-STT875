@@ -1,0 +1,2 @@
+"0","##TODO 13.1: Draw the five remaining scatter plots here, i.e., Lag2, Lag3, Lag4, Lag5, Volume, versus binDirection "
+"0","ggplot(Weekly, aes(x = Lag2, y = binDirection)) + geom_point() + stat_smooth(method = ""glm"", method.args = list(family = ""binomial""), se = FALSE)"

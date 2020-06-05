@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1577814448049.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4271897432",
+    "id" : "7823BFE2",
+    "lastKnownWriteTime" : 1577814687,
+    "last_content_update" : 1577814687152,
+    "path" : "~/Dropbox/teaching/for875/for875-20/textbook/10-classification.Rmd",
+    "project_path" : "10-classification.Rmd",
+    "properties" : {
+        "cursorPosition" : "250,10",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 10,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

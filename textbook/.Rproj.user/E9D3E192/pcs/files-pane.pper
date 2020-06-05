@@ -1,0 +1,13 @@
+{
+    "path" : "~/Dropbox/teaching/for875/for875-19/bookdown-crc-master",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        },
+        {
+            "ascending" : false,
+            "columnIndex" : 4
+        }
+    ]
+}

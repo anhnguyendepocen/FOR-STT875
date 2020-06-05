@@ -1,0 +1,9 @@
+"0","# TODO 16.2: replace playerID with namefirst and namelast using an inner join
+battingTable %>% 
+  inner_join(baseballTable) %>% 
+  select(namefirst, namelast, yearid, hr, rbi) %>% 
+  filter(hr >= 40) %>% 
+  arrange(desc(hr))
+"
+"2","Joining, by = ""playerid""
+"

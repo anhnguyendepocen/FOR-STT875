@@ -1,0 +1,1 @@
+{"frames":[{"character_number":0,"end_character_number":0,"end_line_number":0,"file":"","func":"apply(X = gapminder1[, 2:ncol(gapminder1)], 2, mean, na.rm = TRUE)","line_number":0}],"message":"Error in apply(X = gapminder1[, 2:ncol(gapminder1)], 2, mean, na.rm = TRUE) : \n  object 'gapminder1' not found\n"}

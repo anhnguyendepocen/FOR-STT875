@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1577814450873.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "443680828",
+    "id" : "D6EABDEE",
+    "lastKnownWriteTime" : 1560430125,
+    "last_content_update" : 1560430125,
+    "path" : "~/Dropbox/teaching/for875/for875-20/textbook/12-rcpp.Rmd",
+    "project_path" : "12-rcpp.Rmd",
+    "properties" : {
+        "cursorPosition" : "225,6",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

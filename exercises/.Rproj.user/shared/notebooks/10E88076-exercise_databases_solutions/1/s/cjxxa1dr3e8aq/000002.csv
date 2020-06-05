@@ -1,0 +1,5 @@
+"0","names(Fielding) <- tolower(names(Fielding))
+"
+"2","Warning:"
+"2"," call dbDisconnect() when finished working with a connection
+"

@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1577814452693.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "661123922",
+    "id" : "E4BDC034",
+    "lastKnownWriteTime" : 1562752217,
+    "last_content_update" : 1562752217,
+    "path" : "~/Dropbox/teaching/for875/for875-20/textbook/13-databases.Rmd",
+    "project_path" : "13-databases.Rmd",
+    "properties" : {
+        "cursorPosition" : "274,690",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 13,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

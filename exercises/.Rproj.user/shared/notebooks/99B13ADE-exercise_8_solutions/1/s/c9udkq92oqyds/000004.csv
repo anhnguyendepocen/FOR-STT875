@@ -1,0 +1,6 @@
+"0","# apply(x = gapminder1[,2:218], 2, mean, na.rm = TRUE)
+apply(X = gapminder1[, 2:ncol(gapminder1)], 2, mean, na.rm = TRUE)
+"
+"2","Error in apply(X = gapminder1[, 2:ncol(gapminder1)], 2, mean, na.rm = TRUE) : 
+  object 'gapminder1' not found
+"

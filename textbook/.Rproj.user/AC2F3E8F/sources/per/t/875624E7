@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1577814454609.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2886121122",
+    "id" : "875624E7",
+    "lastKnownWriteTime" : 1590790966,
+    "last_content_update" : 1590790966,
+    "path" : "~/Dropbox/teaching/for875/for875-20/textbook/15-graphics-base.Rmd",
+    "project_path" : "15-graphics-base.Rmd",
+    "properties" : {
+        "cursorPosition" : "253,19",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 15,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

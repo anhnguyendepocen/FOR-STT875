@@ -1,0 +1,2 @@
+"0","#TODO 8.2: rename name of the first column to ""country"""
+"0","names(gapminder1)[1] <- ""country"""

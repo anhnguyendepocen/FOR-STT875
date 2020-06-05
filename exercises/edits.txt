@@ -1,0 +1,3 @@
+Things to fix before July 1:
+
+1. Shiny exercise: not sure where Andy is hosting the app. Both links currently in there are broken. 

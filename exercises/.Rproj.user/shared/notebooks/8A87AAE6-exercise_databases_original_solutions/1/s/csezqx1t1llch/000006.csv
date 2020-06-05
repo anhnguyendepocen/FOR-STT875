@@ -1,0 +1,4 @@
+"0","  dbRemoveTable(con, ""pitching"")
+"
+"2","Error in dbRemoveTable(con, ""pitching"") : No such table: pitching
+"
