@@ -1,32 +1,39 @@
 ## ----global_options------------------------------------------------------
 knitr::opts_chunk$set(comment = NA, tidy = TRUE)
 
+
 ## ------------------------------------------------------------------------
 data(swiss)
 str(swiss)
 head(swiss)
 cor(swiss)
 
+
 ## ------------------------------------------------------------------------
 plot(swiss$Education, swiss$Fertility)
 plot(Fertility ~ Education, data = swiss)
+
 
 ## ------------------------------------------------------------------------
 swiss.lm <- lm(Fertility ~ Education, data = swiss)
 is.list(swiss.lm)
 names(swiss.lm)
 
+
 ## ------------------------------------------------------------------------
 swiss.lm.coef.1 <- swiss.lm$coefficients
 swiss.lm.resid.1 <- swiss.lm$residuals
+
 
 ## ------------------------------------------------------------------------
 swiss.lm.coef.1
 swiss.lm.resid.1
 
+
 ## ------------------------------------------------------------------------
 is.vector(swiss.lm.coef.1)
 is.vector(swiss.lm.resid.1)
+
 
 ## ------------------------------------------------------------------------
 # TODO 5.1: Create swiss.lm.coef.2 and swiss.lm.coef.3 here, then print swiss.lm.coef.1, swiss.lm.coef.2, and swiss.lm.coef.3
@@ -37,6 +44,7 @@ swiss.lm.coef.1
 swiss.lm.coef.2
 swiss.lm.coef.3
 
+
 ## ------------------------------------------------------------------------
 # TODO 5.2: Apply is.vector and is.list on swiss.lm.coef.1, swiss.lm.coef.2, and swiss.lm.coef.3 here
 is.vector(swiss.lm.coef.1)
@@ -46,15 +54,19 @@ is.list(swiss.lm.coef.1)
 is.list(swiss.lm.coef.2)
 is.list(swiss.lm.coef.3)
 
+
 ## ------------------------------------------------------------------------
-gapminder <- read.delim("http://blue.for.msu.edu/FOR875/data/gapminder.tsv")
+gapminder <- read.delim("http://www.finley-lab.com/files/data/gapminder.tsv")
 str(gapminder)
+
 
 ## ------------------------------------------------------------------------
 mean(gapminder$pop[gapminder$country == "France"])
 
+
 ## ------------------------------------------------------------------------
 unique(gapminder$country[gapminder$continent == "Africa"])
+
 
 ## ------------------------------------------------------------------------
 boxplot(gapminder$gdpPercap[gapminder$year == 1952])
@@ -62,15 +74,19 @@ hist(gapminder$gdpPercap[gapminder$year == 1952])
 boxplot(gapminder$gdpPercap[gapminder$year == 2002])
 hist(gapminder$gdpPercap[gapminder$year == 2002])
 
+
 ## ------------------------------------------------------------------------
 gapminder$country[gapminder$pop > 150000000 & gapminder$year == 1992]
+
 
 ## ------------------------------------------------------------------------
 # TODO 5.3: Add code to get the population of all countries meeting the noted conditions
 gapminder$pop[gapminder$lifeExp > 70 & gapminder$year == 1967]
 
+
 ## ------------------------------------------------------------------------
 mean(gapminder$pop[gapminder$country %in% c("United States", "Mexico", "Canada") & gapminder$year == 1997])
+
 
 ## ------------------------------------------------------------------------
 dd <- data.frame(x = c("dog", "cat", "oink", "pig", "oink", "cat", "dog", "cat", "dog"), y = c("dog", "cat", "cat", "pig", "cow", "dog", "dog", "cat", "pig"), stringsAsFactors = FALSE)
@@ -83,25 +99,31 @@ dd
 dd$same[dd$x == dd$y] <- "yes"
 dd
 
+
 ## ------------------------------------------------------------------------
 # TODO 5.4: Add the G8 variable to the gapminder data frame here
 gapminder$G8 <- rep(0, length.out=dim(gapminder)[1])
+
 
 ## ------------------------------------------------------------------------
 # TODO 5.5: Set the G8 variable to 1 for G8 countries here
 gapminder$G8[gapminder$country %in% c("France", "Germany", "Italy", "United Kingdom", "Japan", "United States", "Canada", "Russia") ] <- 1
 
+
 ## ------------------------------------------------------------------------
 ##Create x here
 x <- seq(from=-2*pi, to=2*pi, length.out=1000)
+
 
 ## ------------------------------------------------------------------------
 # TODO 5.6: Draw the plot here
 plot(x, cos(x))
 
+
 ## ------------------------------------------------------------------------
 # TODO 5.7: Draw the second plot here
 plot(x, cos(x), type="l")
+
 
 ## ------------------------------------------------------------------------
 ltrs <- c("a", "b", "q", "z")
@@ -109,4 +131,28 @@ rep(ltrs, length.out = 9)
 rep(ltrs, each = 3)
 rep(ltrs, times = 3)
 rep(ltrs, times = c(3, 2, 4, 7))
+
+
+## ------------------------------------------------------------------------
+library(MASS)
+full.model <- lm(Fertility ~ ., data = swiss)
+stepwise.model <- stepAIC(full.model, direction = 'backward')
+summary(stepwise.model)
+qqnorm(stepwise.model$residuals, pch = 19)
+qqline(stepwise.model$residuals, col = 'red')
+plot(stepwise.model$fitted.values, stepwise.model$residuals, pch = 19)
+abline(h = 0)
+# Compute confidence interval
+fitted.vals <- predict(stepwise.model, se.fit = TRUE, interval = 'confidence')
+fitted <- fitted.vals$fit[, 1]
+lower <- fitted.vals$fit[, 2]
+upper <- fitted.vals$fit[, 3]
+true <- swiss$Fertility
+plot(true, fitted, pch = 19, ylim = c(20, 100),
+xlab = 'True Fertility Value', ylab = 'Model Fitted Values', frame = FALSE,
+axes = FALSE, xlim = c(20, 100), cex = 2, cex.lab = 1.5)
+segments(x0 = true, y0 = lower, x1 = true, y1 = upper, col = 'grey', lwd = 2)
+axis(2, las = 1, cex.axis = 1.5)
+axis(1, cex.axis = 1.5)
+lines(true, true, col = 'red')
 
