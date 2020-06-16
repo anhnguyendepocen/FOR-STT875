@@ -31,7 +31,7 @@ knitr::opts_chunk$set(comment = NA, tidy = TRUE)
 In this exercise we'll investigate a data set from (http://www.gapminder.org), a site that contains a wealth of data and visualizations related to health, wealth, population, etc. of countries of the world. Typical datasets from (http://www.gapminder.org) are somewhat messy, with a lot of missing observations, so today we'll work with data extracted from the more complete data sets by Jenny Bryan at UBC. First we load the data into R.
 
 ```{r, cache = TRUE}
-location <- "http://blue.for.msu.edu/FOR875/data/gapminder.tsv"
+location <- "http://www.finley-lab.com/files/data/gapminder.tsv"
 gapminder <- read.delim(location)
 ```
 
@@ -173,9 +173,11 @@ Test whether each element of `point3` is equal to 0.3
 ```
 
 `.Machine` is a list that holds information on the numerical characteristics of the machine R is running on, such as the largest double or integer and the machine's precision. For example 
+
 ```{r}
 .Machine$double.eps
 ```
+
 is the smallest positive floating-point number x such that 1 + x != 1. The false in `point3 == 0.3` and `0.2 == 0.6/3` show us that using floating point arithmetic with logical operators can yield unexpected results. The false for `0.2 == 0.6/3` is because floating point arithmetic of 0.6/3 will equal 0.2 + x, where x is some very small value. 
 
 If you want to safely apply a logical tests to computed values, R provides a set of functions that test with a given tolerance, e.g., equal up to 1.5e-8 digits. For example, 
@@ -230,18 +232,30 @@ n <- 10000000000000000
 
 You don't have to understand exactly how your machine handles floating point numbers, but it is good to be aware that testing for equality of numbers may result in unexpected behavior.
 
-********
+
+## Challenge Question 
+
+This question **will not be graded** and is provided for additional practice building your `R` skills. This is a *challenge* question, and thus not all material has been (or will be covered). 
+
+Here we will continue using the `subset` function, learn how to perform basic linear regression in `R`, and continue developing our plotting skills with the `graphics` package. We seek to determine if there is a significant linear correlation between year and per capita GDP for the United States. We will do this by subsetting the data frame to obtain only the data from the United States, determine the correlation between year and GDP, and then create a scatter plot of the results. I used the following functions in my answer: `subset`, `cor` (correlation), `plot`, `axis` (manually add axis to the plot), `text`, `abline` (add a line to the plot), `lm` (linear model, used to get line on plot), `expression` (way to add mathy text to an R plot, e.g., $\rho$). The color I used is `lightskyblue1`. 
+
+
+```{r, out.width = '50%'}
+knitr::include_graphics("challengeQuestion.png")
+```
+
+******
 
 Congratulations! You've reached the end of Exercise 4.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -251,4 +265,4 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+*******

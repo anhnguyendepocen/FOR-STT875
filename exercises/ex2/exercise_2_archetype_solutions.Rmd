@@ -9,7 +9,7 @@ output: html_document
 Today we're going to work with some air temperature data measured at 356 weather stations across the Northeastern United States between 1/1/2000 and 1/1/2005 drawn from the [National Climatic Data Center](https://www.ncdc.noaa.gov/cdo-web) (NCDC). I aggregated the NCDC hourly temperature data to mean monthly values of degrees Celsius. Additionally, each station temperature record is associated with its latitude, longitude, and elevation (meters above sea level). As the semester progresses we'll make use of this set of data in a variety of ways. Today we'll perform some simple but insightful analyses using these data.
 
 ```{r}
-con <- url("http://blue.for.msu.edu/FOR875/data/NE-temp.RData")
+con <- url("http://www.finley-lab.com/files/data/NE-temp.RData")
 load(con)
 close(con)
 rm(con)

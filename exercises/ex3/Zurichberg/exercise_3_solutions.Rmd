@@ -15,13 +15,13 @@ Modify this R Markdown file by filling in the code needed to answer the question
 Upload your exercise_3.Rmd and exercise_3.html files to the Exercise 3 D2L dropbox. 
 
 ## Grading
-You will receive full credit if your R Markdown document: 1) compiles without error; and 2) correctly completes the `# TODO:` code chunks. Also, please, fill in the feedback [questions](#questions) at the end of the exercise.  
+You will receive full credit if your R Markdown document: 1) compiles without error; and 2) correctly completes the `# TODO:` code chunks. Also, please fill in the feedback [questions](#questions) at the end of the exercise.  
 
 ## Getting started
-First we'll set code chunk options to be applied to the entire document (i.e., global options). These global options can be overridden by the options in an individual code chunk. Typically we would use `echo = FALSE` in this chunk, since we wouldn't want it seen in the final document, but here we display the chunk. The global knitr options change how the R code is displayed in the resulting html document. Specifically, `comment = NA` removes the `##` comment that come before printed code and `tidy = TRUE` causes the printed code to wrap neatly.
+First we'll set code chunk options to be applied to the entire document (i.e., global options). These global options can be overridden by the options in an individual code chunk. Typically we would use `echo = FALSE` in this chunk, since we wouldn't want it seen in the final document, but here we display the chunk. The global knitr options change how the R code is displayed in the resulting html document. Specifically, `comment = NA` removes the `##` comment that come before printed code.
 
 ```{r global_options}
-knitr::opts_chunk$set(comment = NA, tidy = TRUE)
+knitr::opts_chunk$set(comment = NA)
 ```
 
 ## Z&uuml;richberg Forest inventory data set
@@ -32,7 +32,7 @@ We'll read in three vectors that hold tree species, diameter, and volume. The el
 Read in the Z&uuml;richberg Forest data.
 
 ```{r}
-con <- url("http://blue.for.msu.edu/FOR875/data/ZF_trees.gz")
+con <- url("http://www.finley-lab.com/files/data/ZF_trees.gz")
 load(con)
 close(con)
 rm(con)
@@ -127,7 +127,7 @@ names(animals) <- c("Asta", "Felix", "Snowy", "Garfield", "Mr. Ed", "Spud")
 animals
 ```
 
-Use `names` to add the species as names to the `dbh` and `vol` vectors, and list the first ten elements of each vector with the names included.
+Use `names` to add the species as names to the `dbh` and `vol` vectors, and list the first ten elements of each vector with the names included. Assign names to the entire `dbh` and `vol` vectors, not just the first ten elements. 
 ```{r}
 # TODO 3.12: Create the vectors with names and list the first ten elements of each here.
 names(dbh) <- spp
@@ -139,7 +139,7 @@ vol[1:10]
 
 ###More advanced subsetting
 
-So far we have directly specified the elements of vectors that we want to extract, for example `spp[1]` or `dbh[length(dbh)]` or `spp[c(1,2,3,5)]`. More commonly we want to extract elements that meet a condition, such as all trees greater than some minimum DBH or all trees of a given species. For this we use subsetting with logical vectors, see Section 4.8 in the course book.
+So far we have directly specified the elements of vectors that we want to extract, for example `spp[1]` or `dbh[length(dbh)]` or `spp[c(1,2,3,5)]`. More commonly we want to extract elements that meet a condition, such as all trees greater than some minimum DBH or all trees of a given species. For this we use subsetting with logical vectors, see [Section 4.8](https://www.jeffdoser.com/files/for875/_book/structures.html#subsetting) in the course book.
 
 First some very simple examples using vectors of random numbers, and then you'll use these ideas for the tree vectors.
 
@@ -201,7 +201,7 @@ e <- c(TRUE, FALSE, FALSE, FALSE, TRUE)
 
 a[b | e]
 ```
-Hint: in TODO 3.16 you need to do an additional step to create the logical vectors `b` and `e`, e.g., vector `b` could be `spp == "larch"`. There is more about logical operators in Section 8.2.1 in our book (although it should not be needed to complete this exercise).
+Hint: in TODO 3.16 you need to do an additional step to create the logical vectors `b` and `e`, e.g., vector `b` could be `spp == "larch"`.
 
 Another useful logical operator is the `!` (i.e., the exclamation point, referred to as the "bang" in coding slang) which negates or flips the logical value, so for example `!=` represents not equal to.
 
@@ -240,18 +240,61 @@ max(dbh[spp=="beech"])
 max(vol[spp=="beech"])
 ```
 
-********
+## Challenge Question
+
+This question **will not be graded** and is provided for additional practice building your `R` skills. This is a *challenge* question, and thus not all material has been (or will be) covered.
+
+In this question, you will further practice your logical subsetting skills (a very handy tool in `R`), perform some basic statistical analyses, and will improve your skills  using the `graphics` package in `R`.
+
+We seek to assess whether or not there are differences in the DBH of Ash, Larch, Maple, and Silver Fir species of trees. Ignoring any necessary assumptions regarding the study design and the model (e.g., a completely randomized design, normality assumptions) perform a one-way Analysis of Variance (ANOVA) to assess if there are differences in the DBH of trees. Subsequently, perform pairwise comparisons using Tukey's adjustment method for the family-wise error rate to assess which species are significantly different from each other. Finally, produce a summary figure of your findings. Your figure should resemble the following: 
+
+Here is a guide to help you along the way. 
+
+1. Install and load the `multcomp` package for performing pairwise comparisons
+2. Collect `spp`, `dbh`, and `vol` into a data frame and subset to only get the species of interest.
+3. Convert the `spp` variable in the data frame into a factor. 
+4. Use the `aov` and `summary` function to perform the ANOVA and interpret results
+5. Use the `glht` and `cld` functions in the `multcomp` package to perform Tukey's pairwise comparisons. The `cld` function will nicely give you the letters necessary for the plot so you don't have to determine them yourself. 
+6.  Use the `boxplot` and `text` functions to produce the plot. 
+
+
+```{r}
+library(multcomp)
+zurich.df <- data.frame(spp = spp, dbh, vol)
+zurich.df.sub <- zurich.df[zurich.df$spp %in% c('ash', 'larch', 'maple', 
+						'silver fir'), ]
+zurich.df.sub$spp <- factor(zurich.df.sub$spp)
+# Run ANOVA
+anova.out <- aov(dbh ~ spp, data = zurich.df.sub)
+summary(anova.out)
+# Tukey's Pairwise comparisons
+tukey.out <- glht(anova.out, linfct = mcp(spp = 'Tukey'))
+tukey.out
+# Letters are obtained from the above
+cld(tukey.out)
+boxplot(dbh ~ spp, data = zurich.df.sub, xlab = 'Species', ylab = 'DBH', 
+	col = 'grey', names = c('Ash', 'Larch', 'Maple', 'Silver Fir'), 
+	las = 1, ylim = c(0, 100), 
+	main = 'Results of One-Way ANOVA and Tukeys Pairwise Comparisons')
+text(x = 1, y = 85, labels = 'C')
+text(x = 2, y = 100, labels = 'B')
+text(x = 3, y = 65, labels = 'A')
+text(x = 4, y = 82, labels = 'B')
+```
+
+
+******
 
 Congratulations! You've reached the end of Exercise 3.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -261,4 +304,4 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+*******

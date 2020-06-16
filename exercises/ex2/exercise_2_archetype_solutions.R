@@ -1,13 +1,15 @@
 ## ------------------------------------------------------------------------
-con <- url("http://blue.for.msu.edu/FOR875/data/NE-temp.RData")
+con <- url("http://www.finley-lab.com/files/data/NE-temp.RData")
 load(con)
 close(con)
 rm(con)
 ls()
 
+
 ## ------------------------------------------------------------------------
 is.vector(ne.station.1)
 is.numeric(ne.station.1)
+
 
 ## ------------------------------------------------------------------------
 head(ne.station.1)
@@ -15,37 +17,44 @@ mean(ne.station.1)
 max(ne.station.1)
 summary(ne.station.1)
 
+
 ## ---- comment=NA---------------------------------------------------------
 which.max(ne.station.1)
 ne.station.1[which.max(ne.station.1)]
 max(ne.station.1)
 
+
 ## ------------------------------------------------------------------------
 cor(ne.station.1, ne.station.2)
+
 
 ## ---- fig.width=4, fig.height=4, fig.align='center'----------------------
 plot(ne.station.1, ne.station.2)
 
+
 ## ------------------------------------------------------------------------
-##1
 length(ne.station.2)
 
-##2a
+
+## ------------------------------------------------------------------------
 which.max(ne.station.2)
 #or
 names(which.max(ne.station.2))
 #or
 ne.station.2[which.max(ne.station.2)]
 
-##2b
+
+## ------------------------------------------------------------------------
 which.min(ne.station.2)
 #or
 names(which.min(ne.station.2))
 #or
 ne.station.2[which.min(ne.station.2)]
 
-##3
+
+## ------------------------------------------------------------------------
 mean(ne.station.2)
+
 
 ## ------------------------------------------------------------------------
 library(leaflet)
