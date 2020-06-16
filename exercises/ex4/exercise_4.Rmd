@@ -235,12 +235,12 @@ You don't have to understand exactly how your machine handles floating point num
 
 ## Challenge Question 
 
-This question **will not be graded** and is provided for additional practice building your `R` skills. This is a *challenge* question, and thus not all material has been (or will be covered). 
+This question **will not be graded** and is provided for additional practice building your `R` skills. This is a *challenge* question, and thus not all material has been (or will be) covered. 
 
 Here we will continue using the `subset` function, learn how to perform basic linear regression in `R`, and continue developing our plotting skills with the `graphics` package. We seek to determine if there is a significant linear correlation between year and per capita GDP for the United States. We will do this by subsetting the data frame to obtain only the data from the United States, determine the correlation between year and GDP, and then create a scatter plot of the results. I used the following functions in my answer: `subset`, `cor` (correlation), `plot`, `axis` (manually add axis to the plot), `text`, `abline` (add a line to the plot), `lm` (linear model, used to get line on plot), `expression` (way to add mathy text to an R plot, e.g., $\rho$). The color I used is `lightskyblue1`. 
 
 
-```{r, out.width = '50%'}
+```{r, out.width = '50%', echo = FALSE}
 knitr::include_graphics("challengeQuestion.png")
 ```
 
