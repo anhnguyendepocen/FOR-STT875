@@ -24,16 +24,16 @@ Set some global options to make the R code printed in the html output look nice.
 knitr::opts_chunk$set(comment = NA)
 ```
 
-In this exercise we practice using `ggplot2` functions for creating graphics. Some of what you'll be doing is not covered explicitly in the book, so you will probably find the `ggplot2` help at (http://docs.ggplot2.org/current/) to be useful, as well as other referenced provided in Chapter 5. Of course Google is also quite helpful!
+In this exercise we practice using `ggplot2` functions for creating graphics. Some of what you'll be doing is not covered explicitly in the book, so you will probably find the `ggplot2` help at https://ggplot2.tidyverse.org/reference/ to be useful, as well as other references provided in Chapter 5. Of course Google is also quite helpful!
 
 We'll again use the gapminder data created by Jenny Bryan. To read these data into R and remind yourself of the structure use
 
 ```{r, cache = TRUE}
-gapminder <- read.delim("http://blue.for.msu.edu/FOR875/data/gapminder.tsv", header = TRUE)
+gapminder <- read.delim("http://www.finley-lab.com/files/data/gapminder.tsv", header = TRUE)
 str(gapminder)
 ```
 
-##Scatter Plots
+## Scatter Plots
 Our main focus will be on scatter plots, although other types of graphical displays such as histograms and box plots will also make an appearance. In some cases the R code will be provided for you. In others the finished graphic will be provided, and your job will be to determine how to create that graphic.
 
 First, we draw a simple scatter plot of life expectancy versus GDP. In this first code chunk we'll need to load the `ggplot2` library, since it's not loaded by default in R.
@@ -84,8 +84,10 @@ p <- ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) +
 p + geom_point()
 ```
 
-##TODO
-###Life expectancy and GDP
+## TODO
+
+### Life expectancy and GDP
+
 Using `p` as a starting point, produce a scatter plot similar to the ones we have created, but with the countries from each of the five continents colored differently such that your graphic looks like this:
 
 ```{r p-col}
@@ -98,7 +100,7 @@ Add a least squares line to the scatter plot. Here is what the graphic should lo
 p + geom_point(size=1, aes(color = continent)) + stat_smooth(method = lm, se = FALSE) + labs(title = "TODO 6.2: plot 2")
 ```
 
-The least squares line is not very visible. Make it wider. Also change its color to green. Here is what the graphic should look like:
+The least squares line is not very visible. Make it wider. Also change its color to green. Here is what the graphic should look like (Note: we won't take off if your line width and color do not *exactly* match ours, but do try to get them as close as possible):
 
 ```{r p-col-lm-grn}
 p + geom_point(aes(color = continent)) + stat_smooth(method = lm, se = FALSE, lwd = 2, color = "green") + labs(title = "TODO 6.3: plot 3")
@@ -116,14 +118,14 @@ Rather than least squares LINES, include a separate smoother for each continent.
 p + geom_point(aes(color = continent)) + stat_smooth(method = loess, se = FALSE, aes(color = continent), lwd = 1.5) + labs(title = "TODO 6.5: plot 5")
 ```
 
-###Country trends over time
+### Country trends over time
 So far the focus has been on life expectancy versus per capita GDP. Next we investigate how life expectancy changes over time, and limit our attention to one or a few countries. First, here is the graphic for Rwanda (do you recall what happened in Rwanda in the early to mid 1990s).
 
 ```{r}
 ggplot(data = subset(gapminder, country == "Rwanda"), aes(x = year, y = lifeExp)) + geom_line() + labs(title = "TODO 6.6: plot 6")
 ```
 
-Probably adding the actual points being connected by the line segments would add clarity.
+Probably adding the actual points being connected by the line segments would add clarity. Add the points to the graph as in the following: 
 
 ```{r}
 ggplot(data = subset(gapminder, country == "Rwanda"), aes(x = year, y = lifeExp)) + geom_line() + geom_point() + labs(title = "TODO 6.7: plot 7")
@@ -140,7 +142,7 @@ ggplot(data = subset(gapminder, country %in% five_countries), aes(x = year, y = 
 ```
 
 ## Histograms, box plots, and facets
-Consider the distribution of life expectancy. Here is a histogram of life expectancy.
+Consider the distribution of life expectancy. Here is a histogram of life expectancy (Note: you will likely receive warning messages. These messages are fine and just provide suggestions regarding the number of bins to use).
 
 ```{r}
 ggplot(data = gapminder, aes(x = lifeExp)) + geom_histogram()
@@ -174,15 +176,48 @@ Side by side boxplots would help us understand the changes in life expectancy ov
 ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_boxplot(aes(group = year))
 ```
 
-********
+## Challenge Question
+
+This question **will not be graded** and is provided for additional practice building your `R` skills. This is a *challenge* question, and thus not all material has been (or will be) covered. 
+
+`ggplot2` can produce some really fantastic, publication quality plots. As previously showed, creating facet plots is a nice way to group sets of plots together. However, there are additional methods for grouping multiple plots in the same row, column, or a table like format, which are tasks that are often desired when preparing a publication. In this question, you will use the `ggpubr` package to create a grouping of three plots of the gapminder data set. You should produce the following plot. Here are a couple tips for recreating these plots: 
+
+1. Install and load the `ggthemes` and `ggpubr` packages, two very useful extensions of `ggplot2`. 
+2. Use the `scale_color_colorblind()` function in the first plot to create a color palette that is easily visible for colorblind folks like Jeff. This color palette is contained within the `ggthemes` package.
+3. Use the `theme_bw()` theme for the first graph and the `theme_classic()` theme for the second graph. 
+4. Use the `ggarrange` function to arrange the three plots in vertical format, giving them labels of A, B, and C, respectively. 
+
+
+```{r, fig.height = 12, message = FALSE}
+library(ggthemes)
+library(ggpubr)
+plot.1 <- p + 
+  geom_point(aes(color = continent)) + 
+  scale_color_colorblind() + 
+  stat_smooth(method = lm, se = FALSE, aes(color = continent)) + 
+  theme_bw() + 
+  labs(x = 'Year', y = 'Life Expectancy', color = 'Continent')
+plot.2 <- ggplot(data = gapminder, aes(x = year, y = lifeExp)) + 
+      geom_boxplot(aes(group = year), fill = 'grey') + 
+      theme_classic() + 
+      labs(x = 'Year', y = 'Life Expectancy')
+plot.3 <- ggplot(data = subset(gapminder, country == 'United States'), 
+		 aes(x = year, y = lifeExp)) + 
+	    geom_line(col = 'blue') + 
+	    geom_point(col = 'black') + 
+	    labs(x = 'Year', y = 'Life Expectancy')
+ggarrange(plot.1, plot.2, plot.3, ncol = 1, nrow = 3, labels = c('A', 'B', 'C'))
+```
+
+******
 
 Congratulations! You've reached the end of Exercise 6.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them at the end of your R Script.
 
-###Give us your feedback!
+### Give us your feedback!
 
 Place answers at end of R Script.
 
@@ -190,4 +225,4 @@ Place answers at end of R Script.
 
 2.  What could be done to improve your learning experience?
 
-*********
+*******
