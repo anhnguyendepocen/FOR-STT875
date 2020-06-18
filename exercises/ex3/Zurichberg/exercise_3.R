@@ -122,7 +122,3 @@ letters %in% c("a", "m", "q", "s")
 ## ----QuestionD-----------------------------------------------------------
 # TODO 3.17: Answer to question here
 
-
-## ---- echo = FALSE, out.width = "100%"-----------------------------------
-knitr::include_graphics("../challengeQuestion.png")
-

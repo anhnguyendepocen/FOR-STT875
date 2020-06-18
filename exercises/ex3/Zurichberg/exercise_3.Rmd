@@ -222,7 +222,7 @@ This question **will not be graded** and is provided for additional practice bui
 
 In this question, you will further practice your logical subsetting skills (a very handy tool in `R`), perform some basic statistical analyses, and will improve your skills  using the `graphics` package in `R`.
 
-We seek to assess whether or not there are differences in the DBH of Ash, Larch, Maple, and Silver Fir species of trees. Ignoring any necessary assumptions regarding the study design and the model (e.g., a completely randomized design, normality assumptions) perform a one-way Analysis of Variance (ANOVA) to assess if there are differences in the DBH of trees. Subsequently, perform pairwise comparisons using Tukey's adjustment method for the family-wise error rate to assess which species are significantly different from each other. Finally, produce a summary figure of your findings. Your figure should resemble the following: 
+We seek to assess whether or not there are differences in the DBH of Ash, Larch, Maple, and Silver Fir species of trees. Ignoring any necessary assumptions regarding the study design and the model (e.g., a completely randomized design, normality assumptions) perform a one-way Analysis of Variance (ANOVA) to assess if there are differences in the DBH of trees. Subsequently, perform pairwise comparisons using Tukey's adjustment method for the family-wise error rate to assess which species are significantly different from each other. Finally, produce a summary figure of your findings. Your figure should resemble the `challengeQuestion.png` included on D2L: 
 
 Here is a guide to help you along the way. 
 
@@ -232,12 +232,6 @@ Here is a guide to help you along the way.
 4. Use the `aov` and `summary` function to perform the ANOVA and interpret results
 5. Use the `glht` and `cld` functions in the `multcomp` package to perform Tukey's pairwise comparisons. The `cld` function will nicely give you the letters necessary for the plot so you don't have to determine them yourself. 
 6.  Use the `boxplot` and `text` functions to produce the plot. 
-
-
-```{r, echo = FALSE, out.width = "100%"}
-knitr::include_graphics("../challengeQuestion.png")
-```
-
 
 ******
 
