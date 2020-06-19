@@ -24,11 +24,11 @@ Again, set some global options to make the R code printed in the html output loo
 knitr::opts_chunk$set(comment = NA, tidy = TRUE)
 ```
 
-###Three functions: `table`, `cut`, and `tapply`
+### Three functions: `table`, `cut`, and `tapply`
 
 The `table`, `cut`, and `tapply` functions are very handy for partitioning and summarizing data sets. We'll use these functions to summarize World Bank data on life expectancy, GDP, fertility rate, population, etc., for countries over the years 1960-2014. (These data share some similarities with the `gapminder` data we have worked with previously.)
 ```{r, cache = TRUE}
-WorldBank <- read.csv("http://blue.for.msu.edu/FOR875/data/WorldBank.csv", header = TRUE)
+WorldBank <- read.csv("http://www.finley-lab.com/files/data/WorldBank.csv", header = TRUE)
 str(WorldBank)
 ```
 
@@ -113,7 +113,7 @@ Next use `with` to create the two-way table of region and life expectancy with r
 with(WorldBank, table(region2, life.expectancy > 60, dnn = c("Region","Life Expectancy more than 60 years")))
 ```
 
-##Using `tapply`
+## Using `tapply`
 
 Consider investigating mean life expectancy by region. For example we could compute the mean life expectancy by region.
 
@@ -197,18 +197,43 @@ x <- cut(WorldBank$latitude, breaks = c(-66.5, -23.5, 0, 23.5, 66.5), include.lo
 with(WorldBank, tapply(X = life.expectancy, INDEX = x, FUN = mean, na.rm = TRUE ))
 ```
 
-********
+## Challenge Question
+
+This question **will not be graded** and is provided for additional practice building your `R` skills. This is a *challenge* question, and thus not all material has been (or will be) covered. 
+
+Principal components analysis (PCA) is a statistical technique often used for data reduction. PCA is often used when a researcher collects multiple dependent variables that are highly correlated with each other and are somehow related. PCA can also give some understanding into how different groups of variables are related to each other. In this challenge question, we ask you to perform a PCA on the following variables in the `WorldBank` data set: `fertility.rate`, `life.expectancy`, `population`, `GDP.per.capita.Current.USD`, and `X15.to.25.yr.female.literacy`. Many of these variables are correlated with each other, and thus we could potentially use principal components analysis to reduce the number of variables we are looking at by considering some overall "socioeconomic variable". You should perform a PCA on these variables, assess the results of the PCA, and then produce a biplot for the first two principal components showing how the different regions are related to each other in terms of these components by plotting the points with different colors for each region. We took the following steps: 
+
+1. Install and load the `ggbiplot` package for producing a biplot. Note: this will also install a couple other packages if they aren't already installed, including `ggplot2`. 
+2. Subset the `WorldBank` data set to only grab the variables you will include in the PCA, as well as the `region2` variable. You will also want to remove any rows of these variables that contain any NA values (as PCA does not go well with NAs). I find the `na.omit` function useful for this. 
+3. Perform the PCA using the `prcomp` function. You will want to make sure to center and scale the variables. 
+4. Use the `summary` function to assess results of the PCA. 
+5. Use the `ggbiplot` function to produce a plot of the first principal component vs the second principal component. Plot the points in the graph so that each region has a different color. 
+
+```{r, message = FALSE, warning = FALSE, out.width = '100%'}
+library(ggbiplot)
+pca.wb <- na.omit(WorldBank[, c('fertility.rate', 'life.expectancy',
+                                'population', 'GDP.per.capita.Current.USD', 
+                                'X15.to.25.yr.female.literacy', 'region2')])
+out.pca <- prcomp(pca.wb[, -ncol(pca.wb)],
+                 center = TRUE,
+                 scale. = TRUE) 
+summary(out.pca)
+ggbiplot(out.pca, groups = pca.wb$region2) + 
+  theme_bw()
+```
+
+******
 
 Congratulations! You've reached the end of Exercise 7.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -218,4 +243,6 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+
+
+*******

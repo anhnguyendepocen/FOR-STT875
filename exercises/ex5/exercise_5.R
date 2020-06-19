@@ -115,7 +115,3 @@ rep(ltrs, each = 3)
 rep(ltrs, times = 3)
 rep(ltrs, times = c(3, 2, 4, 7))
 
-
-## ---- out.width = '50%', echo = FALSE------------------------------------
-knitr::include_graphics("challengeFigure.png")
-

@@ -213,7 +213,7 @@ This question **will not be graded** and is provided for additional practice bui
 
 In this question we will extend upon our knowledge of analyzing basic linear models in `R` using the `lm` function by developing a model to predict the `Fertility` based on the other socioeconomic variables included in the `swiss` data set. We seek the basic linear model that best predicts fertility. To do this we take a *Backwards Stepwise Regression* approach where we seek to minimize the *Akaike's Information Criterion*. The fundamental idea behind backwards stepwise regression and the wide topic of *model selection* is to determine the most simple model that best explains the variability in the response variable of interest. In our case, we could simply model Fertility as a linear function of all variables in the `swiss` data set, but we may be including variables that do not explain a lot of variability in Fertility which would make our model overly complex. 
 
-Backwards stepwise selection is a procedure that is used to compare between different sets of models. For more specific information, visit [this website](https://quantifyinghealth.com/stepwise-selection/). Here we use backwards stepwise selection to determine the "best" fitting model according to the Akaike's Information Criterion (AIC). After determining the best model, we seek to produce a plot of the fitted values versus the true values of Fertility to seek how well our model represents the data. We take the following steps to do this: 
+Backwards stepwise selection is a procedure that is used to compare between different sets of models. For more specific information, visit [this website](https://quantifyinghealth.com/stepwise-selection/). Here we use backwards stepwise selection to determine the "best" fitting model according to the Akaike's Information Criterion (AIC). After determining the best model, we seek to produce a plot of the fitted values versus the true values of Fertility to seek how well our model represents the data. The plot you should produce is on D2l, saved in the Exercise 5 folder as `challengeQuestionEx5.png`. We take the following steps to do this: 
 
 1. Install and load the `MASS` package that contains function for stepwise selection
 2. Use the `lm` function to run the full linear model with Fertility as a dependent variable and all other variables as independent variables. 
@@ -221,10 +221,6 @@ Backwards stepwise selection is a procedure that is used to compare between diff
 4. Assess normality using the `qqnorm` and `qqline` functions, as well as a plot of the residuals versus the fitted values. 
 5. Use the `predict` function to obtain the lower and upper 95\% confidence intervals for the fitted values. 
 6. Use the `plot`, `axis`, `segments` and `lines` function to produce the following plot of the predicted vs the real values. The gray lines represent the 95\% confidence interval for each fitted value.  
-
-```{r, out.width = '50%', echo = FALSE}
-knitr::include_graphics("challengeFigure.png")
-```
 
 ******
 

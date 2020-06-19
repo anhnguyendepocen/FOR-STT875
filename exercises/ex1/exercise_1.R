@@ -44,18 +44,3 @@ plot(JimRiceBA, JimRiceRBI)
 plot(JimRiceBA, JimRiceHR)
 plot(JimRiceHR, JimRiceRBI)
 
-
-## ------------------------------------------------------------------------
-names(batting_stats)
-dim(batting_stats)
-batting_stats[90000, c(32, 25, 13, 14)] 
-batting_stats[c(90000, 91000, 92000), c(32, 25, 13, 14)]
-
-
-## ------------------------------------------------------------------------
-RockyColavito <- subset(batting_stats, playerName == "Rocky Colavito")
-RockyColavito[, c(32, 25, 13, 14)]
-Over400 <- subset(batting_stats, BA > 0.4 & G >= 100)
-dim(Over400)
-Over400[, c("playerName", "BA", "yearID")]
-

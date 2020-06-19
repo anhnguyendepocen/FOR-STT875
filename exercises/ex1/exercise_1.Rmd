@@ -16,7 +16,7 @@ opts_chunk$set(comment=NA, tidy=TRUE, prompt=FALSE)
   + Produce basic descriptive statistics and graphics 
 
 ## Deliverables
-Create a R script that follows the code format of the script I created for the first part of this exercise (see exercise_1.R in the D2L Exercise 1 directory). Your answer script should follow the format of the template (see template_1.R). The Exercise 1 video provides some guidance for completing this exercise.
+Create a `R` script that follows the code format of the script I created for the first part of this exercise (see exercise_1.R in the D2L Exercise 1 directory). Your answer script should follow the format of the template (see template_1.R). The Exercise 1 video provides some guidance for completing this exercise.
 
 After you check that your script runs and produces the correct answers to the questions listed at the end of this document, upload it to the Exercise 1 D2L dropbox.
 
@@ -41,9 +41,9 @@ Two useful functions are `rm` and `ls`. The first removes an object (e.g., the `
 ```{r List all objects in the workspace.}
 ls()
 ```
-Initially we'll be interested in the nine objects that contain the batting data set, number of home runs, and number of RBIs for three players, Jim Rice, Carlton Fisk, and Ted Williams. The other object we read in, `batting_stats`, contains such data and more for a wide variety of players. 
+Initially we'll be interested in the ten objects that contain the batting data set, number of home runs, and number of RBIs for three players, Jim Rice, Carlton Fisk, and Ted Williams. The other object we read in, `batting_stats`, contains such data and more for a wide variety of players. 
 
-First let's look at the batting average data for Jim Rice. This *vector* holds his batting average for the years 1974-1989. *Vectors* typically contain values for one variable, e.g, Jim Rice's batting average with the vector named `JimRiceBA`. 
+First let's look at the batting average data for Jim Rice. This *vector* holds his batting average for the years 1974-1989. *Vectors* typically contain values for one variable, e.g., Jim Rice's batting average with the vector named `JimRiceBA`. 
 
 ```{r Structure of JimRiceBA}
 JimRiceBA
@@ -84,10 +84,10 @@ plot(JimRiceBA, JimRiceHR)
 plot(JimRiceHR, JimRiceRBI)
 ```
 
-Both the scatter plots and the correlation calculations show that the strongest relationship exists between home runs and RBIs (At this point we are using the base `graphics` functions in R to create graphics. Later in the course we will learn to use a package called `ggplot2` which provides an alternative to the base graphics.)
+Both the scatter plots and the correlation calculations show that the strongest relationship exists between home runs and RBIs (At this point we are using the base `graphics` functions in `R` to create graphics. Later in the course we will learn to use a package called `ggplot2` which provides an alternative to the base graphics.)
 
 ### Questions to answer 
-Write an R script to answer the following questions for Ted Williams using `TedWilliamsBA`, `TedWilliamsHR`, and `TedWilliamsRBI` vectors. 
+Write an `R` script to answer the following questions for Ted Williams using `TedWilliamsBA`, `TedWilliamsHR`, and `TedWilliamsRBI` vectors. 
 
 1. How many seasons did Ted Williams play? (Hint: Use the `length` function.)
 2. In which season did Ted Williams have his highest batting average?
@@ -96,36 +96,36 @@ Write an R script to answer the following questions for Ted Williams using `TedW
 5. For which pair of the variables representing home runs, RBIs, and batting average, is the correlation the highest? What is this correlation?
 6. What was the largest jump in Ted Williams' RBIs from one season to the next? In which season did this jump occur? Note that we are asking for the largest *magnitude* jump, regardless of whether or not it was an increase or a decrease.
 
+Congratulations! You finished Exercise 1. 
+<!-- The R objects like `JimRiceBA` or `JimRiceRBI` that we worked with above are *vectors*. *Data frames* provide a way to collect many variables together. The data frame `batting_stats` contains data on several variables for many baseball players. Later in the course we will learn a lot about data frames, which provide a way to represent data sets with many variables.  -->
 
-The R objects like `JimRiceBA` or `JimRiceRBI` that we worked with above are *vectors*. *Data frames* provide a way to collect many variables together. The data frame `batting_stats` contains data on several variables for many baseball players. Later in the course we will learn a lot about data frames, which provide a way to represent data sets with many variables. 
+<!-- Variables in data frames are represented by columns. We can find out the names of the variables using the `names` function. Also the `dim` function yields the number of rows and columns of the data frame. We can also select particular rows and/or columns as shown below. Below we provide an example using the `batting_stats` data frame.  -->
 
-Variables in data frames are represented by columns. We can find out the names of the variables using the `names` function. Also the `dim` function yields the number of rows and columns of the data frame. We can also select particular rows and/or columns as shown below. Below we provide an example using the `batting_stats` data frame. 
+<!-- ```{r} -->
+<!-- names(batting_stats) -->
+<!-- dim(batting_stats) -->
+<!-- batting_stats[90000, c(32, 25, 13, 14)]  -->
+<!-- batting_stats[c(90000, 91000, 92000), c(32, 25, 13, 14)] -->
+<!-- ``` -->
 
-```{r}
-names(batting_stats)
-dim(batting_stats)
-batting_stats[90000, c(32, 25, 13, 14)] 
-batting_stats[c(90000, 91000, 92000), c(32, 25, 13, 14)]
-```
+<!-- The `subset` function provides a way to select rows of a data frame that satisfy a condition of interest (rather than just specifying the row number(s) as above). We will use `subset` to select the rows corresponding to a particular player, Rocky Colavito, and also will select all the rows for which the batting average is greater than 0.400, and for which there were at least 100 games played. -->
+<!-- ```{r} -->
+<!-- RockyColavito <- subset(batting_stats, playerName == "Rocky Colavito") -->
+<!-- RockyColavito[, c(32, 25, 13, 14)] -->
+<!-- Over400 <- subset(batting_stats, BA > 0.4 & G >= 100) -->
+<!-- dim(Over400) -->
+<!-- Over400[, c("playerName", "BA", "yearID")] -->
+<!-- ``` -->
+<!-- To specify that a variable is equal to a given value, we use `==`. If, as in `RockyColavito[, c(32, 25, 13, 14)]`, we leave the row specification blank, R returns all rows. To specify both of two conditions, we use `&`. And we can specify columns either by the column number, or by the column name. -->
 
-The `subset` function provides a way to select rows of a data frame that satisfy a condition of interest (rather than just specifying the row number(s) as above). We will use `subset` to select the rows corresponding to a particular player, Rocky Colavito, and also will select all the rows for which the batting average is greater than 0.400, and for which there were at least 100 games played.
-```{r}
-RockyColavito <- subset(batting_stats, playerName == "Rocky Colavito")
-RockyColavito[, c(32, 25, 13, 14)]
-Over400 <- subset(batting_stats, BA > 0.4 & G >= 100)
-dim(Over400)
-Over400[, c("playerName", "BA", "yearID")]
-```
-To specify that a variable is equal to a given value, we use `==`. If, as in `RockyColavito[, c(32, 25, 13, 14)]`, we leave the row specification blank, R returns all rows. To specify both of two conditions, we use `&`. And we can specify columns either by the column number, or by the column name.
+<!-- Use the `batting_stats` data frame to answer these questions. -->
 
-Use the `batting_stats` data frame to answer these questions.
-
-  7. Extract all the rows giving data on the baseball player `Lou Gehrig` and assign the result to an object called `LouGehrig`.
-  8. Display the player name, batting average, number of home runs (HR), number of RBIs, and year for Lou Gehrig.
-  9. Display the same data only for the years when Lou Gehrig hit at least 30 home runs.
-  10. Extract all the rows where the number of home runs is 50 or more and the batting average is 
-over 0.300. Assign the result to an object called PowerAndAverage.
-  11. Which players had years with 50 or more home runs and an average over 0.300?
-  12. In which years did these players achieve this result?
-  13. Try to extract the rows when the number of home runs is greater than 90. What happens?
+<!--   7. Extract all the rows giving data on the baseball player `Lou Gehrig` and assign the result to an object called `LouGehrig`. -->
+<!--   8. Display the player name, batting average, number of home runs (HR), number of RBIs, and year for Lou Gehrig. -->
+<!--   9. Display the same data only for the years when Lou Gehrig hit at least 30 home runs. -->
+<!--   10. Extract all the rows where the number of home runs is 50 or more and the batting average is  -->
+<!-- over 0.300. Assign the result to an object called PowerAndAverage. -->
+<!--   11. Which players had years with 50 or more home runs and an average over 0.300? -->
+<!--   12. In which years did these players achieve this result? -->
+<!--   13. Try to extract the rows when the number of home runs is greater than 90. What happens? -->
 

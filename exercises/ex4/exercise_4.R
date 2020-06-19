@@ -125,7 +125,3 @@ n <- 1000000000000000
 n <- 10000000000000000
 (1 + 1/n)^n
 
-
-## ---- out.width = '50%', echo = FALSE------------------------------------
-knitr::include_graphics("challengeQuestion.png")
-

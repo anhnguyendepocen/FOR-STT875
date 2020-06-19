@@ -3,7 +3,7 @@
 ## Author: 
 
 # Setup -------------------------------------------------------------------
-con <- url("http://blue.for.msu.edu/FOR875/data/batting.RData")
+con <- url("http://www.finley-lab.com/files/data/batting.RData")
 load(con)
 close(con)
 rm(con)
