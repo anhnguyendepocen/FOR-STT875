@@ -1,6 +1,6 @@
 ---
 title: "FOR/STT 875 Exercise 2"
-#author: "Andy Finley"
+author: "Andy Finley"
 #date: "September 13, 2016"
 output: html_document
 ---
@@ -56,7 +56,7 @@ Make sure your figure is the same dimension and centered in the document. I used
 Note, the horizontal rule (i.e., line) below. It is useful for delineating different parts of a document.
 
 ***********
-###Part 2: Some questions for you to answer
+### Part 2: Some questions for you to answer
 Write R code that answers the following questions for the station 2 data, i.e., `ne.station.2` vector. Write your answers in an R code chunk immediately after each question. 
 
 1. How many temperature readings were taken at station 2? 
@@ -82,7 +82,7 @@ Write R code that answers the following questions for the station 2 data, i.e., 
 
 ***********
 
-###Part 3: Some other useful R Markdown features
+### Part 3: Some other useful R Markdown features
 
 Here are some other useful features of R Markdown.
 
@@ -92,7 +92,7 @@ b. It is possible to use $\LaTeX$ to display more complex mathematics such as $\
 c. As you saw in Part 1, URLs can be included in R Markdown, e.g., the webcomic [xkcd](http://xkcd.com/) sometimes has funny stuff.
 
 ***********
-###Part 4: Now just some fun and foreshadowing of topics to come
+### Part 4: Now just some fun and foreshadowing of topics to come
 
 Try out the resulting web map by clicking on the station markers, radio buttons, and check boxes. Zoom into the coldest location, the [Mount Washington Observatory](https://www.mountwashington.org/experience-the-weather/current-summit-conditions.aspx). It's a lovely view from there.
 
@@ -116,7 +116,7 @@ m <- leaflet(ne.stations, width="100%")%>%
     addMarkers(~lon, ~lat, data=cold.stations, group="Cold stations", popup= ~cold.popup) %>%
     addTiles(group = "Roads etc.") %>%
     addProviderTiles("Esri.WorldImagery", group = "Satellite") %>%
-    addProviderTiles("Thunderforest.Landscape", group = "Topographical") %>%
+    addProviderTiles("Esri.WorldTopoMap", group = "Topographical") %>%
     addLayersControl(baseGroup = c("Roads etc.", "Satellite", "Topographical"),
                      overlayGroups = c("Hot stations", "Cold stations"),
                      options = layersControlOptions(collapsed = FALSE)

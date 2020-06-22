@@ -19,63 +19,65 @@ Upload your exercise_8.Rmd and exercise_8.html files to the Exercise 8 D2L dropb
 ## Grading
 You will receive full credit if your R Markdown document: 1) compiles without error; and 2) correctly completes the `# TODO:` code chunks. Also, please, fill in the feedback [questions](#questions) at the end of the exercise. 
 
-##Getting the "raw" data from Gapminder
-Go to http://www.gapminder.org/data/. You should see a list of 25 data sets available for download, out of 519 such data sets (as of July 25, 2018). Enter `life expectancy` in the search box in the right corner of the data table. The second result should be called "Life expectancy (years)". 
+## Getting the "raw" data from Gapminder
 
-Click on the link in the `Download` column to download an Excel spreadsheet with the data. Open the spreadsheet, which will have several sheets, in Excel. If it's not the active sheet already, click on the `Data` tab to make it active. The first column has a list of countries, and the subsequent columns have life expectancies for years from 1800 through 2016. How are missing values indicated in the spreadsheet?
+Go to http://www.gapminder.org/data/. You should see a search box in a popup window in the middle of the screen. In this box, type "life expectancy". Hover over the first result, and you should see a description on the right with the title "Life expectancy (years)".
+
+Click on the first result, and you should see the data set pop up in a display, with multiple options for download as a .csv file, a .xlsx file, as well as different viewing options. Although there is an option to save the file as a .csv file directly, download the .xlsx file so we can practice converting an Excel spreadsheet into a csv file. Notice the first column has a list of countries, and the subsequent columns have life expectancies for years from 1800 predicted all the way to 2100. How are NA values included in the data set? 
 
 Although it's possible to read Excel spreadsheets directly into R, we'll first save the spreadsheet as a CSV file. Save it in the working directory of your R session. (If you don't know the working directory, type `getwd()` in the console window. Ideally you've created a new R project in a directory of your choice, and this will be the working directory.) Excel will probably remind you that it can only save the active sheet, and will also give various other warnings about saving as a CSV file. Choose a simple name such as `LifeExp.csv` since you'll have to use this name as an argument to the `read.csv` function soon.
 
-##Getting the data into R and doing some clean up
+## Getting the data into R and doing some clean up
 Use `read.csv` to read the data into an object called `gapminder1`. Make sure to use `na.strings` to specify how missing data are indicated in the CSV file. 
 
 ```{r}
 #TODO 8.1: Read in LifeExp.csv and check that it was read in correctly
 ```
 
-Investigate the data using `str`, `head`, `names`, etc., to make sure it was read in correctly. (Hint: it should have 260 rows and 218 columns.) You don't need to submit code for this, just convince yourself it was read in correctly. Because names in R cannot start with a number, the columns after the first column have an `X` prepended, e.g., `X1804` and `X2001`. We'll address this later on.
+Investigate the data using `str`, `head`, `names`, etc., to make sure it was read in correctly. (Hint: it should have 187 rows and 302 columns.) You don't need to submit code for this, just convince yourself it was read in correctly. Because names in R cannot start with a number, the columns after the first column have an `X` prepended, e.g., `X1804` and `X2001`. We'll address this later on.
 
-Note that some spreadsheet applications do weird things when exporting data into csvs, which may cause your data set to show up as having 999 rows instead of 260. If this is the case, then use the code `gapminder1 <- gapminder1[1:260, ]` to only work with the 260 rows that comprise the data set. 
+Note that some spreadsheet applications do weird things when exporting data into csvs, which may cause your data set to show up as having 999 rows instead of 187. If this is the case, then use the code `gapminder1 <- gapminder1[1:187, ]` to only work with the 187 rows that comprise the data set. 
 
-The name of the variable containing the countries is something like `Life.expectancy` (yours might be different, but similar). Rename this column to `country`. You can do this using the `names` function.
-
-```{r}
-#TODO 8.2: rename name of the first column to "country"
-```
-
-##Computing some summary statistics
+## Computing some summary statistics
 Use `apply` to compute the **mean, median, minimum, and maximum** life expectancy for each year. You'll need to exclude the first column, and also will need to tell R how to handle missing values. 
 
 ```{r}
-#TODO 8.3: calculate mean, median, minimum, and maximum life expetancy for each year here
+#TODO 8.2: calculate mean, median, minimum, and maximum life expetancy for each year here
 ```
 
-##Changing the data from wide to long format
+## Changing the data from wide to long format
+
 Notice the data are in "wide" format, with each column representing a year rather than "long" format, where year is a variable.
 
-Load the `tidyr` library. Use the `gather` function to transform the data from wide to long format and assign the result back to `gapminder1` (i.e., after the call to the `gather` function, your new `gapminder1` should have 56420 rows and 3 columns).  Call the variable containing the years `year` and call the variable containing the life expectancies `lifeExp`. At this point the years will be represented as `X1804` and `X2001` for example. We will fix that soon. Consult Section 6.4 of the book for details on the `gather` function. 
+Load the `tidyr` library. Use the `pivot_longer` function to transform the data from wide to long format and assign the result to `gapminder2` (i.e., after the call to the `pivot_longer` function, `gapminder2` should have 56287 rows and 3 columns).  Call the variable containing the years `year` and call the variable containing the life expectancies `lifeExp`. At this point the years will be represented as `X1804` and `X2001` for example. We will fix that soon. Consult [Section 6.6](https://www.jeffdoser.com/files/for875/_book/data2.html#reshaping-data)  of the book for details on the `pivot_longer` function. 
 
 ```{r}
 #TODO 8.4: Change gapminder1 from wide to long format here
 ```
 
-After transformation the data frame should contain 56420 observations (i.e., rows) on 3 variables (i.e., columns). 
+After transformation the data frame should contain 56287 observations (i.e., rows) on 3 variables (i.e., columns). 
 
-Because names in R cannot start with a number, the columns after the first have an `X` prepended, e.g., `X1804` and `X2001`. We will use the `substr` and `as.integer` functions to strip off the `X` and then to convert the resulting values to integer. (The `substr` function will be covered later in the course, but we'll use it here anyway!)
+Now that we have the data set in long format, use the `pivot_wider` function to convert the `gapminder2` data set back into the wide version of the data set. Save the result as `gapminder3`. Compare `gapminder3` to `as_tibble(gapminder1)` using the `all.equal` function, which should return `TRUE` if done correctly. Note: `gapminder3` is by default returned as a *tibble* while `gapminder1` is a data frame, which is why we compare `gapminder3` to `as_tibble(gapminder1`). 
+
+```{r}
+# TODO 8.5 Changer gapminder2 from long to wide, compare result to gapminder1
+```
+
+Now let's focus on working with `gapminder2`, the long version of the data set. Because names in R cannot start with a number, the columns after the first have an `X` prepended, e.g., `X1804` and `X2001`. We will use the `substr` and `as.integer` functions to strip off the `X` and then to convert the resulting values to integer. (The `substr` function will be covered later in the course, but we'll use it here anyway!)
 
 First use the code below to strip off the `X`. Make sure you remove the `eval = FALSE` code chunk option so that your R Markdown file will compile correctly. 
 
 ```{r, eval = FALSE}
-gapminder1$year <- substr(x = gapminder1$year, start = 2, stop = 5)
+gapminder2$year <- substr(x = gapminder2$year, start = 2, stop = 5)
 ```
 
 At that point the variable `year` should look good, i.e., should have the `X` removed, but will still be a character vector (see if you can confirm this yourself). Next, use `as.integer` to convert `year` to an integer vector. Again, remove the `eval = FALSE` code chunk option for proper compiling of the html document.
  
 ```{r, eval = FALSE}
-gapminder1$year <- as.integer(gapminder1$year)
+gapminder2$year <- as.integer(gapminder2$year)
 ```
  
-##Graphical displays
+## Graphical displays
 Load the `ggplot2` library and use it to create the following graphical displays:
 
 1. Draw a histogram of life expectancy, using all the data.
@@ -102,18 +104,36 @@ Load the `ggplot2` library and use it to create the following graphical displays
 ##TODO 8.8: Draw line graph grouped by country here
 ```
 
-********
+## Challenge Question
+
+This question **will not be graded** and is provided for additional practice building your `R` skills. This is a *challenge* question, and thus not all material has been (or will be) covered. 
+
+In this challenge question, we simply provide two additional examples to practice converting data sets between long and wide format. This is an extremely useful data manipulation technique provided by `R` that can greatly save time and reduce any errors if such a task was attempted in Excel. Hopefully after practicing this task a bit more you will become fully convinced to do such data manipulation tasks in `R` rather than in Excel. 
+
+Challenge Question 1: The `fish_encounters` data set is currently in long format. The dataset is contained in the `tidyr` package. Use the `help` function to learn about this data set, convert it into wide format, convert it back into long format, and compare your result to the original. 
+
+Challenge Question 2: The `us_rent_income` data set provides a slightly more complex example. Let's take a look at the structure of the data set, which again is included in the `tidyr` package. 
+
+```{r}
+library(tidyr)
+str(us_rent_income)
+head(us_rent_income)
+```
+
+These data are from the 2017 American Community Survey. The `GEOID` and `NAME` columns serve to identify the state the data come from. The `variable` gives the name of the variable that is estimated. The estimate for that value is `estimate` and the margin of error around that estimate is the `moe` column. Here, we have multiple values (i.e., `estimate` and `moe`) that correspond to each state. Convert these data into wide format. Your final data set should have 52 rows and 6 colums, where each row is a state (includes the District of Columbia and Puerto Rico, hence the 52). The names of the columns should be as follows: `GEOID`, `NAME`, `estimate.income`, `estimate.rent`, `moe.income`, `moe.rent`. You will need to use the `names_sep` argument, and supply a vector of columns to the `values_from` argument instead of a single column. 
+
+******
 
 Congratulations! You've reached the end of Exercise 8.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -123,4 +143,4 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+*******
