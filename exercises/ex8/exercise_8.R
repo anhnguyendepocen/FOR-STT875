@@ -7,11 +7,11 @@
 
 
 ## ------------------------------------------------------------------------
-#TODO 8.4: Change gapminder1 from wide to long format here
+#TODO 8.3: Change gapminder1 from wide to long format here
 
 
 ## ------------------------------------------------------------------------
-# TODO 8.5 Changer gapminder2 from long to wide, compare result to gapminder1
+# TODO 8.4 Changer gapminder2 from long to wide, compare result to gapminder1
 
 
 ## ---- eval = FALSE-------------------------------------------------------

@@ -44,7 +44,7 @@ Note that some spreadsheet applications do weird things when exporting data into
 Use `apply` to compute the **mean, median, minimum, and maximum** life expectancy for each year. You'll need to exclude the first column, and also will need to tell R how to handle missing values. 
 
 ```{r}
-#TODO 8.3: calculate mean, median, minimum, and maximum life expetancy for each year here
+#TODO 8.2: calculate mean, median, minimum, and maximum life expetancy for each year here
 apply(gapminder1[,2:ncol(gapminder1)], MARGIN = 2, mean, na.rm = TRUE)
 apply(gapminder1[,2:ncol(gapminder1)], MARGIN = 2, median, na.rm = TRUE)
 apply(gapminder1[,2:ncol(gapminder1)], MARGIN = 2, min, na.rm = TRUE)
@@ -58,7 +58,7 @@ Notice the data are in "wide" format, with each column representing a year rathe
 Load the `tidyr` library. Use the `pivot_longer` function to transform the data from wide to long format and assign the result to `gapminder2` (i.e., after the call to the `pivot_longer` function, `gapminder2` should have 56287 rows and 3 columns).  Call the variable containing the years `year` and call the variable containing the life expectancies `lifeExp`. At this point the years will be represented as `X1804` and `X2001` for example. We will fix that soon. Consult [Section 6.6](https://www.jeffdoser.com/files/for875/_book/data2.html#reshaping-data)  of the book for details on the `pivot_longer` function. 
 
 ```{r}
-#TODO 8.4: Change gapminder1 from wide to long format here
+#TODO 8.3: Change gapminder1 from wide to long format here
 library(tidyr)
 gapminder2 <- pivot_longer(data = gapminder1, cols = 2:ncol(gapminder1), 
 			   names_to = 'year', values_to = 'lifeExp') 
@@ -71,7 +71,7 @@ After transformation the data frame should contain 56287 observations (i.e., row
 Now that we have the data set in long format, use the `pivot_wider` function to convert the `gapminder2` data set back into the wide version of the data set. Save the result as `gapminder3`. Compare `gapminder3` to `as_tibble(gapminder1)` using the `all.equal` function, which should return `TRUE` if done correctly. Note: `gapminder3` is by default returned as a *tibble* while `gapminder1` is a data frame, which is why we compare `gapminder3` to `as_tibble(gapminder1`). 
 
 ```{r}
-# TODO 8.5 Changer gapminder2 from long to wide, compare result to gapminder1
+# TODO 8.4 Changer gapminder2 from long to wide, compare result to gapminder1
 gapminder3 <- pivot_wider(data = gapminder2, names_from = year, values_from = lifeExp)
 all.equal(gapminder1, as_tibble(gapminder3))
 ```

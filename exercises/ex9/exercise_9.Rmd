@@ -42,7 +42,7 @@ First let's look at the data frame `flights`. The following would be dangerous i
 flights
 ```
 
-##`print` and `glimpse`
+## `print` and `glimpse`
 What if we wanted to see more (or less) than 10 rows of `flights` or wanted to see all the variables? To specify the number of rows displayed we can use a print statement, and specify the number of rows:
 
 ```{r}
@@ -55,7 +55,7 @@ To see all the variables, use `glimpse`.
 glimpse(flights)
 ```
 
-##`filter`, `slice`, and `arrange`
+## `filter`, `slice`, and `arrange`
 The `filter` function filters rows based on specified criteria. It is similar to the `subset` function in base R. For example here we select flights from March that had Detroit Metro Airport as their destination.
 
 ```{r}
@@ -65,7 +65,7 @@ filter(flights, month == 3 & dest == "DTW")
 Which flights in January have either Detroit Metro (DTW) or Chicago O'Hare (ORD) destinations?
 
 ```{r}
-##TODO 9.1: January flights to Detroit Metro (DTW) or Chicago O'Hare (ORD)
+## TODO 9.1: January flights to Detroit Metro (DTW) or Chicago O'Hare (ORD)
 ```
 
 The `slice` function selects specified rows. To select the first, third, seventh, and twentieth rows:
@@ -83,12 +83,12 @@ arrange(flights, arr_time, carrier)
 Arrange flights by distance (`distance`) and then by departure delay (`dep_delay`), with the sorting being in descending order in both cases? (You'll find the `desc` function useful in conjunction with `arrange`.)
 
 ```{r}
-#TODO 9.2: arrange flights by distance and then by departure delay, with the sorting being in descending order in both cases
+# TODO 9.2: arrange flights by distance and then by departure delay, with the sorting being in descending order in both cases
 ```
 
-*TODO 9.3*: In your output above, what happens to `dep_delay` when `distance` changes from one distance to the next smallest? Add your answer here.
+**TODO 9.3**: In your output above, what happens to `dep_delay` when `distance` changes from one distance to the next smallest? Add your answer here.
 
-##`select`, `mutate`, and `summarize`
+## `select`, `mutate`, and `summarize`
 The `select`, `mutate`, and `summarize` functions work with columns. To choose a subset of the existing columns, use `select`. It is also possible to rename variables when using `select`. Here are two examples.
 
 ```{r}
@@ -101,7 +101,7 @@ Columns to be selected can also be specified using `start:end` to specify all co
 Use select to return a data frame with the variables representing departure time, departure delay, arrival time, arrival delay, origin, and destination.
 
 ```{r}
-##TODO 9.4: Select the columns here
+## TODO 9.4: Select the columns here
 ```
 
 The `mutate` function provides a simple way to create new columns that are functions of existing columns. 
@@ -115,7 +115,7 @@ glimpse(mutate(flights,
 Create two new columns, one called `total_gain` (calculated as `gain` in the `mutate` call above), and another which has the gain per hour, i.e., `total_gain` divided by the `(air_time/60)`.
 
 ```{r}
-#TODO 9.5: Create the new columns here
+# TODO 9.5: Create the new columns here
 ```
 
 The `summarize` (or `summarise`) function returns a function of one or more columns. 
@@ -127,7 +127,7 @@ summarise(flights,
 
 We'll see the real power of `summarize` when we pair it with `dplyr`'s grouping capabilities. 
 
-##`group_by` and `%>%`
+## `group_by` and `%>%`
 Grouping operations add substantially to the power of the `dplyr` functions. We will focus on using `summarize` with grouping, but grouping also can be used with other functions. (This is akin to using `tapply` but the syntax and power are much better.) Often we apply several functions in order. The piping operator `%>%` improves both readability and intuitiveness of these more complex operations.
 
 Here are three different ways to compute the number of flights, the mean distance of flights, and the mean arrival delay of flights, for each month of the year. In the first, we create an intermediate data frame with grouping. In the second, we nest functions. In the third, we use the piping operator.
@@ -136,38 +136,64 @@ Here are three different ways to compute the number of flights, the mean distanc
 flights_by_month <- group_by(flights, month)
 summarize(flights_by_month, number = n(), mean_distance = mean(distance, na.rm = TRUE), mean_arrival_delay = mean(arr_delay, na.rm = TRUE))
 summarize(group_by(flights, month), number = n(), mean_distance = mean(distance, na.rm = TRUE), mean_arrival_delay = mean(arr_delay, na.rm = TRUE))
-group_by(flights, month) %>% summarize(number = n(), mean_distance = mean(distance, na.rm = TRUE), mean_arrival_delay = mean(arr_delay, na.rm = TRUE))
+flights %>%
+  group_by(month) %>%
+  summarize(number = n(), 
+	    mean_distance = mean(distance, na.rm = TRUE), 
+	    mean_arrival_delay = mean(arr_delay, na.rm = TRUE))
 ```
 
 We can even pipe the results into the `ggplot` function to produce a scatter plot. Of course if we planned to do a lot of exploration we might want to save the results first and then construct the plot, as in the second section below.
 
 ```{r}
-##Pipe the results directly into ggplot
+## Pipe the results directly into ggplot
 library(ggplot2)
-group_by(flights, month) %>% summarize(number = n(), mean_distance = mean(distance, na.rm = TRUE), mean_arrival_delay = mean(arr_delay, na.rm = TRUE)) %>% ggplot(aes(x = month, y = mean_arrival_delay)) + geom_point()
-##Save the results in "delays" and then use ggplot on delays
-delays <- group_by(flights, month) %>% summarize(number = n(), mean_distance = mean(distance, na.rm = TRUE), mean_arrival_delay = mean(arr_delay, na.rm = TRUE))
+flights %>%
+  group_by(month) %>%
+  summarize(number = n(), 
+	    mean_distance = mean(distance, na.rm = TRUE), 
+	    mean_arrival_delay = mean(arr_delay, na.rm = TRUE)) %>% 
+  ggplot(aes(x = month, y = mean_arrival_delay)) + 
+  geom_point()
+## Save the results in "delays" and then use ggplot on delays
+delays <- flights %>%
+  group_by(month) %>%
+  summarize(number = n(), 
+	    mean_distance = mean(distance, na.rm = TRUE), 
+	    mean_arrival_delay = mean(arr_delay, na.rm = TRUE))
 ggplot(data = delays, aes(x = month, y = mean_arrival_delay)) + geom_point()
 ```
 
 Create a data frame that gives the number of flights and the mean arrival delay for flights on the carrier UA (United Airlines) whose destination is O'Hare Airport (ORD), with the number of flights and mean arrival delay calculated separately for flights out of each of the `origin` airports. (Hint: You'll probably want to use `filter` first to get the UA flights whose destination is ORD, then group by the originating airport, then calculate the statistics requested.)
 
 ```{r}
-##TODO 9.6: add code here to answer the query above
+## TODO 9.6: add code here to answer the query above
 ```
 
-********
+## Challenge Question
+
+This question **will not be graded** and is provided for additional practice building your `R` skills. This is a *challenge* question, and thus not all material has been (or will be) covered. 
+
+`dplyr` is a fantastic package for data science that you will surely find useful in your work. We have addressed the fundamental aspects of `dplyr`, but there are additional functions and tools in `dplyr` that you may find useful. In this challenge question, you will learn three additional features for working with data using `dplyr` that can increase the efficiency of your anaysis. 
+
+**Challenge Question 1**: Continuing with the `flights` data set, compute the average depart time, average scheduled depart time, average depart delay, average arrival time, and average scheduled arrival time grouped by each month of the data frame. The answer will involve the `group_by` function, but avoid manually typing out each `mean` function in the `summarize` function, and instead use the `summarize_at` function to reduce the amount of code you need to type. 
+
+**Challenge Question 2**: There are a lot of useful "helper" functions that go along with the `select` function to enable you to select columns from a data frame with a certain pattern. Explore the `select` function help page and determine a way to select all the columns from the `flights` data set that contain the word "time". 
+
+**Challenge Question 3**: You may often want to pull out a single column from a dplyr tibble. However, if you simply use the `select` function to pull out a single variable, the resulting object will still be a tibble and not a vector. For only the flights in the month of June with a scheduled depart time between 500 and 1000, use the `pull` function to extract the `carrier` as a vector. Practice using pipes in your answer. 
+
+******
 
 Congratulations! You've reached the end of Exercise 9.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -177,4 +203,4 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+*******

@@ -5,7 +5,7 @@ dim(gapminder1)
 
 
 ## ------------------------------------------------------------------------
-#TODO 8.3: calculate mean, median, minimum, and maximum life expetancy for each year here
+#TODO 8.2: calculate mean, median, minimum, and maximum life expetancy for each year here
 apply(gapminder1[,2:ncol(gapminder1)], MARGIN = 2, mean, na.rm = TRUE)
 apply(gapminder1[,2:ncol(gapminder1)], MARGIN = 2, median, na.rm = TRUE)
 apply(gapminder1[,2:ncol(gapminder1)], MARGIN = 2, min, na.rm = TRUE)
@@ -13,7 +13,7 @@ apply(gapminder1[,2:ncol(gapminder1)], MARGIN = 2, max, na.rm = TRUE)
 
 
 ## ------------------------------------------------------------------------
-#TODO 8.4: Change gapminder1 from wide to long format here
+#TODO 8.3: Change gapminder1 from wide to long format here
 library(tidyr)
 gapminder2 <- pivot_longer(data = gapminder1, cols = 2:ncol(gapminder1), 
 			   names_to = 'year', values_to = 'lifeExp') 
@@ -22,7 +22,7 @@ dim(gapminder2)
 
 
 ## ------------------------------------------------------------------------
-# TODO 8.5 Changer gapminder2 from long to wide, compare result to gapminder1
+# TODO 8.4 Changer gapminder2 from long to wide, compare result to gapminder1
 gapminder3 <- pivot_wider(data = gapminder2, names_from = year, values_from = lifeExp)
 all.equal(gapminder1, as_tibble(gapminder3))
 
