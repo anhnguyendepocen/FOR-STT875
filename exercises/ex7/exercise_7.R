@@ -2,8 +2,9 @@
 knitr::opts_chunk$set(comment = NA, tidy = TRUE)
 
 
-## ---- cache = TRUE-------------------------------------------------------
-WorldBank <- read.csv("http://www.finley-lab.com/files/data/WorldBank.csv", header = TRUE)
+## ---- cache = TRUE, tidy=TRUE--------------------------------------------
+WorldBank <- read.csv("http://www.finley-lab.com/files/data/WorldBank.csv", header = TRUE, 
+                      stringsAsFactors = TRUE)
 str(WorldBank)
 
 

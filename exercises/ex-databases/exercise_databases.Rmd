@@ -103,7 +103,7 @@ So it looks like this table contains different statistics on batters throughout 
 
 Notice that the `playerID` field does not give us the actual name of the player (although if you know baseball you could probably figure out who most of these top home run hitters are by their `playerID`). We want to replace the `playerID` field with the player's name. The player's name is stored in the `Baseball` table in our database, so we need to somehow join these two tables. We join the tables using the `inner_join()` function below.
 
-```{r, tidy = FALSE}
+```{r, tidy = FALSE, warning = FALSE}
 battingTable %>% 
   inner_join(baseballTable)
 ```
@@ -138,18 +138,11 @@ Now run the query finding the top home run hitters in the database and you will 
 
 Now we will update data used in a Shiny App and see the changes that occur in the app (you don't need to have gone through the Shiny chapter to do this). Open and look through the `db_app.R` file.  This file produces a simple user interface that allows the user to set restrictions on a few statistics of the baseball players, and then submit this to perform a query on the database and return the players that fulfill those requirements. No need to fully understand how this works, but if you previously completed the Shiny Chapter then perhaps going through this code will be a good refresher for you.
 
-It is important to note here that SQLite allows multiple concurrent connections to signle database, but does not allow more than one concurrent embedded server session. This could lead to some problems when you are working on this part of the exercise if you have the Shiny app running at the same time you are trying to make edits in the R Markdown document. If you encounter some weird errors suggesting SQLite has failed or there is a lock on the database, you can shutdown the server using 
+It is important to note here that SQLite allows multiple concurrent connections to a single database, but does not allow more than one concurrent embedded server session. This could lead to some problems when you are working on this part of the exercise if you have the Shiny app running at the same time you are trying to make edits in the R Markdown document. If you encounter some weird errors suggesting SQLite has failed or there is a lock on the database, you can shutdown the connection using 
 
 ```{r, eval = FALSE}
 dbDisconnect(con, shutdown = TRUE)
 ```
-
-or 
-
-```{r, eval = FALSE}
-monetdblite_shutdown()
-```
-
 and then can continue working as usual.
 
 To run the app, press the `Run App` button in the top right of the script window in RStudio. Notice that again because of the bug we have been experiencing, the first time you try to run this app you will likely encounter an error. Try a second time (or a third) and I think it should run correctly. Mess around with the user interface to see exactly how the app works. 
@@ -170,18 +163,18 @@ Knowing this format, write a query using the `dbSendQuery` statement like before
 
 Now rerun the Shiny app and see the changes that occur in the right hand side of the panel. Alex Rodriguez now shows up as number 1 on that list. 
 
-********
+******
 
 Congratulations! You've reached the end of Exercise 16.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -191,4 +184,4 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+*******

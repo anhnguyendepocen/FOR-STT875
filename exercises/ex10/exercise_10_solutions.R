@@ -1,10 +1,12 @@
 ## ----global_options, echo=FALSE------------------------------------------
 knitr::opts_chunk$set(comment = NA, tidy = TRUE)
 
+
 ## ------------------------------------------------------------------------
 1*(1-0.5)^(-1/(3.5-1))
 6e8 * (1-0.5)^(-1/(2.34-1))
 1e6 * (1-0.92)^(-1/(2.5-1))
+
 
 ## ---- echo=TRUE----------------------------------------------------------
 qpareto.1 <- function(p, alpha, x0) {
@@ -12,10 +14,12 @@ q <- x0*((1-p)^(-1/(alpha-1)))
 return(q)
 }
 
+
 ## ------------------------------------------------------------------------
 qpareto.1(p = 0.5, alpha = 3.5, x0 = 1)
 qpareto.1(p = 0.5, alpha = 2.34, x0 = 6e8)
 qpareto.1(p = 0.92, alpha = 2.5, x0 = 1e6)
+
 
 ## ----echo=TRUE-----------------------------------------------------------
 qpareto.2 <- function(p, alpha, x0, lower.tail=TRUE) {
@@ -26,9 +30,11 @@ q <- qpareto.1(p, alpha, x0)
 return(q)
 }
 
+
 ## ------------------------------------------------------------------------
 qpareto.2(p = 0.5, alpha = 3.5, x0 = 1)
 qpareto.2(p = 0.08, alpha = 2.5, x0 = 1e6, lower.tail = FALSE)
+
 
 ## ---- error=TRUE---------------------------------------------------------
 ff <- function(p, y, z){
@@ -42,8 +48,6 @@ ff(p = -1, y = 3, z = 2)
 ff(p = 2, y = 3, z = 5)
 ff(p = 0.5, y = 3, z = 2)
 
-## ---- error = TRUE-------------------------------------------------------
-ff(p = -1, y = 3, z = 5)
 
 ## ---- echo=TRUE----------------------------------------------------------
 qpareto <- function(p, alpha, x0, lower.tail=TRUE) {
@@ -55,12 +59,14 @@ q <- qpareto.1(p, alpha, x0)
 return(q)
 }
 
+
 ## ---- error=TRUE---------------------------------------------------------
 qpareto(p = 0.5, alpha = 3.5, x0 = 1)
 qpareto(p = 0.08, alpha = 2.5, x0 = 1e6, lower.tail = FALSE)
 qpareto(p = 1.08, alpha = 2.5, x0 = 1e6, lower.tail = FALSE)
 qpareto(p = 0.5, alpha = 0.5, x0 = -4)
 qpareto(p = 0.5, alpha = 2, x0 = -4)
+
 
 ## ----echo=TRUE-----------------------------------------------------------
 normal.mle <- function(x) {
@@ -72,8 +78,45 @@ out <- list(mean_hat=mean_hat, var_hat=var_hat)
 return(out)
 }
 
+normal.mle <- function(x, n) {
+  mean_hat <- sum(x/n)
+  var_hat <- sum((x-mean_hat^2)/n)
+  return(mean_hat, var_hat)
+}
+
+
 ## ---- error=TRUE---------------------------------------------------------
 normal.mle(c(1, 2, 1, 4))
 normal.mle(c("a", "b"))
 normal.mle(1)
+sessionInfo()
+
+
+## ------------------------------------------------------------------------
+set.seed(12345)
+x <- rnorm(100,160,sd = 15)
+y <- 80+1.02*(x) + rnorm(100, 0, sd = 1)
+# Create design matrix
+X <- cbind(1, x)
+
+
+## ---- echo = TRUE--------------------------------------------------------
+my.ols <- function(y, x) {
+  beta.hat <- solve(t(x) %*% x) %*% (t(x) %*% y)
+  pred <- as.vector(X %*% beta.hat)
+  e <- y - pred
+  n <- length(y)
+  p <- dim(X)[2]
+  VC <- (as.vector((t(e) %*% e)) / (n-p)) * solve(t(X) %*% X)
+  standard.errors <- sqrt(diag(VC))
+  return(list(estimate = as.vector(beta.hat), std.error = standard.errors))
+}
+
+
+## ------------------------------------------------------------------------
+my.ols(y, X)
+
+
+## ------------------------------------------------------------------------
+summary(lm(y ~ X - 1))
 

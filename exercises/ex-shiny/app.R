@@ -5,7 +5,7 @@ library(shiny)
 library(maps)
 library(ggplot2)
 
-sites <- read.csv("http://blue.for.msu.edu/FOR875/data/Michigan_State_Park_Campgrounds.csv")
+sites <- read.csv("http://www.finley-lab.com/files/data/Michigan_State_Park_Campgrounds.csv")
 
 ui <- fluidPage(
   

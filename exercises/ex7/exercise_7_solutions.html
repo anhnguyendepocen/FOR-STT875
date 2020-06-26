@@ -405,8 +405,9 @@ summary {
 <pre class="r"><code>knitr::opts_chunk$set(comment = NA, tidy = TRUE)</code></pre>
 <div id="three-functions-table-cut-and-tapply" class="section level3">
 <h3>Three functions: <code>table</code>, <code>cut</code>, and <code>tapply</code></h3>
-<p>The <code>table</code>, <code>cut</code>, and <code>tapply</code> functions are very handy for partitioning and summarizing data sets. We’ll use these functions to summarize World Bank data on life expectancy, GDP, fertility rate, population, etc., for countries over the years 1960-2014. (These data share some similarities with the <code>gapminder</code> data we have worked with previously.)</p>
-<pre class="r"><code>WorldBank &lt;- read.csv(&quot;http://www.finley-lab.com/files/data/WorldBank.csv&quot;, header = TRUE)
+<p>The <code>table</code>, <code>cut</code>, and <code>tapply</code> functions are very handy for partitioning and summarizing data sets. We’ll use these functions to summarize World Bank data on life expectancy, GDP, fertility rate, population, etc., for countries over the years 1960-2014 (these data share some similarities with the <code>gapminder</code> data we have worked with previously). As of R 4.0.0, the <code>read.table</code> and related functions like <code>read.csv</code> do not assume character columns are factors by default (see, <a href="https://cran.r-project.org/doc/manuals/r-devel/NEWS.html">R 4.0.0 r-devel news</a> and/or <a href="https://developer.r-project.org/Blog/public/2020/02/16/stringsasfactors/index.html">The R Blog - R Developer Page</a> for the developers’ perspective on this change). For the subsequent analysis, we generally want character columns (i.e., variables) to be treated as factors, so we set the <code>stringsAsFactors</code> argument in the call to <code>read.csv</code> to <code>TRUE</code> (note, if we forgot to read these columns in as factors, we could always convert them to factors later in the code using, e.g., the <code>as.factor</code> function).</p>
+<pre class="r"><code>WorldBank &lt;- read.csv(&quot;http://www.finley-lab.com/files/data/WorldBank.csv&quot;, header = TRUE, 
+                      stringsAsFactors = TRUE)
 str(WorldBank)</code></pre>
 <pre><code>&#39;data.frame&#39;:   11880 obs. of  15 variables:
  $ iso2c                       : Factor w/ 215 levels &quot;AD&quot;,&quot;AE&quot;,&quot;AF&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -436,7 +437,10 @@ str(WorldBank)</code></pre>
 <p>Let’s create a <code>region2</code> variable with shorter but less descriptive values, for simplicity.</p>
 <pre class="r"><code>WorldBank$region2 &lt;- WorldBank$region
 levels(WorldBank$region2) &lt;- c(&quot;EastAsia&quot;, &quot;Europe&quot;, &quot;LatAmer&quot;, &quot;MideastAndNorthAfrica&quot;, &quot;NorthAmer&quot;, &quot;SouthAsia&quot;, &quot;SubSaharanAfrica&quot;)</code></pre>
-<p>##The <code>table</code> function</p>
+</div>
+</div>
+<div id="the-table-function" class="section level2">
+<h2>The <code>table</code> function</h2>
 <p>We have seen the <code>table</code> function before. The <code>table</code> function returns a one, two, three, or higher dimensional contingency table. For example, we can try to tabulate the number of countries in each region.</p>
 <pre class="r"><code>table(WorldBank$region2)</code></pre>
 <pre><code>
@@ -527,7 +531,6 @@ Region                  FALSE TRUE
   NorthAmer                 0  126
   SouthAsia               251  181
   SubSaharanAfrica       2252  248</code></pre>
-</div>
 </div>
 <div id="using-tapply" class="section level2">
 <h2>Using <code>tapply</code></h2>
@@ -656,13 +659,15 @@ Northern temperate
 <div id="challenge-question" class="section level2">
 <h2>Challenge Question</h2>
 <p>This question <strong>will not be graded</strong> and is provided for additional practice building your <code>R</code> skills. This is a <em>challenge</em> question, and thus not all material has been (or will be) covered.</p>
-<p>Principal components analysis (PCA) is a statistical technique often used for data reduction. PCA is often used when a researcher collects multiple dependent variables that are highly correlated with each other and are somehow related. PCA can also give some understanding into how different groups of variables are related to each other. In this challenge question, we ask you to perform a PCA on the following variables in the <code>WorldBank</code> data set: <code>fertility.rate</code>, <code>life.expectancy</code>, <code>population</code>, <code>GDP.per.capita.Current.USD</code>, and <code>X15.to.25.yr.female.literacy</code>. Many of these variables are correlated with each other, and thus we could potentially use principal components analysis to reduce the number of variables we are looking at by considering some overall “socioeconomic variable”. You should perform a PCA on these variables, assess the results of the PCA, and then produce a biplot for the first two principal components showing how the different regions are related to each other in terms of these components by plotting the points with different colors for each region. We took the following steps:</p>
+<p><a href="https://en.wikipedia.org/wiki/Principal_component_analysis">Principal components analysis</a> (PCA) is a statistical technique used for data reduction. In practice, we often see PCA used when a researcher wishes to find a reduced set of composite variables that explain much of the variability in a larger set of potentially correlated variables. The reduced set of composite variables are called the principal components (PCs) and are derived in such a way as to maximize the variance explained in the larger set of variables. These PCs can be used in <a href="https://en.wikipedia.org/wiki/Exploratory_data_analysis">exploratory data analysis</a> (EDA) and/or as explanatory variables in a regression setting (e.g., <a href="https://en.wikipedia.org/wiki/Principal_component_regression">principal components regression</a>). From an EDA perspective, consider the setting where you wish to understand if there are differences among groups defined by some characteristic (e.g., health or socioeconomic status, treatment, or geographic region) based on a large set of potentially correlated variables. Most EDAs start with simple graphics and other data visualization tools, but trying to detect group patters across a large number of variables can be challenging. Hence, if we can <em>distill</em> the large set of potentially redundant variables into PCs that capture the dominant characteristics in two or three derived variables, then visualization of group patterns becomes much more manageable. This idea motivates the challenge question.</p>
+<p>Here, we ask you to perform a PCA on the following variables in the <code>WorldBank</code> data set: <code>fertility.rate</code>, <code>life.expectancy</code>, <code>population</code>, <code>GDP.per.capita.Current.USD</code>, and <code>X15.to.25.yr.female.literacy</code>. Many of these variables are correlated, and thus we could potentially use PCA to reduce the number of variables we are looking at by considering a set of composite “socioeconomic variables”, i.e., PCs. You should perform a PCA on these variables, assess the results of the PCA, and then produce a biplot for the first two PCs showing how the different regions are related to each other in terms of these components by plotting the points with different colors for each region. Consider following these steps:</p>
 <ol style="list-style-type: decimal">
-<li>Install and load the <code>ggbiplot</code> package for producing a biplot. Note: this will also install a couple other packages if they aren’t already installed, including <code>ggplot2</code>.</li>
-<li>Subset the <code>WorldBank</code> data set to only grab the variables you will include in the PCA, as well as the <code>region2</code> variable. You will also want to remove any rows of these variables that contain any NA values (as PCA does not go well with NAs). I find the <code>na.omit</code> function useful for this.</li>
+<li>Install and load the <code>ggbiplot</code> package for producing a biplot. Note: this will also install a couple other packages if they aren’t already installed, including <code>ggplot2</code>. If <code>ggbiplot</code> is not available via CRAN then you can install the development version from <a href="https://github.com/vqv/ggbiplot">https://github.com/vqv/ggbiplot</a>.</li>
+<li>Subset the <code>WorldBank</code> data set to only grab the variables you will include in the PCA, as well as the <code>region2</code> variable. You will also want to remove any rows of these variables that contain any <code>NA</code> values (as PCA does not accommodate <code>NA</code>s). I find the <code>na.omit</code> function useful for this.</li>
 <li>Perform the PCA using the <code>prcomp</code> function. You will want to make sure to center and scale the variables.</li>
 <li>Use the <code>summary</code> function to assess results of the PCA.</li>
 <li>Use the <code>ggbiplot</code> function to produce a plot of the first principal component vs the second principal component. Plot the points in the graph so that each region has a different color.</li>
+<li>Interpret the results.</li>
 </ol>
 <pre class="r"><code>library(ggbiplot)
 pca.wb &lt;- na.omit(WorldBank[, c(&#39;fertility.rate&#39;, &#39;life.expectancy&#39;,
