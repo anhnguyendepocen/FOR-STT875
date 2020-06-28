@@ -29,7 +29,7 @@ Use `cppFunction()` to write versions of the following functions from R's `base`
 *  `all` - Given a logical vector, are all of the values true? Return `TRUE` or `FALSE`. Write `allC`.
 *  `range` - Return a 2-item vector containing the minimum and maximum of a numeric vector. Write `rangeC`. 
 
-*Note*: C++ does have a `max()` function, but it is only for pairwise maximum (two arguments), not vector maximum element. Think about how you can iterate through a vector to find the max and min values. (*Hint*: Look at the textbook's **Vector input and scalar output** section code for a loop example.)
+*Note*: C++ does have a `max()` function, but it is only for pairwise maximum (two arguments), not vector maximum element. Think about how you can iterate through a vector to find the max and min values. (*Hint*: Look at the textbook's [Vector input and scalar output](https://www.jeffdoser.com/files/for875/_book/rcpp.html#vector-input-and-scalar-output) section code for a loop example.)
 
 ```{r}
 # TODO 15.1: Rewrite all() as allC()
@@ -42,9 +42,11 @@ cppFunction("bool allC(NumericVector x) {
   return true;
 }")
 
-allC(c(TRUE,TRUE,TRUE,TRUE))
-allC(c(TRUE,FALSE,TRUE,TRUE))
-allC(c(F,T,F,F,T,T,T,T,T,F,T,T))
+# Example run 1
+all(c(T,T,F,T,T,T,F,F,F))
+
+# Example run 2
+all(c(T,T,T,T,T,T))
 ```
 
 ```{r}
@@ -73,12 +75,14 @@ cppFunction("NumericVector rangeC(NumericVector x) {
   return out;
 }")
 
-rangeC(c(1,2,3,10,4))
+# Example run 1
+range(c(-0.654, 0.121, 0.088, 0.976, -0.325))
 
-rangeC(c(1,1,1,1))
+# Example run 2
+range(c(1,1,1,1,1,1,1,1))
 
-rangeC(c(-1000,10,-20,999))
-
+# Example run 3
+range(c(9991, 847, 63, 345, 561))
 ```
 
 How does the efficiency of your function, `rangeC`, compare to the R function `range`? Uncomment the code below and answer the `## TODO:` question.
@@ -166,18 +170,18 @@ microbenchmark(distR(x),distC(x))
 ```
 
 
-********
+******
 
 Congratulations! You've reached the end of Rcpp Exercise.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -187,4 +191,4 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+*******

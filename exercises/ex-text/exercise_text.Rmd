@@ -32,19 +32,19 @@ In this exercise we will practice reading in and manipulating text data.
 
 ### Reading data in using `readLines`
 
-The file located at (http://blue.for.msu.edu/FOR875/data/Forbes100.html) gives the 100 wealthiest people in America, along with their net worth, age, and a few other variables, according to Forbes magazine. These data are from 2013. More recent data are available online at [here](http://www.forbes.com/forbes-400/list/#version:static). For simplicity we will work with the 2013 data.
+The file located at http://www.finley-lab.com/files/data/Forbes100.html gives the 100 wealthiest people in America, along with their net worth, age, and a few other variables, according to Forbes magazine. These data are from 2013. More recent data are available online at [here](http://www.forbes.com/forbes-400/list/#version:static). For simplicity we will work with the 2013 data.
 
 Open the file in a web browser. Next, view the document source. If you are using Google Chrome or Firefox this is easy. Just right click on the document and choose `View Page Source`. This is what we can read into R. 
 
 Now use `readLines` to read the data into an R object called `richhtml` as follows.
 
 ```{r}
-richhtml <- readLines("http://blue.for.msu.edu/FOR875/data/Forbes100.html")
+richhtml <- readLines("http://www.finley-lab.com/files/data/Forbes100.html")
 ```
 
 The resulting R object `richhtml` should be a character vector, with each entry corresponding to one line in the HTML source file. 
 
-1.  How many lines are in the source file? How many total characters are in the source file? Use R to answer these questions below. (For the second, you will find the `nchar` function, discussed in Section 11.3, useful.)
+1.  How many lines are in the source file? How many total characters are in the source file? Use R to answer these questions below. (For the second, you will find the `nchar` function, discussed in [Section 11.3.2](https://www.jeffdoser.com/files/for875/_book/xml.html#nchar-and-strsplit), useful.)
 
 ```{r}
 ## TODO 14.1: How many lines? How many total characters?
@@ -55,7 +55,7 @@ The resulting R object `richhtml` should be a character vector, with each entry 
 Next we will read in the novel *Sense and Sensibility* by Jane Austen using the `scan` function. We specify that we are reading in character data, and that newline characters are the separators.
 
 ```{r}
-SandS <- scan("http://blue.for.msu.edu/FOR875/data/austen.txt", what = "character", sep = "\n")
+SandS <- scan("http://www.finley-lab.com/files/data/austen.txt", what = "character", sep = "\n")
 ```
 
 2. We are only interested in the story part of the novel and want to remove extraneous text that comes before "CHAPTER 1" and after "THE END". Inspect the vector `SandS` to discover the index of the elements containing "CHAPTER 1" and "THE END". Which element contains "CHAPTER 1"? Which element contains "THE END"? Add your code in the code chunk below question 3.
@@ -159,7 +159,7 @@ Prime Number 4 is 7
 ##TODO 14.6: If needed, rewrite print_primes here to give output without quotes and the preceeding [1]
 ```
 
-###`substr` and `strtrim`
+### `substr` and `strtrim`
 
 The `substr` function can extract or replace a substring. Consult Section 11.3 of the text for examples of its use. First we create a simple character vector and use `substr` in a simple fashion.
 ```{r}
@@ -189,18 +189,18 @@ The `strtrim` function trims a string to a specified width. Again consult Sectio
 ##TODO 14.8: trim x as described above
 ```
 
-********
+******
 
 Congratulations! You've reached the end of the Text Exercise.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -210,4 +210,4 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+*******

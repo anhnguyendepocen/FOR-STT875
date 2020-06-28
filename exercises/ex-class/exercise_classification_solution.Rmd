@@ -201,18 +201,18 @@ percent.correct(k.5)
 ##TODO 13.14: put your answer here
 ```
 
-********
+******
 
 Congratulations! You've reached the end of the Classification Exercise.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -222,4 +222,4 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+*******

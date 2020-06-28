@@ -36,10 +36,10 @@ We will explore the daily temporal variation of a soundscape in a small forest p
 library(tuneR)
 library(downloader)
 
-# download("http://blue.for.msu.edu/FOR875/data/tempVarSongs.zip",
-#          destfile="./tempVarSongs.zip", mode="wb")
-# 
-# unzip("tempVarSongs.zip", exdir = ".")
+download("http://www.finley-lab.com/files/data/tempVarSongs.zip", 
+         destfile="./tempVarSongs.zip", mode="wb") 
+
+unzip("tempVarSongs.zip", exdir = ".")
 
 list.files("tempVarSongs")
 
@@ -106,7 +106,7 @@ There appears to be some slight differences in the ADI across the sound files. P
 
 ```{r  out.width = "50%", echo=FALSE, fig.align="center"}
 library(knitr)
-include_graphics("http://blue.for.msu.edu/FOR875/data/adiComparison.png") 
+include_graphics("http://www.finley-lab.com/files/data/adiComparison.png") 
 ```
 
 ```{r}
@@ -129,7 +129,7 @@ Here are some potentially useful (or maybe not useful) hints:
 
 
 ```{r  out.width = "50%", echo=FALSE, fig.align="center"}
-include_graphics("http://blue.for.msu.edu/FOR875/data/adiBandComparison.png") 
+include_graphics("http://www.finley-lab.com/files/data/adiBandComparison.png") 
 ```
 
 ```{r, warning = FALSE, message = FALSE, output = FALSE}
@@ -153,74 +153,18 @@ ggplot(data = allADI, aes(x = time, y = values, fill = range)) +
   geom_bar(stat = "identity", position = "dodge")
 ```
 
-## Spatial Variation of Soundscapes in Western New York
-
-**NOTE**: here we are dealing with spatial data, this section requires some of the skills learned in Chapter 8: Spatial data visualization and analysis. Since that is an optional chapter, this final part of the exercise will be optional. 
-
-We will next explore the spatial variation of 9 soundscape recordings across the Genesee River Valley Region in western New York. Here we again use the `downloader` package to download the songs. 
-```{r}
-# download("http://blue.for.msu.edu/FOR875/data/spatialVarSongs.zip", 
-#          destfile="./spatialVarSongs.zip", mode="wb") 
-# 
-# unzip("spatialVarSongs.zip", exdir = ".")
-
-list.files("spatialVarSongs")
-```
-You will compute the Normalized Difference Soundscape Index, a common index developed right here at MSU that is used to display whether or not a soundscape is dominated by biological sounds (biophony) or human-produced sounds (technophony). The NDSI ranges from -1 (soundscape is composed entirely of technophony) to +1 (soundscape is composed entirely of biological sounds). You goal is to compute the NDSI for all 9 soundscapes and produce a visualization that shows spatially the different recording locations and the values of the NDSI at these locations. This should allow you to see how the NDSI varies across the Genesee Valley Region in this sample of recordings. The goal is to reproduce the following figure (if you want to make the graph even more elaborate, feel free to do that as well):
-
-```{r  out.width = "50%", echo=FALSE, fig.align="center"}
-include_graphics("http://blue.for.msu.edu/FOR875/data/spatialVariationFigure.png") 
-```
-Here is a set of guidelines to follow: 
-
-1. Listen to all the recordings. This will give you a general sense of whether or not a recording is dominated by technophony or biophony.
-2. Use the `sp`, `ggmap`, and `ggrepel` packages.
-3. Again, use the `multiple_sounds` function to compute the `ndsi` for all 9 audio files. 
-4. Read in the `recordingSiteLocations.csv` data, add a column to this containing the NDSI values from the left channel.
-5. Convert the resulting data frame into a spatial data frame.
-6. Assign the coordinate system ("+proj=longlat +datum=WGS84") to the spatial data frame.
-7. Include the code `register_google(key = "AIzaSyBPAwSY5x8vQqlnG-QwiCAWQW12U3CTLZY")` to connect to the class project for working with `ggmap`.
-8. Use `ggmap`, `ggrepel`, and `ggplot2` to produce the desired map. For the location of the map, use "avon, new york"
-
-```{r, warning = FALSE, message = FALSE, output = FALSE}
-# Optional TODO 17.7: Produce the figure above using the provided guidelines
-library(sp)
-library(ggmap)
-multiple_sounds(directory = paste(getwd(), "spatialVarSongs", sep = "/"), 
-                resultfile = "spatialVariationData.csv", soundindex = "ndsi")
-spatialData <- read.csv("spatialVariationData.csv", stringsAsFactors = FALSE)
-head(spatialData)
-soundMapData <- read.csv("recordingSiteLocations.csv", stringsAsFactors = FALSE)
-soundMapData$ndsi <- spatialData$LEFT_CHANNEL
-head(soundMapData)
-coordinates(soundMapData) <- ~longitude + latitude
-soundMapData
-proj4string(soundMapData) <- CRS("+proj=longlat +datum=WGS84")
-proj4string(soundMapData)
-register_google(key = "AIzaSyBPAwSY5x8vQqlnG-QwiCAWQW12U3CTLZY")
-basemap <- get_map(location = "avon, new york", zoom = 10, maptype = "roadmap")
-ggmap(basemap) + 
-  geom_point(data = as.data.frame(soundMapData), 
-             aes(x = longitude, y = latitude, color =ndsi), size = 2) +
-  ggrepel::geom_label_repel(data = as.data.frame(soundMapData), 
-             aes(x = longitude, y = latitude, label = locations), alpha = 0.5) + 
-  scale_color_gradient(low = "red", high = "darkblue") 
-```
-
-
-
-********
+******
 
 Congratulations! You've reached the end of Exercise 17.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, put them here.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -230,4 +174,4 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+*******

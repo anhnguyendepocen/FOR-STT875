@@ -22,13 +22,13 @@ You will receive full credit if your R Markdown document: 1) compiles without er
 This exercise builds on Chapter 8 by illustrating some R `leaflet` functionality for creating dynamic web maps. Your task is to recreate the look and behavior of the map in the [Colorado wells](#colorado-wells) Section. To do this you will need to become familiar with the data described below and work through the tutorials on RStudio's leaflet site [https://rstudio.github.io/leaflet/](https://rstudio.github.io/leaflet/). Please review the following topics in the left menu on the R leaflet site: Introduction, Map Widget, Basemaps, Popups and Labels, Lines and Shapes, Colors, Legends, Show/Hide Layers, and Choropleths. These are short tutorials and quite fun, so this should be fairly painless.
 
 ## Motivating data
-All data for this exercise is available at [http://blue.for.msu.edu/FOR875/data/CO-wells.zip](http://blue.for.msu.edu/FOR875/data/CO-wells.zip). Let's use the `downloader` package `download` function to grab the data, then unzip it into your working directory (note, you should set your working directory to the directory dedicated to this exercise prior to running the code chunk below), and take a look at the content. 
+All data for this exercise is available at http://www.finley-lab.com/files/data/CO-wells.zip. Let's use the `downloader` package `download` function to grab the data, then unzip it into your working directory (note, you should set your working directory to the directory dedicated to this exercise prior to running the code chunk below), and take a look at the content. 
 
 ```{r}
 library(downloader)
 
-download("http://blue.for.msu.edu/FOR875/data/CO-wells.zip", 
-         destfile="./CO-wells.zip", mode="wb") 
+download("http://www.finley-lab.com/files/data/CO-wells.zip", 
+         destfile="./CO-wells.zip", mode="wb")
 
 unzip("CO-wells.zip", exdir = ".")
 
@@ -51,7 +51,7 @@ The "CO-HUC" shapefile in the "CO-wells.zip" comprises non-overlapping polygons 
   1. `HUC_ID` a unique integer code for each HUC polygon.
   2. `HUC_NAME` the name of each HUC polygon (these may or may not be unique).
 
-##Colorado wells
+## Colorado wells
 
 Your goal for this exercise is to produce a leaflet map that looks and behaves like [Map 1](#fig_oil). You can take some artistic (or should I say cartographic) liberties and change the color scheme and other style elements. 
 
@@ -126,9 +126,9 @@ leaflet(width = "100%") %>%
   )
 
 ```
-<a name="fig_oil"></a>Map 1: Total, active, and inactive oil and gas wells by USGS hydrologic units across Colorado. You can see a full browser window version of this map [here](http://blue.for.msu.edu/FOR875/data/exercise_sp_map1.html).
+<a name="fig_oil"></a>Map 1: Total, active, and inactive oil and gas wells by USGS hydrologic units across Colorado. You can see a full browser window version of this map [here](http://www.finley-lab.com/files/data/exercise_sp_map1.html).
 
-###Here are the steps you'll need to follow to create the map above.
+### Here are the steps you'll need to follow to create the map above.
 
   1. Read in "CO-wells.csv" and promote it into a `SpatialPointsDataFrame`. As noted above `Latitude` and `Longitude` are in proj.4 string "+proj=longlat +datum=WGS84" geographic coordinate system, so this will need to be set using the `proj4string` function. I called the resulting object `wells`.
   2. Read in "CO-HUC" shapefile and reproject it to "+proj=longlat +datum=WGS84". Note it is in some other projection when you first read it in. I called the resulting `SpatialPolygonsDataFrame` object `huc`
@@ -179,18 +179,18 @@ leaflet(width = "100%") %>%
   
   8. Work through the tutorials on RStudio's leaflet site [https://rstudio.github.io/leaflet/](https://rstudio.github.io/leaflet/) to add the remaining functionality, including mouse over popups/labels, polygon outlines, and legend. One last piece of guidance. Construction of the labels that appear when mousing over the HUCs can be a bit tricky. There are several ways to get this `label` behavior; however, I used the approach detailed in the "Custom info" Section toward the bottom of the RStudio's leaflet site [Choropleths](https://rstudio.github.io/leaflet/choropleths.html) page. In fact working the Choropleths tutorial will get you most of the way through this exercise. 
 
-********
+******
 
 Congratulations! You've reached the end of the Spatial Data Exercise.
 
-###Questions?
+### Questions?
 
 If you have any lingering questions about the material in this document or in the corresponding chapter, add them as comments to the end your R script.
 
 *Response...*
 
 
-###Give us your feedback!
+### Give us your feedback!
 
 1.  How do you feel you're doing in this class?
 
@@ -200,4 +200,4 @@ If you have any lingering questions about the material in this document or in th
 
 *Response...*
 
-*********
+*******
