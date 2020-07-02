@@ -133,6 +133,7 @@ countries <- c("China", "India", "United States", "Indonesia", "Brazil")
 lifeExp_countries <- subset(gapminder2, country %in% countries)
 ggplot(lifeExp_countries, aes(year, lifeExp, group = country)) + geom_line(aes(color = country))
 ```
+
 ## Challenge Question
 
 This question **will not be graded** and is provided for additional practice building your `R` skills. This is a *challenge* question, and thus not all material has been (or will be) covered. 
