@@ -121,7 +121,7 @@ Use `names` to add the species as names to the `dbh` and `vol` vectors, and list
 # TODO 3.12: Create the vectors with names and list the first ten elements of each here.
 ```
 
-###More advanced subsetting
+### More advanced subsetting
 
 So far we have directly specified the elements of vectors that we want to extract, for example `spp[1]` or `dbh[length(dbh)]` or `spp[c(1,2,3,5)]`. More commonly we want to extract elements that meet a condition, such as all trees greater than some minimum DBH or all trees of a given species. For this we use subsetting with logical vectors, see [Section 4.8](https://www.jeffdoser.com/files/for875/_book/structures.html#subsetting) in the course book.
 
@@ -152,7 +152,7 @@ First, use logical subsetting to count the number of maple trees in the forest.
 
 Did you answer the above question using `sum(spp=="maple")`? It's okay if you didn't, there are several ways to count the trees that meet this condition. If you didn't use `sum(spp=="maple")`, then figure out why the `sum` function returns the correct answer.
 
-###A bit more on logical operators and subsetting
+### A bit more on logical operators and subsetting
 
 So far, we have made use of some comparison operators, including:
 

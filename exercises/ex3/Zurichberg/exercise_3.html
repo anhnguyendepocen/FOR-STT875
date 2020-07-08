@@ -452,7 +452,8 @@ animals</code></pre>
    &quot;dog&quot;    &quot;cat&quot;    &quot;dog&quot;    &quot;cat&quot;  &quot;horse&quot;    &quot;dog&quot; </code></pre>
 <p>Use <code>names</code> to add the species as names to the <code>dbh</code> and <code>vol</code> vectors, and list the first ten elements of each vector with the names included. Assign names to the entire <code>dbh</code> and <code>vol</code> vectors, not just the first ten elements.</p>
 <pre class="r"><code># TODO 3.12: Create the vectors with names and list the first ten elements of each here.</code></pre>
-<p>###More advanced subsetting</p>
+<div id="more-advanced-subsetting" class="section level3">
+<h3>More advanced subsetting</h3>
 <p>So far we have directly specified the elements of vectors that we want to extract, for example <code>spp[1]</code> or <code>dbh[length(dbh)]</code> or <code>spp[c(1,2,3,5)]</code>. More commonly we want to extract elements that meet a condition, such as all trees greater than some minimum DBH or all trees of a given species. For this we use subsetting with logical vectors, see <a href="https://www.jeffdoser.com/files/for875/_book/structures.html#subsetting">Section 4.8</a> in the course book.</p>
 <p>First some very simple examples using vectors of random numbers, and then you’ll use these ideas for the tree vectors.</p>
 <pre class="r"><code>set.seed(123) #Set the seed for reproducible random number generation
@@ -479,7 +480,9 @@ x</code></pre>
 <p>First, use logical subsetting to count the number of maple trees in the forest.</p>
 <pre class="r"><code># TODO 3.13: Count the number of maple trees here</code></pre>
 <p>Did you answer the above question using <code>sum(spp==&quot;maple&quot;)</code>? It’s okay if you didn’t, there are several ways to count the trees that meet this condition. If you didn’t use <code>sum(spp==&quot;maple&quot;)</code>, then figure out why the <code>sum</code> function returns the correct answer.</p>
-<p>###A bit more on logical operators and subsetting</p>
+</div>
+<div id="a-bit-more-on-logical-operators-and-subsetting" class="section level3">
+<h3>A bit more on logical operators and subsetting</h3>
 <p>So far, we have made use of some comparison operators, including:</p>
 <ul>
 <li>Equal: <code>==</code></li>
@@ -511,12 +514,12 @@ a[b | e]</code></pre>
 <p>Another useful logical operator is the <code>!</code> (i.e., the exclamation point, referred to as the “bang” in coding slang) which negates or flips the logical value, so for example <code>!=</code> represents not equal to.</p>
 <p>Yet another very handy operator is <code>%in%</code> which is used to identify if an element occurs in a second vector. Consider the example below and consult the manual page via <code>help(&quot;%in%&quot;)</code>.</p>
 <pre class="r"><code>letters</code></pre>
-<pre><code> [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot;
-[18] &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<pre><code> [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot;
+[20] &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
 <pre class="r"><code>letters %in% c(&quot;a&quot;, &quot;m&quot;, &quot;q&quot;, &quot;s&quot;)</code></pre>
-<pre><code> [1]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-[12] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
-[23] FALSE FALSE FALSE FALSE</code></pre>
+<pre><code> [1]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[13]  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[25] FALSE FALSE</code></pre>
 <p>Use these ideas to:</p>
 <p>Get the DBH of larch and silver fir trees and assign them to <code>dbh_l_sf</code> (you don’t have to print out the resulting values, just assign to <code>dbh_l_sf</code>). Use the <code>%in%</code> operator for subsetting.</p>
 <pre class="r"><code># TODO 3.14: Answer to question here</code></pre>
@@ -526,6 +529,7 @@ a[b | e]</code></pre>
 <pre class="r"><code># TODO 3.16: Answer to question here</code></pre>
 <p>What is the maximum DBH and volume among the beech trees?</p>
 <pre class="r"><code># TODO 3.17: Answer to question here</code></pre>
+</div>
 </div>
 <div id="challenge-question" class="section level2">
 <h2>Challenge Question</h2>
