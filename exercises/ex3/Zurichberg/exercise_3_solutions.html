@@ -430,13 +430,12 @@ spp[1:25]</code></pre>
 <p>List the first 25 diameter measurements in <code>dbh</code>.</p>
 <pre class="r"><code># TODO 3.2: List the DBH here
 dbh[1:25]</code></pre>
-<pre><code> [1] 14 15 15 30 41 69 67 53 46 50 12 13 30 52 64 65 49 38 58 54 42 17 36
-[24] 64 49</code></pre>
+<pre><code> [1] 14 15 15 30 41 69 67 53 46 50 12 13 30 52 64 65 49 38 58 54 42 17 36 64 49</code></pre>
 <p>List the first 25 volume measurements in <code>vol</code>.</p>
 <pre class="r"><code># TODO 3.3: List the volume here
 vol[1:25]</code></pre>
-<pre><code> [1] 0.11 0.14 0.14 0.84 1.82 5.97 5.61 3.33 2.40 2.91 0.08 0.09 0.84 3.19
-[15] 5.08 5.25 2.78 1.51 4.08 3.48 1.93 0.19 1.33 5.08 2.78</code></pre>
+<pre><code> [1] 0.11 0.14 0.14 0.84 1.82 5.97 5.61 3.33 2.40 2.91 0.08 0.09 0.84 3.19 5.08
+[16] 5.25 2.78 1.51 4.08 3.48 1.93 0.19 1.33 5.08 2.78</code></pre>
 <p>The <code>table</code> function builds a contingency table. For example,</p>
 <pre class="r"><code>animals &lt;- c(&quot;dog&quot;, &quot;cat&quot;, &quot;dog&quot;, &quot;cat&quot;, &quot;horse&quot;, &quot;dog&quot;)
 table(animals)</code></pre>
@@ -572,12 +571,12 @@ a[b | e]</code></pre>
 <p>Another useful logical operator is the <code>!</code> (i.e., the exclamation point, referred to as the “bang” in coding slang) which negates or flips the logical value, so for example <code>!=</code> represents not equal to.</p>
 <p>Yet another very handy operator is <code>%in%</code> which is used to identify if an element occurs in a second vector. Consider the example below and consult the manual page via <code>help(&quot;%in%&quot;)</code>.</p>
 <pre class="r"><code>letters</code></pre>
-<pre><code> [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot;
-[18] &quot;r&quot; &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<pre><code> [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot; &quot;s&quot;
+[20] &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
 <pre class="r"><code>letters %in% c(&quot;a&quot;, &quot;m&quot;, &quot;q&quot;, &quot;s&quot;)</code></pre>
-<pre><code> [1]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
-[12] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
-[23] FALSE FALSE FALSE FALSE</code></pre>
+<pre><code> [1]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[13]  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[25] FALSE FALSE</code></pre>
 <p>Use these ideas to:</p>
 <p>Get the DBH of larch and silver fir trees and assign them to <code>dbh_l_sf</code> (you don’t have to print out the resulting values, just assign to <code>dbh_l_sf</code>). Use the <code>%in%</code> operator for subsetting.</p>
 <pre class="r"><code># TODO 3.14: Answer to question here
