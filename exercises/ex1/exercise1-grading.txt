@@ -1,7 +1,7 @@
 Exercise 1
 
-13 questions
+6 questions
 
 1 point each question, 3 points for proper format, 1 point for everything running without error. 
 
-Grade out of a total of 17 points, then scale to 10
+Grade out of 10

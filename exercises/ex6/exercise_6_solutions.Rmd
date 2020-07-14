@@ -196,7 +196,7 @@ plot.1 <- p +
   scale_color_colorblind() + 
   stat_smooth(method = lm, se = FALSE, aes(color = continent)) + 
   theme_bw() + 
-  labs(x = 'Year', y = 'Life Expectancy', color = 'Continent')
+  labs(x = 'Per Capita GDP (log10 scaled)', y = 'Life Expectancy', color = 'Continent')
 plot.2 <- ggplot(data = gapminder, aes(x = year, y = lifeExp)) + 
       geom_boxplot(aes(group = year), fill = 'grey') + 
       theme_classic() + 

@@ -261,3 +261,7 @@ If you have any lingering questions about the material in this document or in th
 *Response...*
 
 *******
+
+```{r}
+warnings()
+```
